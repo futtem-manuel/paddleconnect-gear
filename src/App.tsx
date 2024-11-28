@@ -12,6 +12,7 @@ import RecordMatch from "./pages/RecordMatch";
 import VerifyMatch from "./pages/VerifyMatch";
 import FindPlayers from "./pages/FindPlayers";
 import Rules from "./pages/Rules";
+import Connections from "./pages/Connections";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/verify-match/:matchId" element={<VerifyMatch />} />
             <Route path="/find-players" element={<FindPlayers />} />
             <Route path="/rules" element={<Rules />} />
+            <Route path="/connections" element={<Connections />} />
           </Routes>
         </BrowserRouter>
       </div>

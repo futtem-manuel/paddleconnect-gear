@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Trophy, Users, MapPin, Edit } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
-import { ChartContainer } from "@/components/ui/chart";
-import { Line, LineChart, XAxis, YAxis, Tooltip } from "recharts";
+import { PerformanceCharts } from "@/components/dashboard/PerformanceCharts";
+import { PlayerConnections } from "@/components/dashboard/PlayerConnections";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -20,13 +20,18 @@ const Dashboard = () => {
     location: "San Francisco, CA",
   };
 
+  const playerConnections = [
+    { id: "1", name: "Alice Smith", avatar: "" },
+    { id: "2", name: "Bob Johnson", avatar: "" },
+    { id: "3", name: "Carol White", avatar: "" },
+  ];
+
   const nearbyVenues = [
     { id: 1, name: "City Padel Club", distance: "0.8 miles", rating: 4.5 },
     { id: 2, name: "Bay Area Padel Center", distance: "1.2 miles", rating: 4.8 },
     { id: 3, name: "Golden Gate Padel", distance: "2.1 miles", rating: 4.3 },
   ];
 
-  // Sample data for the performance chart
   const performanceData = [
     { date: "Jan", rating: 5.2 },
     { date: "Feb", rating: 5.4 },
@@ -34,6 +39,11 @@ const Dashboard = () => {
     { date: "Apr", rating: 5.6 },
     { date: "May", rating: 5.8 },
   ];
+
+  const winLossData = {
+    wins: 9,
+    losses: 6,
+  };
 
   const displayRating = eloToDisplayRating(userProfile.eloRating);
 
@@ -70,7 +80,7 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div className="p-4 neu-card flex items-center gap-3">
                   <Trophy className="h-5 w-5 text-primary" />
                   <div>
@@ -85,10 +95,13 @@ const Dashboard = () => {
                     <p className="text-xl font-semibold">{userProfile.winRate}</p>
                   </div>
                 </div>
+                <div className="p-4 neu-card">
+                  <PlayerConnections connections={playerConnections} />
+                </div>
               </div>
 
               {/* Quick Actions */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <Button 
                   className="neu-button flex items-center gap-2 h-auto py-4"
                   variant="outline"
@@ -110,55 +123,11 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Performance Chart */}
-        <Card className="neu-card">
-          <CardHeader>
-            <CardTitle>Performance Over Time</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px] w-full">
-              <ChartContainer
-                config={{
-                  line: {
-                    theme: {
-                      light: "var(--primary)",
-                      dark: "var(--primary)",
-                    },
-                  },
-                }}
-              >
-                <LineChart 
-                  data={performanceData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                >
-                  <XAxis dataKey="date" />
-                  <YAxis domain={[1, 7]} />
-                  <Line
-                    type="monotone"
-                    dataKey="rating"
-                    strokeWidth={2}
-                    dot={{ strokeWidth: 2 }}
-                  />
-                  <Tooltip content={({ active, payload, label }) => {
-                    if (active && payload && payload.length) {
-                      return (
-                        <div className="rounded-lg border bg-background p-2 shadow-sm">
-                          <div className="grid grid-cols-2 gap-2">
-                            <span className="font-medium">{label}</span>
-                            <span className="font-medium">
-                              {payload[0].value}
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }} />
-                </LineChart>
-              </ChartContainer>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Performance Charts */}
+        <PerformanceCharts 
+          performanceData={performanceData}
+          winLossData={winLossData}
+        />
 
         {/* Nearby Venues */}
         <Card className="neu-card">

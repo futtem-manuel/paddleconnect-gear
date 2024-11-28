@@ -9,11 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { QRCodeSVG } from "qrcode.react";
 
 const matchSchema = z.object({
   date: z.string(),
   courtNumber: z.string(),
-  duration: z.string(),
+  venue: z.string(),
   matchType: z.enum(["doubles", "singles"]),
   tournament: z.string().optional(),
   notes: z.string().optional(),
@@ -36,7 +37,7 @@ const RecordMatch = () => {
     defaultValues: {
       date: new Date().toISOString().split('T')[0],
       courtNumber: "",
-      duration: "",
+      venue: "",
       matchType: "doubles",
       tournament: "",
       notes: "",
@@ -51,6 +52,8 @@ const RecordMatch = () => {
     });
     navigate("/dashboard");
   };
+
+  const matchUrl = window.location.href;
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -93,12 +96,12 @@ const RecordMatch = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
-                    name="duration"
+                    name="venue"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Duration</FormLabel>
+                        <FormLabel>Venue</FormLabel>
                         <FormControl>
-                          <Input type="time" step="60" {...field} />
+                          <Input placeholder="Enter venue name" {...field} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -144,15 +147,20 @@ const RecordMatch = () => {
                   )}
                 />
 
-                <div className="flex justify-end gap-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => navigate("/dashboard")}
-                  >
-                    Cancel
-                  </Button>
-                  <Button type="submit">Record Match</Button>
+                <div className="flex justify-between items-center gap-4">
+                  <div className="flex-shrink-0">
+                    <QRCodeSVG value={matchUrl} size={100} />
+                  </div>
+                  <div className="flex justify-end gap-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => navigate("/dashboard")}
+                    >
+                      Cancel
+                    </Button>
+                    <Button type="submit">Record Match</Button>
+                  </div>
                 </div>
               </form>
             </Form>

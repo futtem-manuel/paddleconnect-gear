@@ -60,7 +60,7 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
             value={searchValue}
             onValueChange={(value) => {
               setSearchValue(value);
-              setShowSuggestions(value.length > 0);
+              setShowSuggestions(true);
             }}
           />
           {showSuggestions && (

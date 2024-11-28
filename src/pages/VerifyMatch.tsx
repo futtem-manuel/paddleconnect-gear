@@ -39,7 +39,7 @@ const VerifyMatch = () => {
           { name: "Player 2", initialRank: 4.8 }
         ],
         score: "21 - 19 - 21",
-        color: "primary"
+        color: "primary" as const
       },
       {
         players: [
@@ -47,7 +47,7 @@ const VerifyMatch = () => {
           { name: "Player 4", initialRank: 4.9 }
         ],
         score: "19 - 21 - 19",
-        color: "secondary"
+        color: "secondary" as const
       }
     ]
   };

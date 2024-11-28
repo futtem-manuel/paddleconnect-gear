@@ -5,12 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { eloToDisplayRating } from "@/utils/rankingUtils";
 
 // Mock data - would be replaced with API call
 const mockPlayers = [
-  { id: 1, name: "Sarah Johnson", rating: 1350, avatar: "", location: "San Francisco", matchesPlayed: 25 },
-  { id: 2, name: "Mike Chen", rating: 1275, avatar: "", location: "Los Angeles", matchesPlayed: 18 },
-  { id: 3, name: "Ana Silva", rating: 1420, avatar: "", location: "San Diego", matchesPlayed: 32 },
+  { id: 1, name: "Sarah Johnson", eloRating: 1350, avatar: "", location: "San Francisco", matchesPlayed: 25 },
+  { id: 2, name: "Mike Chen", eloRating: 1275, avatar: "", location: "Los Angeles", matchesPlayed: 18 },
+  { id: 3, name: "Ana Silva", eloRating: 1420, avatar: "", location: "San Diego", matchesPlayed: 32 },
 ];
 
 const FindPlayers = () => {
@@ -62,7 +63,7 @@ const FindPlayers = () => {
                     <div>
                       <h3 className="font-semibold">{player.name}</h3>
                       <p className="text-sm text-muted-foreground">
-                        {player.location} • Rating: {player.rating}
+                        {player.location} • Rating: {eloToDisplayRating(player.eloRating).toFixed(1)}
                       </p>
                     </div>
                   </div>

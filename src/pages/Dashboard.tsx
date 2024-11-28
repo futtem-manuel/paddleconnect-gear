@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Trophy, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { eloToDisplayRating } from "@/utils/rankingUtils";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -10,11 +11,13 @@ const Dashboard = () => {
   // Placeholder data - would normally come from an API
   const userProfile = {
     name: "John Doe",
-    rating: 1200,
+    eloRating: 1200,
     matches: 15,
     winRate: "60%",
     avatar: "",
   };
+
+  const displayRating = eloToDisplayRating(userProfile.eloRating);
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -29,7 +32,7 @@ const Dashboard = () => {
               </Avatar>
               <div>
                 <CardTitle className="text-2xl">{userProfile.name}</CardTitle>
-                <p className="text-muted-foreground">Rating: {userProfile.rating}</p>
+                <p className="text-muted-foreground">Rating: {displayRating.toFixed(1)}</p>
               </div>
             </div>
           </CardHeader>

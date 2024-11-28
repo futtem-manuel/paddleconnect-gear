@@ -54,7 +54,7 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
   return (
     <div className="space-y-4">
       <div className="relative">
-        <Command shouldFilter={false} className="rounded-lg border shadow-md">
+        <Command className="rounded-lg border shadow-md">
           <CommandInput 
             placeholder="Search players..." 
             value={searchValue}
@@ -63,41 +63,39 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
               setShowSuggestions(true);
             }}
           />
-          {showSuggestions && (
-            <CommandList>
-              <CommandEmpty>
-                <div className="p-2 space-y-2">
-                  <Button 
-                    variant="outline" 
-                    className="w-full" 
-                    onClick={() => handleAddGhostPlayer(1)}
+          <CommandList>
+            <CommandEmpty>
+              <div className="p-2 space-y-2">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => handleAddGhostPlayer(1)}
+                >
+                  Add "{searchValue}" to Team 1
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => handleAddGhostPlayer(2)}
+                >
+                  Add "{searchValue}" to Team 2
+                </Button>
+              </div>
+            </CommandEmpty>
+            {filteredPlayers.length > 0 && (
+              <CommandGroup>
+                {filteredPlayers.map((player) => (
+                  <CommandItem
+                    key={player.id}
+                    value={player.name}
+                    onSelect={() => handleAddPlayer(1, player)}
                   >
-                    Add "{searchValue}" to Team 1
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full" 
-                    onClick={() => handleAddGhostPlayer(2)}
-                  >
-                    Add "{searchValue}" to Team 2
-                  </Button>
-                </div>
-              </CommandEmpty>
-              {filteredPlayers.length > 0 && (
-                <CommandGroup heading="Existing Players">
-                  {filteredPlayers.map((player) => (
-                    <CommandItem
-                      key={player.id}
-                      value={player.name}
-                      onSelect={() => handleAddPlayer(1, player)}
-                    >
-                      {player.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
-            </CommandList>
-          )}
+                    {player.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+          </CommandList>
         </Command>
       </div>
 

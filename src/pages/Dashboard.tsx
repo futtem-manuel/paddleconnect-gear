@@ -5,7 +5,7 @@ import { Plus, Trophy, Users, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { Line, LineChart, XAxis, YAxis } from "recharts";
+import { Line, LineChart, XAxis, YAxis, Tooltip } from "recharts";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -104,9 +104,21 @@ const Dashboard = () => {
                     strokeWidth={2}
                     dot={{ strokeWidth: 2 }}
                   />
-                  <ChartTooltip>
-                    <ChartTooltipContent />
-                  </ChartTooltip>
+                  <Tooltip content={({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                      return (
+                        <div className="rounded-lg border bg-background p-2 shadow-sm">
+                          <div className="grid grid-cols-2 gap-2">
+                            <span className="font-medium">{label}</span>
+                            <span className="font-medium">
+                              {payload[0].value}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }} />
                 </LineChart>
               </ChartContainer>
             </div>

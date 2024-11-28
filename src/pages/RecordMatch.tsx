@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Badge } from "@/components/ui/badge";
+import { Check, Copy } from "lucide-react";
+import { useState } from "react";
 
 const matchSchema = z.object({
   opponent: z.string().min(1, "Opponent name is required"),
@@ -20,6 +23,7 @@ type MatchFormData = z.infer<typeof matchSchema>;
 
 const RecordMatch = () => {
   const navigate = useNavigate();
+  const [copied, setCopied] = useState(false);
   const form = useForm<MatchFormData>({
     resolver: zodResolver(matchSchema),
     defaultValues: {
@@ -33,10 +37,18 @@ const RecordMatch = () => {
   const matchId = crypto.randomUUID();
   const verificationUrl = `${window.location.origin}/verify-match/${matchId}`;
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(verificationUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const onSubmit = (data: MatchFormData) => {
     // This would normally send data to an API
     console.log("Match recorded:", { ...data, matchId });
-    toast.success("Match recorded! Waiting for opponent verification.");
+    toast.success("Match recorded! Waiting for opponent verification.", {
+      description: "Share the QR code or link with your opponent to verify the match.",
+    });
     navigate("/dashboard");
   };
 
@@ -109,11 +121,26 @@ const RecordMatch = () => {
                 />
 
                 <div className="mt-6 p-4 border rounded-lg bg-muted">
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Share this QR code with your opponent to verify the match:
-                  </p>
-                  <div className="flex justify-center bg-white p-4 rounded-lg">
-                    <QRCodeSVG value={verificationUrl} size={200} />
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-sm text-muted-foreground">
+                      Share this QR code with your opponent to verify the match:
+                    </p>
+                    <Badge variant="outline" className="ml-2">
+                      Pending Verification
+                    </Badge>
+                  </div>
+                  <div className="flex flex-col items-center space-y-4">
+                    <div className="bg-white p-4 rounded-lg">
+                      <QRCodeSVG value={verificationUrl} size={200} />
+                    </div>
+                    <Button
+                      variant="outline"
+                      className="w-full flex items-center justify-center gap-2"
+                      onClick={copyToClipboard}
+                    >
+                      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                      {copied ? "Copied!" : "Copy Verification Link"}
+                    </Button>
                   </div>
                 </div>
 

@@ -66,6 +66,7 @@ const Dashboard = () => {
           <Button 
             className="neu-button flex items-center gap-2 h-auto py-4"
             variant="outline"
+            onClick={() => navigate("/find-players")}
           >
             <Users className="h-5 w-5" />
             Find Players

@@ -2,22 +2,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { QRCodeSVG } from "qrcode.react";
-import { Copy, Home, Share2, Check, X } from "lucide-react";
+import { Copy, Home, Share2 } from "lucide-react";
 import { toast } from "sonner";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { MatchSummary } from "@/components/match/MatchSummary";
 import { VerificationExplanation } from "@/components/match/VerificationExplanation";
 import { MatchImageUpload } from "@/components/match/MatchImageUpload";
+import { MatchQuickView } from "@/components/match/MatchQuickView";
+import { VerificationActions } from "@/components/match/VerificationActions";
 
 const VerifyMatch = () => {
   const { matchId } = useParams();
@@ -145,7 +138,7 @@ const VerifyMatch = () => {
             <VerificationExplanation />
 
             <div className="flex flex-col items-center space-y-4">
-              <QRCodeSVG value={matchUrl} size={300} />
+              <QRCodeSVG value={matchUrl} size={200} />
               <Button
                 variant="outline"
                 className="flex items-center gap-2"
@@ -156,26 +149,14 @@ const VerifyMatch = () => {
               </Button>
             </div>
 
+            <MatchQuickView teams={matchData.teams} />
+
             <MatchImageUpload onImageUpload={setMatchImages} />
 
-            <div className="flex justify-center gap-4">
-              <Button
-                variant="outline"
-                className="flex items-center gap-2"
-                onClick={() => setShowVerificationDialog(true)}
-              >
-                <Check className="h-4 w-4" />
-                Verify Result
-              </Button>
-              <Button
-                variant="destructive"
-                className="flex items-center gap-2"
-                onClick={() => handleVerification(false)}
-              >
-                <X className="h-4 w-4" />
-                Contest Result
-              </Button>
-            </div>
+            <VerificationActions 
+              onVerify={() => setShowVerificationDialog(true)}
+              onContest={() => handleVerification(false)}
+            />
           </CardContent>
         </Card>
 

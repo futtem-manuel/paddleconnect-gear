@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Slider } from "@/components/ui/slider";
+import { LoadScript } from "@react-google-maps/api";
 
 // Mock data - would be replaced with API call
 const mockPlayers = [
@@ -18,7 +18,7 @@ const mockPlayers = [
 
 const FindPlayers = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState("");
   const [ratingRange, setRatingRange] = useState([0, 7]);
 
   const filteredPlayers = mockPlayers.filter(player => {
@@ -33,6 +33,10 @@ const FindPlayers = () => {
     toast.success("Connection request sent!", {
       description: `A request has been sent to ${playerName}.`,
     });
+  };
+
+  const handleLocationSelect = (address: string) => {
+    setSelectedLocation(address);
   };
 
   return (
@@ -55,14 +59,12 @@ const FindPlayers = () => {
             
             <div className="space-y-2">
               <label className="text-sm font-medium">Location</label>
-              <GooglePlacesAutocomplete
-                apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
-                selectProps={{
-                  value: selectedLocation,
-                  onChange: setSelectedLocation,
-                  placeholder: 'Search for a location...',
-                  className: 'w-full'
-                }}
+              <Input
+                type="text"
+                placeholder="Enter location..."
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+                className="w-full"
               />
             </div>
 

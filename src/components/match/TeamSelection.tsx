@@ -54,7 +54,7 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
   return (
     <div className="space-y-4">
       <div className="relative">
-        <Command className="rounded-lg border shadow-md">
+        <Command shouldFilter={false} className="rounded-lg border shadow-md">
           <CommandInput 
             placeholder="Search players..." 
             value={searchValue}
@@ -84,7 +84,7 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
                 </div>
               </CommandEmpty>
               {filteredPlayers.length > 0 && (
-                <CommandGroup>
+                <CommandGroup heading="Existing Players">
                   {filteredPlayers.map((player) => (
                     <CommandItem
                       key={player.id}

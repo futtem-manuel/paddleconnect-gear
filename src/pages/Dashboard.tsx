@@ -2,8 +2,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Trophy, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  
   // Placeholder data - would normally come from an API
   const userProfile = {
     name: "John Doe",
@@ -55,6 +58,7 @@ const Dashboard = () => {
           <Button 
             className="neu-button flex items-center gap-2 h-auto py-4"
             variant="outline"
+            onClick={() => navigate("/record-match")}
           >
             <Plus className="h-5 w-5" />
             Record New Match

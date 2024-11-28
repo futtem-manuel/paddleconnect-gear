@@ -41,6 +41,33 @@ import { PlayerConnections } from "@/components/dashboard/PlayerConnections";
     losses: 6,
   };
 
+const recentMatches = [
+  {
+    id: "1",
+    date: "2024-02-20",
+    venue: "City Padel Club",
+    result: "Won",
+    score: "6-4, 6-3",
+    opponent: "Alice Smith"
+  },
+  {
+    id: "2",
+    date: "2024-02-18",
+    venue: "Bay Area Padel Center",
+    result: "Lost",
+    score: "4-6, 6-7",
+    opponent: "Bob Johnson"
+  },
+  {
+    id: "3",
+    date: "2024-02-15",
+    venue: "Golden Gate Padel",
+    result: "Won",
+    score: "6-2, 6-4",
+    opponent: "Carol White"
+  }
+];
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const displayRating = eloToDisplayRating(userProfile.eloRating);
@@ -77,22 +104,23 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="p-4 neu-card flex items-center gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="p-4 neu-card flex items-center gap-3 col-span-1">
                   <Trophy className="h-5 w-5 text-primary" />
                   <div>
                     <p className="text-sm text-muted-foreground">Matches Played</p>
                     <p className="text-xl font-semibold">{userProfile.matches}</p>
                   </div>
                 </div>
-                <div className="p-4 neu-card flex items-center gap-3">
+                <div className="p-4 neu-card flex items-center gap-3 col-span-1">
                   <Users className="h-5 w-5 text-primary" />
                   <div>
                     <p className="text-sm text-muted-foreground">Win Rate</p>
                     <p className="text-xl font-semibold">{userProfile.winRate}</p>
                   </div>
                 </div>
-                <div className="p-4 neu-card">
+                <div className="p-4 neu-card bg-primary/5 border-2 border-primary col-span-1 sm:h-32">
+                  <h3 className="font-medium mb-2 text-primary">Connected Players</h3>
                   <PlayerConnections connections={playerConnections} />
                 </div>
               </div>
@@ -115,6 +143,37 @@ const Dashboard = () => {
                   Find Players
                 </Button>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="neu-card">
+          <CardHeader>
+            <CardTitle>Recent Matches</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {recentMatches.map((match) => (
+                <div
+                  key={match.id}
+                  onClick={() => navigate(`/match/${match.id}`)}
+                  className="p-4 neu-card hover:bg-muted/50 cursor-pointer transition-colors"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="font-medium">vs {match.opponent}</p>
+                      <p className="text-sm text-muted-foreground">{match.venue}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className={`font-medium ${match.result === 'Won' ? 'text-green-500' : 'text-red-500'}`}>
+                        {match.result}
+                      </p>
+                      <p className="text-sm text-muted-foreground">{match.score}</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">{match.date}</p>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>

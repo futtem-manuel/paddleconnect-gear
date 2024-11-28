@@ -4,6 +4,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Input } from "@/components/ui/input";
 import { TeamSelection } from "@/components/match/TeamSelection";
 import { ScoreInput } from "@/components/match/ScoreInput";
+import { AdvancedMatchDetails } from "@/components/match/AdvancedMatchDetails";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -16,6 +17,7 @@ const matchSchema = z.object({
   venue: z.string(),
   matchType: z.enum(["doubles", "singles"]),
   tournament: z.string().optional(),
+  time: z.string().optional(),
   notes: z.string().optional(),
 });
 
@@ -30,6 +32,7 @@ const RecordMatch = () => {
       venue: "",
       matchType: "doubles",
       tournament: "",
+      time: "",
       notes: "",
     },
   });
@@ -82,19 +85,6 @@ const RecordMatch = () => {
                   />
                 </div>
 
-                <FormField
-                  control={form.control}
-                  name="tournament"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tournament/League (Optional)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter tournament name" {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-
                 <div className="space-y-4">
                   <h3 className="font-semibold">Teams</h3>
                   <TeamSelection 
@@ -108,22 +98,17 @@ const RecordMatch = () => {
                   <ScoreInput onScoreSubmit={() => {}} />
                 </div>
 
-                <FormField
-                  control={form.control}
-                  name="notes"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Notes (Optional)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Add any notes about the match" {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                <AdvancedMatchDetails 
+                  onDetailsChange={(details) => {
+                    if (details.tournament) form.setValue('tournament', details.tournament);
+                    if (details.time) form.setValue('time', details.time);
+                    if (details.notes) form.setValue('notes', details.notes);
+                  }}
                 />
 
                 <div className="flex justify-between items-center gap-4">
                   <div className="flex-shrink-0">
-                    <QRCodeSVG value={matchUrl} size={100} />
+                    <QRCodeSVG value={matchUrl} size={120} />
                   </div>
                   <div className="flex justify-end gap-4">
                     <Button

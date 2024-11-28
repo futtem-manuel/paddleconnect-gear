@@ -1,76 +1,114 @@
-import { Button } from "@/components/ui/button";
+import { useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { QRCodeSVG } from "qrcode.react";
+import { Copy } from "lucide-react";
 import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
-import { Check, X } from "lucide-react";
 
 const VerifyMatch = () => {
-  const navigate = useNavigate();
   const { matchId } = useParams();
+  const matchUrl = window.location.href;
 
-  const handleVerify = (verified: boolean) => {
-    // This would normally send verification to an API
-    console.log("Match verification:", { matchId, verified });
-    
-    if (verified) {
-      toast.success("Match verified successfully!", {
-        description: "The match has been added to both players' records.",
-      });
-    } else {
-      toast.error("Match declined", {
-        description: "The match has been marked as disputed.",
-      });
+  const handleCopyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(matchUrl);
+      toast.success("Match URL copied to clipboard");
+    } catch (err) {
+      toast.error("Failed to copy URL");
     }
-    
-    navigate("/dashboard");
   };
 
   return (
     <div className="min-h-screen bg-background p-6">
-      <div className="max-w-md mx-auto">
+      <div className="max-w-2xl mx-auto space-y-6">
         <Card>
           <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>Verify Match</CardTitle>
-              <Badge variant="outline">Pending Verification</Badge>
-            </div>
+            <CardTitle>Verify Match</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="space-y-4">
-              <p className="text-muted-foreground">
-                You've been invited to verify a match. Please review the details below:
-              </p>
-              
-              <div className="space-y-2 border rounded-lg p-4">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Match ID:</span>
-                  <span className="font-mono">{matchId}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Date:</span>
-                  <span>{new Date().toLocaleDateString()}</span>
-                </div>
-                {/* Additional match details would be fetched from API */}
-              </div>
-            </div>
-
-            <div className="flex justify-end gap-4">
+            <div className="flex flex-col items-center space-y-4">
+              <QRCodeSVG value={matchUrl} size={250} />
               <Button
                 variant="outline"
                 className="flex items-center gap-2"
-                onClick={() => handleVerify(false)}
+                onClick={handleCopyUrl}
               >
-                <X className="h-4 w-4" />
-                Decline
+                <Copy className="h-4 w-4" />
+                Copy Match URL
               </Button>
-              <Button
-                className="flex items-center gap-2"
-                onClick={() => handleVerify(true)}
-              >
-                <Check className="h-4 w-4" />
-                Verify Match
-              </Button>
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Match Details</h3>
+              <div className="grid gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-medium text-muted-foreground">Date</h4>
+                    <p>March 15, 2024</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-muted-foreground">Venue</h4>
+                    <p>Local Sports Center</p>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-muted-foreground mb-2">Teams</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-lg border-2 border-primary bg-primary/5">
+                      <h5 className="font-medium text-primary mb-2">Team 1</h5>
+                      <ul className="space-y-1">
+                        <li>Player 1</li>
+                        <li>Player 2</li>
+                      </ul>
+                    </div>
+                    <div className="p-4 rounded-lg border-2 border-secondary bg-secondary/5">
+                      <h5 className="font-medium text-secondary mb-2">Team 2</h5>
+                      <ul className="space-y-1">
+                        <li>Player 3</li>
+                        <li>Player 4</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-muted-foreground mb-2">Score</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-primary font-medium">Team 1</p>
+                      <p>21 - 19 - 21</p>
+                    </div>
+                    <div>
+                      <p className="text-secondary font-medium">Team 2</p>
+                      <p>19 - 21 - 19</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-muted-foreground mb-2">Match Photos</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <img
+                      src="/placeholder-image.jpg"
+                      alt="Match"
+                      className="rounded-lg w-full h-48 object-cover"
+                    />
+                    <img
+                      src="/placeholder-image.jpg"
+                      alt="Match"
+                      className="rounded-lg w-full h-48 object-cover"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-muted-foreground">Notes</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Great match with excellent sportsmanship from both teams.
+                  </p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

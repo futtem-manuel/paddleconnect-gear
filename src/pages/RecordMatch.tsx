@@ -2,20 +2,26 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { QRCodeSVG } from "qrcode.react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface MatchFormData {
-  opponent: string;
-  yourScore: string;
-  opponentScore: string;
-  notes?: string;
-}
+const matchSchema = z.object({
+  opponent: z.string().min(1, "Opponent name is required"),
+  yourScore: z.string().min(1, "Your score is required"),
+  opponentScore: z.string().min(1, "Opponent score is required"),
+  notes: z.string().optional(),
+});
+
+type MatchFormData = z.infer<typeof matchSchema>;
 
 const RecordMatch = () => {
   const navigate = useNavigate();
   const form = useForm<MatchFormData>({
+    resolver: zodResolver(matchSchema),
     defaultValues: {
       opponent: "",
       yourScore: "",
@@ -24,10 +30,13 @@ const RecordMatch = () => {
     },
   });
 
+  const matchId = crypto.randomUUID();
+  const verificationUrl = `${window.location.origin}/verify-match/${matchId}`;
+
   const onSubmit = (data: MatchFormData) => {
     // This would normally send data to an API
-    console.log("Match recorded:", data);
-    toast.success("Match recorded successfully!");
+    console.log("Match recorded:", { ...data, matchId });
+    toast.success("Match recorded! Waiting for opponent verification.");
     navigate("/dashboard");
   };
 
@@ -98,6 +107,15 @@ const RecordMatch = () => {
                     </FormItem>
                   )}
                 />
+
+                <div className="mt-6 p-4 border rounded-lg bg-muted">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Share this QR code with your opponent to verify the match:
+                  </p>
+                  <div className="flex justify-center bg-white p-4 rounded-lg">
+                    <QRCodeSVG value={verificationUrl} size={200} />
+                  </div>
+                </div>
 
                 <div className="flex justify-end gap-4">
                   <Button

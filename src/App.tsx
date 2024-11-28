@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import RecordMatch from "./pages/RecordMatch";
+import VerifyMatch from "./pages/VerifyMatch";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/record-match" element={<RecordMatch />} />
+            <Route path="/verify-match/:matchId" element={<VerifyMatch />} />
           </Routes>
         </BrowserRouter>
       </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 
 interface Player {
@@ -12,13 +12,14 @@ interface Player {
 
 interface TeamSelectionProps {
   connectedPlayers: Player[];
-  onTeamsConfirmed: (team1: Player[], team2: Player[]) => void;
+  onTeamsConfirmed: (teams: { team1: Player[]; team2: Player[] }) => void;
 }
 
 export const TeamSelection = ({ connectedPlayers, onTeamsConfirmed }: TeamSelectionProps) => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [team1, setTeam1] = useState<Player[]>([]);
   const [team2, setTeam2] = useState<Player[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedPlayers, setSelectedPlayers] = useState<Player[]>([]);
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -29,6 +30,12 @@ export const TeamSelection = ({ connectedPlayers, onTeamsConfirmed }: TeamSelect
     const [removed] = sourceTeam.splice(result.source.index, 1);
     destTeam.splice(result.destination.index, 0, removed);
 
+    if (result.source.droppableId === "team1") {
+      setTeam1([...team1]);
+    } else {
+      setTeam2([...team2]);
+    }
+
     if (result.destination.droppableId === "team1") {
       setTeam1([...team1]);
     } else {
@@ -36,104 +43,91 @@ export const TeamSelection = ({ connectedPlayers, onTeamsConfirmed }: TeamSelect
     }
   };
 
-  const addPlayerToTeam = (player: Player, teamNumber: 1 | 2) => {
-    if (teamNumber === 1 && team1.length < 2) {
-      setTeam1([...team1, player]);
-    } else if (teamNumber === 2 && team2.length < 2) {
-      setTeam2([...team2, player]);
+  const handlePlayerSelect = (player: Player) => {
+    if (selectedPlayers.length < 4) {
+      setSelectedPlayers([...selectedPlayers, player]);
+      if (team1.length < 2) {
+        setTeam1([...team1, player]);
+      } else {
+        setTeam2([...team2, player]);
+      }
     }
   };
 
   const filteredPlayers = connectedPlayers.filter(
-    player => player.name.toLowerCase().includes(searchQuery.toLowerCase())
+    player => 
+      player.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !selectedPlayers.some(selected => selected.id === player.id)
+  );
+
+  const renderTeam = (teamName: string, players: Player[], droppableId: string) => (
+    <Card className="p-4">
+      <h3 className="font-semibold mb-2">{teamName}</h3>
+      <Droppable droppableId={droppableId}>
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="min-h-[100px] space-y-2"
+          >
+            {players.map((player, index) => (
+              <Draggable key={player.id} draggableId={player.id} index={index}>
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className="flex items-center gap-2 p-2 bg-background border rounded-lg"
+                  >
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={player.avatar} />
+                      <AvatarFallback>{player.name.slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                    <span>{player.name}</span>
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </Card>
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <Command className="rounded-lg border shadow-md">
-        <CommandInput 
-          placeholder="Search players..." 
+        <CommandInput
+          placeholder="Search players..."
           value={searchQuery}
           onValueChange={setSearchQuery}
         />
-        <CommandEmpty>No players found.</CommandEmpty>
-        <CommandGroup>
-          {filteredPlayers.map((player) => (
-            <CommandItem
-              key={player.id}
-              onSelect={() => {
-                if (team1.length < 2) {
-                  addPlayerToTeam(player, 1);
-                } else if (team2.length < 2) {
-                  addPlayerToTeam(player, 2);
-                }
-              }}
-            >
-              <Avatar className="h-8 w-8 mr-2">
-                <AvatarImage src={player.avatar} />
-                <AvatarFallback>{player.name.slice(0, 2)}</AvatarFallback>
-              </Avatar>
-              <span>{player.name}</span>
-            </CommandItem>
-          ))}
-        </CommandGroup>
+        <CommandList>
+          <CommandEmpty>No players found.</CommandEmpty>
+          <CommandGroup heading="Connected Players">
+            {filteredPlayers.map((player) => (
+              <CommandItem
+                key={player.id}
+                value={player.name}
+                onSelect={() => handlePlayerSelect(player)}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={player.avatar} />
+                  <AvatarFallback>{player.name.slice(0, 2)}</AvatarFallback>
+                </Avatar>
+                <span>{player.name}</span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
       </Command>
 
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="grid grid-cols-2 gap-4">
-          <Droppable droppableId="team1">
-            {(provided) => (
-              <Card className="p-4" {...provided.droppableProps} ref={provided.innerRef}>
-                <h3 className="font-semibold mb-2">Team 1</h3>
-                {team1.map((player, index) => (
-                  <Draggable key={player.id} draggableId={player.id} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="flex items-center p-2 mb-2 bg-background rounded-md"
-                      >
-                        <Avatar className="h-8 w-8 mr-2">
-                          <AvatarImage src={player.avatar} />
-                          <AvatarFallback>{player.name.slice(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <span>{player.name}</span>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </Card>
-            )}
-          </Droppable>
-
-          <Droppable droppableId="team2">
-            {(provided) => (
-              <Card className="p-4" {...provided.droppableProps} ref={provided.innerRef}>
-                <h3 className="font-semibold mb-2">Team 2</h3>
-                {team2.map((player, index) => (
-                  <Draggable key={player.id} draggableId={player.id} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="flex items-center p-2 mb-2 bg-background rounded-md"
-                      >
-                        <Avatar className="h-8 w-8 mr-2">
-                          <AvatarImage src={player.avatar} />
-                          <AvatarFallback>{player.name.slice(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <span>{player.name}</span>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </Card>
-            )}
-          </Droppable>
+          {renderTeam("Team 1", team1, "team1")}
+          {renderTeam("Team 2", team2, "team2")}
         </div>
       </DragDropContext>
     </div>

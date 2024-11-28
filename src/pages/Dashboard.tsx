@@ -1,15 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Trophy, Users, MapPin, ExternalLink, Edit } from "lucide-react"; // Added Edit import
+import { Plus, Trophy, Users, MapPin, ExternalLink, Edit, Book } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
 import { PerformanceCharts } from "@/components/dashboard/PerformanceCharts";
 import { PlayerConnections } from "@/components/dashboard/PlayerConnections";
 
-const Dashboard = () => {
-  const navigate = useNavigate();
-  
   const userProfile = {
     name: "John Doe",
     eloRating: 1200,
@@ -44,6 +41,8 @@ const Dashboard = () => {
     losses: 6,
   };
 
+const Dashboard = () => {
+  const navigate = useNavigate();
   const displayRating = eloToDisplayRating(userProfile.eloRating);
 
   return (
@@ -160,9 +159,20 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <footer className="text-center text-sm text-muted-foreground py-4">
-          App powered by Futtem LLC
-        </footer>
+        <div className="flex flex-col items-center space-y-4">
+          <Button
+            variant="outline"
+            className="w-full max-w-md"
+            onClick={() => navigate("/rules")}
+          >
+            <Book className="h-4 w-4 mr-2" />
+            View Official Rules
+          </Button>
+          
+          <footer className="text-center text-sm text-muted-foreground py-4">
+            App powered by Futtem LLC
+          </footer>
+        </div>
       </div>
     </div>
   );

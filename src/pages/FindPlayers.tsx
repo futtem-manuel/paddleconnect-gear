@@ -6,6 +6,8 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import { Slider } from "@/components/ui/slider";
 
 // Mock data - would be replaced with API call
 const mockPlayers = [
@@ -16,11 +18,16 @@ const mockPlayers = [
 
 const FindPlayers = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [ratingRange, setRatingRange] = useState([0, 7]);
 
-  const filteredPlayers = mockPlayers.filter(player =>
-    player.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    player.location.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredPlayers = mockPlayers.filter(player => {
+    const matchesSearch = player.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      player.location.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesRating = eloToDisplayRating(player.eloRating) >= ratingRange[0] && 
+      eloToDisplayRating(player.eloRating) <= ratingRange[1];
+    return matchesSearch && matchesRating;
+  });
 
   const handleConnect = (playerName: string) => {
     toast.success("Connection request sent!", {
@@ -35,15 +42,45 @@ const FindPlayers = () => {
           <CardHeader>
             <CardTitle>Find Players</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search by name or location..."
+                placeholder="Search by name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-9"
               />
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Location</label>
+              <GooglePlacesAutocomplete
+                apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                selectProps={{
+                  value: selectedLocation,
+                  onChange: setSelectedLocation,
+                  placeholder: 'Search for a location...',
+                  className: 'w-full'
+                }}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Rating Range</label>
+              <Slider
+                defaultValue={[0, 7]}
+                max={7}
+                min={0}
+                step={0.5}
+                value={ratingRange}
+                onValueChange={setRatingRange}
+                className="w-full"
+              />
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <span>{ratingRange[0]}</span>
+                <span>{ratingRange[1]}</span>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Trophy, Users, MapPin } from "lucide-react";
+import { Plus, Trophy, Users, MapPin, Edit } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { ChartContainer } from "@/components/ui/chart";
 import { Line, LineChart, XAxis, YAxis, Tooltip } from "recharts";
 
 const Dashboard = () => {
@@ -39,40 +39,72 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Profile Section */}
         <Card className="neu-card">
           <CardHeader>
-            <div className="flex items-center gap-4">
-              <Avatar className="h-20 w-20">
-                <AvatarImage src={userProfile.avatar} />
-                <AvatarFallback className="bg-muted">JD</AvatarFallback>
-              </Avatar>
-              <div className="space-y-1">
-                <CardTitle className="text-2xl">{userProfile.name}</CardTitle>
-                <p className="text-muted-foreground">Rating: {displayRating.toFixed(1)}</p>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <MapPin className="h-4 w-4" />
-                  <span>{userProfile.location}</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="h-20 w-20">
+                  <AvatarImage src={userProfile.avatar} />
+                  <AvatarFallback className="bg-muted">JD</AvatarFallback>
+                </Avatar>
+                <div className="space-y-1">
+                  <CardTitle className="text-2xl">{userProfile.name}</CardTitle>
+                  <p className="text-muted-foreground">Rating: {displayRating.toFixed(1)}</p>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <MapPin className="h-4 w-4" />
+                    <span>{userProfile.location}</span>
+                  </div>
                 </div>
               </div>
+              <Button 
+                variant="outline" 
+                className="neu-button"
+                onClick={() => navigate("/edit-profile")}
+              >
+                <Edit className="h-4 w-4 mr-2" />
+                Edit Profile
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="p-4 neu-card flex items-center gap-3">
-                <Trophy className="h-5 w-5 text-primary" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Matches Played</p>
-                  <p className="text-xl font-semibold">{userProfile.matches}</p>
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="p-4 neu-card flex items-center gap-3">
+                  <Trophy className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Matches Played</p>
+                    <p className="text-xl font-semibold">{userProfile.matches}</p>
+                  </div>
+                </div>
+                <div className="p-4 neu-card flex items-center gap-3">
+                  <Users className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Win Rate</p>
+                    <p className="text-xl font-semibold">{userProfile.winRate}</p>
+                  </div>
                 </div>
               </div>
-              <div className="p-4 neu-card flex items-center gap-3">
-                <Users className="h-5 w-5 text-primary" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Win Rate</p>
-                  <p className="text-xl font-semibold">{userProfile.winRate}</p>
-                </div>
+
+              {/* Quick Actions */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Button 
+                  className="neu-button flex items-center gap-2 h-auto py-4"
+                  variant="outline"
+                  onClick={() => navigate("/record-match")}
+                >
+                  <Plus className="h-5 w-5" />
+                  Record New Match
+                </Button>
+                <Button 
+                  className="neu-button flex items-center gap-2 h-auto py-4"
+                  variant="outline"
+                  onClick={() => navigate("/find-players")}
+                >
+                  <Users className="h-5 w-5" />
+                  Find Players
+                </Button>
               </div>
             </div>
           </CardContent>
@@ -95,7 +127,10 @@ const Dashboard = () => {
                   },
                 }}
               >
-                <LineChart data={performanceData}>
+                <LineChart 
+                  data={performanceData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                >
                   <XAxis dataKey="date" />
                   <YAxis domain={[1, 7]} />
                   <Line
@@ -160,26 +195,6 @@ const Dashboard = () => {
             </div>
           </CardContent>
         </Card>
-
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Button 
-            className="neu-button flex items-center gap-2 h-auto py-4"
-            variant="outline"
-            onClick={() => navigate("/record-match")}
-          >
-            <Plus className="h-5 w-5" />
-            Record New Match
-          </Button>
-          <Button 
-            className="neu-button flex items-center gap-2 h-auto py-4"
-            variant="outline"
-            onClick={() => navigate("/find-players")}
-          >
-            <Users className="h-5 w-5" />
-            Find Players
-          </Button>
-        </div>
       </div>
     </div>
   );

@@ -13,7 +13,6 @@ import { QRCodeSVG } from "qrcode.react";
 
 const matchSchema = z.object({
   date: z.string(),
-  courtNumber: z.string(),
   venue: z.string(),
   matchType: z.enum(["doubles", "singles"]),
   tournament: z.string().optional(),
@@ -22,21 +21,12 @@ const matchSchema = z.object({
 
 type MatchFormData = z.infer<typeof matchSchema>;
 
-// Mock data - replace with actual API call
-const mockConnectedPlayers = [
-  { id: "1", name: "John Doe", avatar: "" },
-  { id: "2", name: "Jane Smith", avatar: "" },
-  { id: "3", name: "Mike Johnson", avatar: "" },
-  { id: "4", name: "Sarah Wilson", avatar: "" },
-];
-
 const RecordMatch = () => {
   const navigate = useNavigate();
   const form = useForm<MatchFormData>({
     resolver: zodResolver(matchSchema),
     defaultValues: {
       date: new Date().toISOString().split('T')[0],
-      courtNumber: "",
       venue: "",
       matchType: "doubles",
       tournament: "",
@@ -45,7 +35,6 @@ const RecordMatch = () => {
   });
 
   const onSubmit = (data: MatchFormData) => {
-    // This would normally send data to an API
     console.log("Match recorded:", data);
     toast.success("Match recorded successfully!", {
       description: "The match has been saved to your history.",
@@ -81,21 +70,6 @@ const RecordMatch = () => {
 
                   <FormField
                     control={form.control}
-                    name="courtNumber"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Court Number</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Enter court number" {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
                     name="venue"
                     render={({ field }) => (
                       <FormItem>
@@ -106,26 +80,26 @@ const RecordMatch = () => {
                       </FormItem>
                     )}
                   />
-
-                  <FormField
-                    control={form.control}
-                    name="tournament"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Tournament/League (Optional)</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Enter tournament name" {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
                 </div>
+
+                <FormField
+                  control={form.control}
+                  name="tournament"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tournament/League (Optional)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter tournament name" {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
                 <div className="space-y-4">
                   <h3 className="font-semibold">Teams</h3>
                   <TeamSelection 
-                    connectedPlayers={mockConnectedPlayers}
                     onTeamsConfirmed={() => {}}
+                    initialPlayers={[]}
                   />
                 </div>
 

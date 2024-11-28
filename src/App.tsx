@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import RecordMatch from "./pages/RecordMatch";
 import VerifyMatch from "./pages/VerifyMatch";
 import FindPlayers from "./pages/FindPlayers";
+import Rules from "./pages/Rules";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/record-match" element={<RecordMatch />} />
             <Route path="/verify-match/:matchId" element={<VerifyMatch />} />
             <Route path="/find-players" element={<FindPlayers />} />
+            <Route path="/rules" element={<Rules />} />
           </Routes>
         </BrowserRouter>
       </div>

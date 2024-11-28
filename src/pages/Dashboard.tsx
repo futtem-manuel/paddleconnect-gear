@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Trophy, Users, MapPin, Edit } from "lucide-react";
+import { Plus, Trophy, Users, MapPin, Edit, Book } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
 import { PerformanceCharts } from "@/components/dashboard/PerformanceCharts";
@@ -50,7 +50,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Profile Section */}
         <Card className="neu-card">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -162,6 +161,20 @@ const Dashboard = () => {
                 </div>
               ))}
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Rules Button */}
+        <Card className="neu-card">
+          <CardContent className="p-6">
+            <Button 
+              className="w-full neu-button flex items-center justify-center gap-2 h-auto py-4"
+              variant="outline"
+              onClick={() => navigate("/rules")}
+            >
+              <Book className="h-5 w-5" />
+              Official Padel Rules
+            </Button>
           </CardContent>
         </Card>
       </div>

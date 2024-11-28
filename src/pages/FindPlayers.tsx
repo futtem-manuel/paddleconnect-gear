@@ -56,7 +56,7 @@ const FindPlayers = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Location</label>
               <GooglePlacesAutocomplete
-                apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
                 selectProps={{
                   value: selectedLocation,
                   onChange: setSelectedLocation,

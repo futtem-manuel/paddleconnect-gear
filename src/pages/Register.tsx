@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -9,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 const Register = () => {
@@ -80,6 +81,15 @@ const Register = () => {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="terms" required />
+              <Label htmlFor="terms" className="text-sm">
+                I agree to the{" "}
+                <Link to="/legal" className="text-primary hover:underline">
+                  Terms of Service and Privacy Policy
+                </Link>
+              </Label>
             </div>
             <Button
               type="submit"

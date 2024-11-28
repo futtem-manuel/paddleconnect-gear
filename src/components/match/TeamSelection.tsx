@@ -45,6 +45,12 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
     handleAddPlayer(team, ghostPlayer);
   };
 
+  const filteredPlayers = searchValue
+    ? initialPlayers.filter(player =>
+        player.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    : [];
+
   return (
     <div className="space-y-4">
       <div className="relative">
@@ -60,34 +66,36 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
           {showSuggestions && (
             <CommandList>
               <CommandEmpty>
-                <div className="p-2">
+                <div className="p-2 space-y-2">
                   <Button 
                     variant="outline" 
                     className="w-full" 
                     onClick={() => handleAddGhostPlayer(1)}
                   >
-                    Add as new player to Team 1
+                    Add "{searchValue}" to Team 1
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="w-full mt-2" 
+                    className="w-full" 
                     onClick={() => handleAddGhostPlayer(2)}
                   >
-                    Add as new player to Team 2
+                    Add "{searchValue}" to Team 2
                   </Button>
                 </div>
               </CommandEmpty>
-              <CommandGroup>
-                {initialPlayers.map((player) => (
-                  <CommandItem
-                    key={player.id}
-                    value={player.name}
-                    onSelect={() => handleAddPlayer(1, player)}
-                  >
-                    {player.name}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
+              {filteredPlayers.length > 0 && (
+                <CommandGroup>
+                  {filteredPlayers.map((player) => (
+                    <CommandItem
+                      key={player.id}
+                      value={player.name}
+                      onSelect={() => handleAddPlayer(1, player)}
+                    >
+                      {player.name}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
             </CommandList>
           )}
         </Command>

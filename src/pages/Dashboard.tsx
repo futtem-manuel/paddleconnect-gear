@@ -1,9 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Trophy, Users } from "lucide-react";
+import { Plus, Trophy, Users, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Line, LineChart, XAxis, YAxis } from "recharts";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -15,7 +17,23 @@ const Dashboard = () => {
     matches: 15,
     winRate: "60%",
     avatar: "",
+    location: "San Francisco, CA",
   };
+
+  const nearbyVenues = [
+    { id: 1, name: "City Padel Club", distance: "0.8 miles", rating: 4.5 },
+    { id: 2, name: "Bay Area Padel Center", distance: "1.2 miles", rating: 4.8 },
+    { id: 3, name: "Golden Gate Padel", distance: "2.1 miles", rating: 4.3 },
+  ];
+
+  // Sample data for the performance chart
+  const performanceData = [
+    { date: "Jan", rating: 5.2 },
+    { date: "Feb", rating: 5.4 },
+    { date: "Mar", rating: 5.3 },
+    { date: "Apr", rating: 5.6 },
+    { date: "May", rating: 5.8 },
+  ];
 
   const displayRating = eloToDisplayRating(userProfile.eloRating);
 
@@ -30,9 +48,13 @@ const Dashboard = () => {
                 <AvatarImage src={userProfile.avatar} />
                 <AvatarFallback className="bg-muted">JD</AvatarFallback>
               </Avatar>
-              <div>
+              <div className="space-y-1">
                 <CardTitle className="text-2xl">{userProfile.name}</CardTitle>
                 <p className="text-muted-foreground">Rating: {displayRating.toFixed(1)}</p>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <MapPin className="h-4 w-4" />
+                  <span>{userProfile.location}</span>
+                </div>
               </div>
             </div>
           </CardHeader>
@@ -56,6 +78,77 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
+        {/* Performance Chart */}
+        <Card className="neu-card">
+          <CardHeader>
+            <CardTitle>Performance Over Time</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px] w-full">
+              <ChartContainer
+                config={{
+                  line: {
+                    theme: {
+                      light: "var(--primary)",
+                      dark: "var(--primary)",
+                    },
+                  },
+                }}
+              >
+                <LineChart data={performanceData}>
+                  <XAxis dataKey="date" />
+                  <YAxis domain={[1, 7]} />
+                  <Line
+                    type="monotone"
+                    dataKey="rating"
+                    strokeWidth={2}
+                    dot={{ strokeWidth: 2 }}
+                  />
+                  <ChartTooltip>
+                    <ChartTooltipContent />
+                  </ChartTooltip>
+                </LineChart>
+              </ChartContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Nearby Venues */}
+        <Card className="neu-card">
+          <CardHeader>
+            <CardTitle>Nearby Padel Venues</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {nearbyVenues.map((venue) => (
+                <div
+                  key={venue.id}
+                  className="flex items-center justify-between p-4 neu-card"
+                >
+                  <div>
+                    <h3 className="font-semibold">{venue.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {venue.distance} away
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium">⭐ {venue.rating}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        // TODO: Implement booking functionality
+                      }}
+                    >
+                      Book
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Button 
@@ -75,21 +168,6 @@ const Dashboard = () => {
             Find Players
           </Button>
         </div>
-
-        {/* Recent Matches */}
-        <Card className="neu-card">
-          <CardHeader>
-            <CardTitle>Recent Matches</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {/* Placeholder for matches list */}
-              <p className="text-muted-foreground text-center py-8">
-                No matches recorded yet. Start by recording your first match!
-              </p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

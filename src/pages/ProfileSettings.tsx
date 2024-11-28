@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +20,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { ProfilePictureSection } from "@/components/settings/ProfilePictureSection";
 import { PersonalInfoSection } from "@/components/settings/PersonalInfoSection";
 import { PrivacySection } from "@/components/settings/PrivacySection";
+import { Link } from "react-router-dom";
 
 const ProfileSettings = () => {
   const navigate = useNavigate();
@@ -77,7 +77,17 @@ const ProfileSettings = () => {
               Save Changes
             </Button>
 
-            <div className="pt-6 border-t">
+            <div className="pt-6 border-t space-y-4">
+              <div className="flex justify-center space-x-4 text-sm text-muted-foreground">
+                <Link to="/legal?tab=terms" className="hover:underline">
+                  Terms of Service
+                </Link>
+                <span>•</span>
+                <Link to="/legal?tab=privacy" className="hover:underline">
+                  Privacy Policy
+                </Link>
+              </div>
+
               <Dialog>
                 <DialogTrigger asChild>
                   <Button

@@ -14,6 +14,7 @@ import FindPlayers from "./pages/FindPlayers";
 import Rules from "./pages/Rules";
 import Connections from "./pages/Connections";
 import ProfileSettings from "./pages/ProfileSettings";
+import Legal from "./pages/Legal";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/rules" element={<Rules />} />
             <Route path="/connections" element={<Connections />} />
             <Route path="/profile-settings" element={<ProfileSettings />} />
+            <Route path="/legal" element={<Legal />} />
           </Routes>
         </BrowserRouter>
       </div>

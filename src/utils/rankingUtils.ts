@@ -1,3 +1,10 @@
+// Extend Math interface to include erf
+declare global {
+  interface Math {
+    erf(x: number): number;
+  }
+}
+
 // Constants for the ranking conversion
 const ELO_MIN = 800;  // Minimum expected ELO
 const ELO_MAX = 2000; // Maximum expected ELO
@@ -50,3 +57,5 @@ if (!Math.erf) {
     return x >= 0 ? 1 - tau : tau - 1;
   };
 }
+
+export {};

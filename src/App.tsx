@@ -20,6 +20,7 @@ import Connections from "./pages/Connections";
 import ProfileSettings from "./pages/ProfileSettings";
 import Legal from "./pages/Legal";
 import Leaderboard from "./pages/Leaderboard";
+import MatchDetails from "./pages/MatchDetails";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/record-match" element={<RecordMatch />} />
               <Route path="/verify-match/:matchId" element={<VerifyMatch />} />
+              <Route path="/match/:matchId" element={<MatchDetails />} />
               <Route path="/find-players" element={<FindPlayers />} />
               <Route path="/rules" element={<Rules />} />
               <Route path="/connections" element={<Connections />} />

@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
+import Messages from "./pages/Messages";
 import RecordMatch from "./pages/RecordMatch";
 import VerifyMatch from "./pages/VerifyMatch";
 import FindPlayers from "./pages/FindPlayers";
@@ -35,6 +36,7 @@ const App = () => (
               <Route path="/register" element={<Register />} />
               <Route path="/onboarding" element={<Onboarding />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/messages" element={<Messages />} />
               <Route path="/record-match" element={<RecordMatch />} />
               <Route path="/verify-match/:matchId" element={<VerifyMatch />} />
               <Route path="/find-players" element={<FindPlayers />} />

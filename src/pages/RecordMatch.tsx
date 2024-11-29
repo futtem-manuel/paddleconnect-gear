@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { QRCodeSVG } from "qrcode.react";
+import { ArrowLeft } from "lucide-react";
 
 const matchSchema = z.object({
   date: z.string(),
@@ -48,16 +49,28 @@ const RecordMatch = () => {
   const matchUrl = window.location.href;
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Record New Match</CardTitle>
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate(-1)}
+          className="mb-6"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back
+        </Button>
+
+        <Card className="border-none shadow-lg">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold">Record New Match</CardTitle>
+            <p className="text-muted-foreground">
+              Enter match details and select players to record a new match.
+            </p>
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
                     name="date"
@@ -65,7 +78,7 @@ const RecordMatch = () => {
                       <FormItem>
                         <FormLabel>Date</FormLabel>
                         <FormControl>
-                          <Input type="date" {...field} />
+                          <Input type="date" {...field} className="bg-white" />
                         </FormControl>
                       </FormItem>
                     )}
@@ -78,39 +91,50 @@ const RecordMatch = () => {
                       <FormItem>
                         <FormLabel>Venue</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter venue name" {...field} />
+                          <Input 
+                            placeholder="Enter venue name" 
+                            {...field} 
+                            className="bg-white"
+                          />
                         </FormControl>
                       </FormItem>
                     )}
                   />
                 </div>
 
-                <div className="space-y-4">
-                  <h3 className="font-semibold">Teams</h3>
-                  <TeamSelection 
-                    onTeamsConfirmed={() => {}}
-                    initialPlayers={[]}
-                  />
+                <div className="space-y-6">
+                  <div className="bg-white p-6 rounded-lg border shadow-sm">
+                    <h3 className="text-lg font-semibold mb-4">Teams</h3>
+                    <TeamSelection 
+                      onTeamsConfirmed={() => {}}
+                      initialPlayers={[]}
+                    />
+                  </div>
+
+                  <div className="bg-white p-6 rounded-lg border shadow-sm">
+                    <h3 className="text-lg font-semibold mb-4">Score</h3>
+                    <ScoreInput onScoreSubmit={() => {}} />
+                  </div>
+
+                  <div className="bg-white p-6 rounded-lg border shadow-sm">
+                    <AdvancedMatchDetails 
+                      onDetailsChange={(details) => {
+                        if (details.tournament) form.setValue('tournament', details.tournament);
+                        if (details.time) form.setValue('time', details.time);
+                        if (details.notes) form.setValue('notes', details.notes);
+                      }}
+                    />
+                  </div>
                 </div>
 
-                <div className="space-y-4">
-                  <h3 className="font-semibold">Score</h3>
-                  <ScoreInput onScoreSubmit={() => {}} />
-                </div>
-
-                <AdvancedMatchDetails 
-                  onDetailsChange={(details) => {
-                    if (details.tournament) form.setValue('tournament', details.tournament);
-                    if (details.time) form.setValue('time', details.time);
-                    if (details.notes) form.setValue('notes', details.notes);
-                  }}
-                />
-
-                <div className="flex justify-between items-center gap-4">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-6 border-t">
                   <div className="flex-shrink-0">
                     <QRCodeSVG value={matchUrl} size={120} />
+                    <p className="text-sm text-muted-foreground mt-2 text-center">
+                      Scan to verify match
+                    </p>
                   </div>
-                  <div className="flex justify-end gap-4">
+                  <div className="flex gap-4">
                     <Button
                       type="button"
                       variant="outline"

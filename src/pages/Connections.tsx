@@ -1,7 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { PlayerConnectionCard } from "@/components/connections/PlayerConnectionCard";
+import { ConnectionDialog } from "@/components/connections/ConnectionDialog";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users } from "lucide-react";
+import { useState } from "react";
+import type { PlayerConnection } from "@/components/connections/PlayerConnectionCard";
 
 // This would come from your API/database in a real application
 const mockConnections = [
@@ -38,21 +41,43 @@ const mockConnections = [
 ];
 
 const Connections = () => {
+  const [selectedConnection, setSelectedConnection] = useState<PlayerConnection | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleConnectionClick = (connection: PlayerConnection) => {
+    setSelectedConnection(connection);
+    setIsDialogOpen(true);
+  };
+
+  const handleWhatsAppAccessChange = (value: boolean) => {
+    if (selectedConnection) {
+      // In a real app, this would update the backend
+      setSelectedConnection({
+        ...selectedConnection,
+        whatsapp: value ? "+1234567890" : null,
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background p-4 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
           <div className="flex items-center gap-2">
-            <Users className="h-6 w-6" />
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="h-8 w-auto"
+            />
             <h1 className="text-2xl font-bold">My Connections</h1>
           </div>
           <Button 
             variant="outline" 
             onClick={() => window.history.back()}
-            className="flex items-center gap-2 text-lg font-semibold shadow-neu-sm hover:shadow-neu"
+            className="w-full sm:w-auto flex items-center gap-2 text-lg font-semibold shadow-neu-sm hover:shadow-neu"
           >
             <ArrowLeft className="h-5 w-5" />
-            Back
+            Back to Dashboard
           </Button>
         </div>
 
@@ -65,12 +90,23 @@ const Connections = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {mockConnections.map((connection) => (
-                  <PlayerConnectionCard key={connection.id} connection={connection} />
+                  <PlayerConnectionCard 
+                    key={connection.id} 
+                    connection={connection}
+                    onClick={() => handleConnectionClick(connection)}
+                  />
                 ))}
               </div>
             )}
           </CardContent>
         </Card>
+
+        <ConnectionDialog
+          connection={selectedConnection}
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          onWhatsAppAccessChange={handleWhatsAppAccessChange}
+        />
       </div>
     </div>
   );

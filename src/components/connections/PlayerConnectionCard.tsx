@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Users, MapPin, MessageCircle } from "lucide-react";
 
-interface PlayerConnection {
+export interface PlayerConnection {
   id: string;
   name: string;
   avatar?: string;
@@ -16,16 +16,25 @@ interface PlayerConnection {
 
 interface PlayerConnectionCardProps {
   connection: PlayerConnection;
+  onClick: () => void;
 }
 
-export const PlayerConnectionCard = ({ connection }: PlayerConnectionCardProps) => {
-  const handleWhatsAppClick = (whatsapp: string) => {
+export const PlayerConnectionCard = ({ connection, onClick }: PlayerConnectionCardProps) => {
+  const handleWhatsAppClick = (e: React.MouseEvent, whatsapp: string) => {
+    e.stopPropagation();
     window.open(`https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`, '_blank');
   };
 
   return (
-    <Card className="hover:shadow-lg transition-shadow h-full">
-      <CardContent className="p-4 flex flex-col h-full">
+    <Card 
+      className="hover:shadow-lg transition-shadow h-full cursor-pointer group"
+      onClick={onClick}
+    >
+      <CardContent className="p-4 flex flex-col h-full relative">
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+          <p className="text-white font-medium">View Details</p>
+        </div>
+        
         <div className="flex flex-col md:flex-row items-center gap-4 flex-1">
           <Avatar className="h-32 w-32 md:h-40 md:w-40">
             <AvatarImage src={connection.avatar} />
@@ -61,7 +70,7 @@ export const PlayerConnectionCard = ({ connection }: PlayerConnectionCardProps) 
           <Button 
             variant="secondary"
             className="w-full mt-4 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold shadow-sm"
-            onClick={() => handleWhatsAppClick(connection.whatsapp!)}
+            onClick={(e) => handleWhatsAppClick(e, connection.whatsapp!)}
           >
             <MessageCircle className="h-4 w-4 mr-2" />
             Chat on WhatsApp

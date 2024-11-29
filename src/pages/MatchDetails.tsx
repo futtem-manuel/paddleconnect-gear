@@ -41,9 +41,16 @@ const MatchDetails = () => {
   const { matchId } = useParams();
   const navigate = useNavigate();
 
+  // Validate that matchId is a valid UUID
+  const isValidUUID = matchId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(matchId);
+
   const { data: match, isLoading } = useQuery<Match>({
     queryKey: ["match", matchId],
     queryFn: async () => {
+      if (!isValidUUID) {
+        throw new Error("Invalid match ID format");
+      }
+
       const { data, error } = await supabase
         .from("matches")
         .select(`
@@ -65,6 +72,7 @@ const MatchDetails = () => {
         venue: data.venue[0] as Venue
       } as Match;
     },
+    enabled: isValidUUID, // Only run the query if we have a valid UUID
   });
 
   const handleShare = async (platform: "facebook" | "twitter") => {
@@ -83,6 +91,17 @@ const MatchDetails = () => {
     window.open(shareLink, "_blank", "width=600,height=400");
     toast.success(`Shared on ${platform}`);
   };
+
+  if (!isValidUUID) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 p-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-2xl font-bold mb-4">Invalid match ID</h1>
+          <Button onClick={() => navigate("/dashboard")}>Return to Dashboard</Button>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

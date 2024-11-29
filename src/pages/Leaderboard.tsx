@@ -10,8 +10,8 @@ import { useState } from "react";
 const Leaderboard = () => {
   const navigate = useNavigate();
   const [locationFilter, setLocationFilter] = useState("");
-  const [ratingFilter, setRatingFilter] = useState("");
-  const [sortBy, setSortBy] = useState("rating"); // rating or winRate
+  const [ratingFilter, setRatingFilter] = useState("all"); // Changed from empty string to "all"
+  const [sortBy, setSortBy] = useState("rating");
   
   const players = [
     { id: 1, name: "John Doe", rating: 5.5, avatar: "", wins: 20, losses: 5, location: "New York" },
@@ -22,7 +22,7 @@ const Leaderboard = () => {
   const filteredPlayers = players
     .filter(player => 
       (!locationFilter || player.location.toLowerCase().includes(locationFilter.toLowerCase())) &&
-      (!ratingFilter || player.rating === parseFloat(ratingFilter))
+      (ratingFilter === "all" || player.rating === parseFloat(ratingFilter))
     )
     .sort((a, b) => {
       if (sortBy === "rating") {
@@ -74,7 +74,7 @@ const Leaderboard = () => {
                     <SelectValue placeholder="Filter by rating" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Ratings</SelectItem>
+                    <SelectItem value="all">All Ratings</SelectItem>
                     {[1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0].map((rating) => (
                       <SelectItem key={rating} value={rating.toString()}>
                         {rating.toFixed(1)}

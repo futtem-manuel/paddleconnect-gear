@@ -36,16 +36,40 @@ export const PlayerConnectionCard = ({ connection, onClick }: PlayerConnectionCa
 
   return (
     <>
-      <Card 
-        className="hover:shadow-lg transition-shadow h-full cursor-pointer group"
-        onClick={onClick}
-      >
-        <CardContent className="p-4 flex flex-col h-full relative">
+      <Card className="relative">
+        <div className="absolute top-2 right-2 flex flex-col sm:flex-row gap-2 z-10">
+          <Button 
+            variant="default"
+            size="sm"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-sm"
+            onClick={handleMessageClick}
+          >
+            <MessageCircle className="h-4 w-4 mr-2" />
+            Message
+          </Button>
+          
+          {connection.whatsapp && (
+            <Button 
+              variant="outline"
+              size="sm"
+              className="bg-white hover:bg-gray-50 text-gray-900 font-semibold shadow-sm"
+              onClick={(e) => handleWhatsAppClick(e, connection.whatsapp!)}
+            >
+              <MessageCircle className="h-4 w-4 mr-2" />
+              WhatsApp
+            </Button>
+          )}
+        </div>
+        
+        <CardContent 
+          className="p-4 flex flex-col h-full relative cursor-pointer group"
+          onClick={onClick}
+        >
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
             <p className="text-white font-medium">View Details</p>
           </div>
           
-          <div className="flex flex-col md:flex-row items-center gap-4 flex-1">
+          <div className="flex flex-col md:flex-row items-center gap-4 flex-1 mt-12 sm:mt-8">
             <Avatar className="h-32 w-32 md:h-40 md:w-40">
               <AvatarImage src={connection.avatar} />
               <AvatarFallback className="text-2xl">{connection.name.slice(0, 2).toUpperCase()}</AvatarFallback>
@@ -74,28 +98,6 @@ export const PlayerConnectionCard = ({ connection, onClick }: PlayerConnectionCa
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="flex gap-2 mt-4">
-            <Button 
-              variant="secondary"
-              className="flex-1 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold shadow-sm"
-              onClick={handleMessageClick}
-            >
-              <MessageCircle className="h-4 w-4 mr-2" />
-              Message
-            </Button>
-            
-            {connection.whatsapp && (
-              <Button 
-                variant="secondary"
-                className="flex-1 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold shadow-sm"
-                onClick={(e) => handleWhatsAppClick(e, connection.whatsapp!)}
-              >
-                <MessageCircle className="h-4 w-4 mr-2" />
-                WhatsApp
-              </Button>
-            )}
           </div>
         </CardContent>
       </Card>

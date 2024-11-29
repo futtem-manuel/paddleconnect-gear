@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Users, Book } from "lucide-react";
+import { Plus, Users, Book, ExternalLink } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
 import { PerformanceCharts } from "@/components/dashboard/PerformanceCharts";

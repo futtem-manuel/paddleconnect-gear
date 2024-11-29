@@ -18,6 +18,13 @@ const RuleSection = ({ title, children, searchQuery }: RuleSectionProps) => {
     );
   };
 
+  // If there's no search query, or if the title/content includes the search term, show the section
+  const shouldShow = !searchQuery || 
+    title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (typeof children === 'string' && children.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  if (!shouldShow) return null;
+
   return (
     <section>
       <h2 className="text-xl font-semibold mb-3">{highlightText(title)}</h2>

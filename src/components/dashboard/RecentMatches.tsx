@@ -35,7 +35,10 @@ export const RecentMatches = ({ matches }: RecentMatchesProps) => {
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10">
-                    <AvatarImage src={match.opponentAvatar || `https://images.unsplash.com/photo-1518770660439-4636190af475?w=100`} />
+                    <AvatarImage 
+                      src={match.opponentAvatar || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150"} 
+                      alt={match.opponent}
+                    />
                     <AvatarFallback>{match.opponent.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div>

@@ -22,7 +22,7 @@ export const ProfileHeader = ({ userProfile, displayRating }: ProfileHeaderProps
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
       <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
         <Avatar className="h-20 w-20">
-          <AvatarImage src={userProfile.avatar} />
+          <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
           <AvatarFallback className="bg-muted">
             {userProfile.name.slice(0, 2).toUpperCase()}
           </AvatarFallback>

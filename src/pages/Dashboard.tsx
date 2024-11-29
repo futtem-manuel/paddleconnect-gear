@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Users, MapPin, ExternalLink, Book } from "lucide-react";
+import { Plus, Users, Book } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
 import { PerformanceCharts } from "@/components/dashboard/PerformanceCharts";
@@ -12,66 +12,99 @@ const Dashboard = () => {
   const navigate = useNavigate();
   
   const userProfile = {
-    name: "John Doe",
-    eloRating: 1200,
-    matches: 15,
-    winRate: "60%",
-    avatar: "",
+    name: "Sarah Johnson",
+    eloRating: 1450,
+    matches: 28,
+    winRate: "64%",
+    avatar: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400",
     location: "San Francisco, CA",
   };
 
   const playerConnections = [
-    { id: "1", name: "Alice Smith", avatar: "" },
-    { id: "2", name: "Bob Johnson", avatar: "" },
-    { id: "3", name: "Carol White", avatar: "" },
+    { 
+      id: "1", 
+      name: "Michael Chen", 
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150" 
+    },
+    { 
+      id: "2", 
+      name: "Emma Rodriguez", 
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150" 
+    },
+    { 
+      id: "3", 
+      name: "David Kim", 
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" 
+    },
   ];
 
   const nearbyVenues = [
-    { id: 1, name: "City Padel Club", distance: "0.8 miles", rating: 4.5, googleUrl: "https://maps.google.com/?q=City+Padel+Club" },
-    { id: "2", name: "Bay Area Padel Center", distance: "1.2 miles", rating: 4.8, googleUrl: "https://maps.google.com/?q=Bay+Area+Padel+Center" },
-    { id: "3", name: "Golden Gate Padel", distance: "2.1 miles", rating: 4.3, googleUrl: "https://maps.google.com/?q=Golden+Gate+Padel" },
+    { 
+      id: 1, 
+      name: "Golden Gate Padel Club", 
+      distance: "0.8 miles", 
+      rating: 4.8, 
+      googleUrl: "https://maps.google.com/?q=Golden+Gate+Padel+Club" 
+    },
+    { 
+      id: "2", 
+      name: "Mission Bay Sports Center", 
+      distance: "1.2 miles", 
+      rating: 4.6, 
+      googleUrl: "https://maps.google.com/?q=Mission+Bay+Sports+Center" 
+    },
+    { 
+      id: "3", 
+      name: "SoMa Padel Courts", 
+      distance: "2.1 miles", 
+      rating: 4.5, 
+      googleUrl: "https://maps.google.com/?q=SoMa+Padel+Courts" 
+    },
   ];
 
   const recentMatches = [
     {
       id: "1",
-      date: "2024-02-20",
-      venue: "City Padel Club",
+      date: "Today",
+      venue: "Golden Gate Padel Club",
       result: "Won",
-      score: "6-4, 6-3",
-      opponent: "Alice Smith",
-      opponentAvatar: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=100"
+      score: "6-4, 7-5",
+      opponent: "Michael Chen",
+      opponentAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150"
     },
     {
       id: "2",
-      date: "2024-02-18",
-      venue: "Bay Area Padel Center",
-      result: "Lost",
-      score: "4-6, 6-7",
-      opponent: "Bob Johnson",
-      opponentAvatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=100"
+      date: "Yesterday",
+      venue: "Mission Bay Sports Center",
+      result: "Won",
+      score: "6-3, 6-2",
+      opponent: "Emma Rodriguez",
+      opponentAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150"
     },
     {
       id: "3",
-      date: "2024-02-15",
-      venue: "Golden Gate Padel",
-      result: "Won",
-      score: "6-2, 6-4",
-      opponent: "Carol White"
+      date: "2 days ago",
+      venue: "SoMa Padel Courts",
+      result: "Lost",
+      score: "4-6, 5-7",
+      opponent: "David Kim",
+      opponentAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150"
     }
   ];
 
   const performanceData = [
-    { date: "2024-01-01", rating: 3.5 },
-    { date: "2024-01-15", rating: 4.0 },
-    { date: "2024-02-01", rating: 3.8 },
-    { date: "2024-02-15", rating: 4.2 },
-    { date: "2024-03-01", rating: 4.5 }
+    { date: "Jan", rating: 3.8 },
+    { date: "Feb", rating: 4.0 },
+    { date: "Mar", rating: 4.2 },
+    { date: "Apr", rating: 3.9 },
+    { date: "May", rating: 4.3 },
+    { date: "Jun", rating: 4.5 },
+    { date: "Jul", rating: 4.7 }
   ];
 
   const winLossData = {
-    wins: 9,
-    losses: 6
+    wins: 18,
+    losses: 10
   };
 
   const displayRating = eloToDisplayRating(userProfile.eloRating);

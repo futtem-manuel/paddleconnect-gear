@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { X, UserPlus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
+import { PlayerSearch } from "./PlayerSearch";
+import { TeamDisplay } from "./TeamDisplay";
 
 interface Player {
   id: string;
@@ -66,9 +64,11 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
 
   const handleAddPlayer = (team: number, player: Player) => {
     if (team === 1 && team1.length < maxPlayersPerTeam) {
-      setTeam1([...team1, player]);
+      setTeam1(prev => [...prev, player]);
+      toast.success(`Added ${player.name} to Team 1`);
     } else if (team === 2 && team2.length < maxPlayersPerTeam) {
-      setTeam2([...team2, player]);
+      setTeam2(prev => [...prev, player]);
+      toast.success(`Added ${player.name} to Team 2`);
     }
     setSearchValue("");
   };
@@ -87,12 +87,13 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
       name: searchValue || "Unknown Player",
     };
     handleAddPlayer(team, ghostPlayer);
-    toast.success(`Added ${ghostPlayer.name} to Team ${team}`);
   };
 
   const filteredPlayers = searchValue
     ? connections.filter(player =>
-        player.name.toLowerCase().includes(searchValue.toLowerCase())
+        player.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+        !team1.some(p => p.id === player.id) &&
+        !team2.some(p => p.id === player.id)
       )
     : connections;
 
@@ -108,123 +109,33 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
       </div>
 
       <div className="relative">
-        <Command className="rounded-lg border shadow-md">
-          <CommandInput 
-            placeholder="Search players or enter new name..." 
-            value={searchValue}
-            onValueChange={setSearchValue}
-          />
-          <CommandList>
-            <CommandEmpty>
-              <div className="p-4 space-y-3">
-                {team1.length < maxPlayersPerTeam && (
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={() => handleAddGhostPlayer(1)}
-                  >
-                    <UserPlus className="h-4 w-4 mr-2" />
-                    Add "{searchValue || 'Unknown Player'}" to Team 1
-                  </Button>
-                )}
-                {team2.length < maxPlayersPerTeam && (
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={() => handleAddGhostPlayer(2)}
-                  >
-                    <UserPlus className="h-4 w-4 mr-2" />
-                    Add "{searchValue || 'Unknown Player'}" to Team 2
-                  </Button>
-                )}
-              </div>
-            </CommandEmpty>
-            {filteredPlayers.length > 0 && (
-              <CommandGroup>
-                {filteredPlayers.map((player) => (
-                  <CommandItem
-                    key={player.id}
-                    value={player.name}
-                    className="flex items-center gap-2 p-2"
-                    onSelect={() => {
-                      if (team1.length < maxPlayersPerTeam) {
-                        handleAddPlayer(1, player);
-                      } else if (team2.length < maxPlayersPerTeam) {
-                        handleAddPlayer(2, player);
-                      }
-                    }}
-                  >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src={player.avatar_url} />
-                      <AvatarFallback>{player.name.slice(0, 2).toUpperCase()}</AvatarFallback>
-                    </Avatar>
-                    {player.name}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            )}
-          </CommandList>
-        </Command>
+        <PlayerSearch
+          searchValue={searchValue}
+          onSearchChange={setSearchValue}
+          filteredPlayers={filteredPlayers}
+          onAddPlayer={handleAddPlayer}
+          onAddGhostPlayer={handleAddGhostPlayer}
+          team1Count={team1.length}
+          team2Count={team2.length}
+          maxPlayersPerTeam={maxPlayersPerTeam}
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2 p-4 rounded-lg border-2 border-primary bg-primary/5">
-          <h4 className="font-medium text-primary">Team 1</h4>
-          <div className="space-y-2">
-            {team1.map((player) => (
-              <div key={player.id} className="flex items-center justify-between p-3 rounded-md bg-white border shadow-sm">
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={player.avatar_url} />
-                    <AvatarFallback>{player.name.slice(0, 2).toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                  <span>{player.name}</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleRemovePlayer(1, player.id)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            {team1.length < maxPlayersPerTeam && (
-              <div className="p-3 rounded-md border border-dashed text-center text-muted-foreground">
-                {isDoubles ? "Add another player" : "Add player"}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-2 p-4 rounded-lg border-2 border-secondary bg-secondary/5">
-          <h4 className="font-medium text-secondary">Team 2</h4>
-          <div className="space-y-2">
-            {team2.map((player) => (
-              <div key={player.id} className="flex items-center justify-between p-3 rounded-md bg-white border shadow-sm">
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={player.avatar_url} />
-                    <AvatarFallback>{player.name.slice(0, 2).toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                  <span>{player.name}</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleRemovePlayer(2, player.id)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            {team2.length < maxPlayersPerTeam && (
-              <div className="p-3 rounded-md border border-dashed text-center text-muted-foreground">
-                {isDoubles ? "Add another player" : "Add player"}
-              </div>
-            )}
-          </div>
-        </div>
+        <TeamDisplay
+          team={team1}
+          teamNumber={1}
+          maxPlayers={maxPlayersPerTeam}
+          onRemovePlayer={handleRemovePlayer}
+          isDoubles={isDoubles}
+        />
+        <TeamDisplay
+          team={team2}
+          teamNumber={2}
+          maxPlayers={maxPlayersPerTeam}
+          onRemovePlayer={handleRemovePlayer}
+          isDoubles={isDoubles}
+        />
       </div>
     </div>
   );

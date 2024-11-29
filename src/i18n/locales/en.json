@@ -7,7 +7,16 @@
     "login": "Login",
     "register": "Register",
     "joinCommunity": "Join the #1 Padel community and track your progress",
-    "success": "Success"
+    "success": "Success",
+    "appName": "PaddleRank",
+    "dashboard": "Dashboard",
+    "messages": "Messages",
+    "notifications": "Notifications",
+    "findPlayers": "Find Players",
+    "rules": "Rules",
+    "connections": "Connections",
+    "settings": "Settings",
+    "leaderboard": "Leaderboard"
   },
   "settings": {
     "language": "Language",
@@ -19,5 +28,10 @@
     "whatsapp": "WhatsApp Number",
     "bio": "Bio",
     "languageChanged": "Language updated successfully"
+  },
+  "navigation": {
+    "home": "Home",
+    "profile": "Profile",
+    "logout": "Logout"
   }
 }

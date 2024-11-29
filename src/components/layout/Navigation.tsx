@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { Bell, MessageSquare, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 const Navigation = () => {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -18,7 +20,7 @@ const Navigation = () => {
               alt="PaddleRank Logo" 
               className="w-8 h-8"
             />
-            <span className="font-bold text-lg">PaddleRank</span>
+            <span className="font-bold text-lg">{t('common.appName')}</span>
           </Link>
           
           <div className="flex items-center gap-4">
@@ -30,7 +32,7 @@ const Navigation = () => {
               )}
             >
               <LayoutDashboard className="h-5 w-5" />
-              <span>Dashboard</span>
+              <span>{t('common.dashboard')}</span>
             </Link>
             
             <Link
@@ -41,7 +43,7 @@ const Navigation = () => {
               )}
             >
               <MessageSquare className="h-5 w-5" />
-              <span>Messages</span>
+              <span>{t('common.messages')}</span>
             </Link>
             
             <Link
@@ -52,7 +54,7 @@ const Navigation = () => {
               )}
             >
               <Bell className="h-5 w-5" />
-              <span>Notifications</span>
+              <span>{t('common.notifications')}</span>
             </Link>
           </div>
         </div>
@@ -69,7 +71,7 @@ const Navigation = () => {
             )}
           >
             <LayoutDashboard className="h-6 w-6" />
-            <span className="text-xs">Dashboard</span>
+            <span className="text-xs">{t('common.dashboard')}</span>
           </Link>
           
           <Link
@@ -80,7 +82,7 @@ const Navigation = () => {
             )}
           >
             <MessageSquare className="h-6 w-6" />
-            <span className="text-xs">Messages</span>
+            <span className="text-xs">{t('common.messages')}</span>
           </Link>
           
           <Link
@@ -91,7 +93,7 @@ const Navigation = () => {
             )}
           >
             <Bell className="h-6 w-6" />
-            <span className="text-xs">Notifications</span>
+            <span className="text-xs">{t('common.notifications')}</span>
           </Link>
         </div>
       </nav>

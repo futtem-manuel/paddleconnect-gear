@@ -35,16 +35,16 @@ const Index = () => {
             alt="PaddleRank Logo" 
             className="w-12 h-12"
           />
-          <h1 className="text-3xl font-bold text-accent">PaddleRank</h1>
+          <h1 className="text-3xl font-bold text-accent">{t('common.appName')}</h1>
         </div>
 
         <div className="space-y-4">
           <div className="mb-6">
             <Select onValueChange={handleLanguageChange} defaultValue={i18n.language}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full bg-white">
                 <SelectValue placeholder={t('settings.selectLanguage')} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white">
                 <SelectItem value="en">English</SelectItem>
                 <SelectItem value="es">Español</SelectItem>
                 <SelectItem value="pt">Português</SelectItem>

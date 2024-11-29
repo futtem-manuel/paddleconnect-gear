@@ -3,7 +3,11 @@
     "save": "Save Changes",
     "delete": "Delete Account",
     "cancel": "Cancel",
-    "back": "Back"
+    "back": "Back",
+    "login": "Login",
+    "register": "Register",
+    "joinCommunity": "Join the #1 Padel community and track your progress",
+    "success": "Success"
   },
   "settings": {
     "language": "Language",
@@ -13,6 +17,7 @@
     "fullName": "Full Name",
     "email": "Email",
     "whatsapp": "WhatsApp Number",
-    "bio": "Bio"
+    "bio": "Bio",
+    "languageChanged": "Language updated successfully"
   }
 }

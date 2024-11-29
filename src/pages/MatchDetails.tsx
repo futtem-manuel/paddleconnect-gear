@@ -7,11 +7,41 @@ import { supabase } from "@/integrations/supabase/client";
 import { MatchSummary } from "@/components/match/MatchSummary";
 import { toast } from "sonner";
 
+interface Player {
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  rating: number | null;
+}
+
+interface Venue {
+  id: string;
+  name: string;
+  location: string | null;
+}
+
+interface Match {
+  id: string;
+  player1_id: string | null;
+  player2_id: string | null;
+  player1_score: string | null;
+  player2_score: string | null;
+  venue_id: string | null;
+  status: string | null;
+  played_at: string | null;
+  created_at: string;
+  verified_at: string | null;
+  verified_by: string | null;
+  player1: Player;
+  player2: Player;
+  venue: Venue;
+}
+
 const MatchDetails = () => {
   const { matchId } = useParams();
   const navigate = useNavigate();
 
-  const { data: match, isLoading } = useQuery({
+  const { data: match, isLoading } = useQuery<Match>({
     queryKey: ["match", matchId],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -20,7 +50,7 @@ const MatchDetails = () => {
           *,
           player1:player1_id(id, full_name, avatar_url, rating),
           player2:player2_id(id, full_name, avatar_url, rating),
-          venue:venue_id(name, location)
+          venue:venue_id(id, name, location)
         `)
         .eq("id", matchId)
         .single();
@@ -33,7 +63,7 @@ const MatchDetails = () => {
   const handleShare = async (platform: "facebook" | "twitter") => {
     const shareUrl = window.location.href;
     const shareText = match ? 
-      `Check out this paddle match between ${match.player1.full_name} and ${match.player2.full_name}!` :
+      `Check out this paddle match between ${match.player1?.full_name} and ${match.player2?.full_name}!` :
       "Check out this paddle match!";
 
     let shareLink = "";

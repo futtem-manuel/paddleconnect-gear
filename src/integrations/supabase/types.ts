@@ -9,7 +9,182 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      connections: {
+        Row: {
+          connected_user_id: string | null
+          created_at: string | null
+          id: string
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          connected_user_id?: string | null
+          created_at?: string | null
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          connected_user_id?: string | null
+          created_at?: string | null
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "connections_connected_user_id_fkey"
+            columns: ["connected_user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "connections_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matches: {
+        Row: {
+          created_at: string | null
+          id: string
+          played_at: string | null
+          player1_id: string | null
+          player1_score: string | null
+          player2_id: string | null
+          player2_score: string | null
+          status: string | null
+          venue_id: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          played_at?: string | null
+          player1_id?: string | null
+          player1_score?: string | null
+          player2_id?: string | null
+          player2_score?: string | null
+          status?: string | null
+          venue_id?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          played_at?: string | null
+          player1_id?: string | null
+          player1_score?: string | null
+          player2_id?: string | null
+          player2_score?: string | null
+          status?: string | null
+          venue_id?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matches_player1_id_fkey"
+            columns: ["player1_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_player2_id_fkey"
+            columns: ["player2_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_verified_by_fkey"
+            columns: ["verified_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          location: string | null
+          rating: number | null
+          updated_at: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          location?: string | null
+          rating?: number | null
+          updated_at?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          rating?: number | null
+          updated_at?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      venues: {
+        Row: {
+          created_at: string | null
+          google_place_id: string | null
+          id: string
+          latitude: number | null
+          location: string | null
+          longitude: number | null
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          google_place_id?: string | null
+          id?: string
+          latitude?: number | null
+          location?: string | null
+          longitude?: number | null
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          google_place_id?: string | null
+          id?: string
+          latitude?: number | null
+          location?: string | null
+          longitude?: number | null
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

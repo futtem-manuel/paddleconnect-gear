@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PlayerConnectionCard } from "@/components/connections/PlayerConnectionCard";
 import { ConnectionDialog } from "@/components/connections/ConnectionDialog";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Users } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import type { PlayerConnection } from "@/components/connections/PlayerConnectionCard";
 
@@ -63,22 +63,22 @@ const Connections = () => {
     <div className="min-h-screen bg-background p-4 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-          <div className="flex items-center gap-2">
-            <img
-              src="/logo.png"
-              alt="Logo"
-              className="h-8 w-auto"
-            />
-            <h1 className="text-2xl font-bold">My Connections</h1>
-          </div>
           <Button 
             variant="outline" 
             onClick={() => window.history.back()}
-            className="w-full sm:w-auto flex items-center gap-2 text-lg font-semibold shadow-neu-sm hover:shadow-neu"
+            className="w-full sm:w-auto flex items-center gap-2 text-lg font-semibold"
           >
             <ArrowLeft className="h-5 w-5" />
             Back to Dashboard
           </Button>
+          
+          <h1 className="text-2xl font-bold order-first sm:order-none">My Connections</h1>
+          
+          <img
+            src="/lovable-uploads/fd2b445d-f8f6-4612-8dc4-42911f72395b.png"
+            alt="Logo"
+            className="h-12 w-auto"
+          />
         </div>
 
         <Card>

@@ -7,8 +7,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ConnectionHistory } from "./ConnectionHistory";
 import { PlayerConnection } from "./PlayerConnectionCard";
+import { MapPin } from "lucide-react";
 
 interface ConnectionDialogProps {
   connection: PlayerConnection | null;
@@ -47,6 +49,21 @@ export const ConnectionDialog = ({
         <DialogHeader>
           <DialogTitle>Connection Details</DialogTitle>
         </DialogHeader>
+        
+        <div className="flex flex-col md:flex-row gap-6 mb-6">
+          <Avatar className="h-32 w-32">
+            <AvatarImage src={connection.avatar} />
+            <AvatarFallback className="text-4xl">{connection.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+          </Avatar>
+          
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold">{connection.name}</h2>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <MapPin className="h-4 w-4" />
+              <span>{connection.location}</span>
+            </div>
+          </div>
+        </div>
         
         <Tabs defaultValue="details" className="w-full">
           <TabsList className="grid w-full grid-cols-2">

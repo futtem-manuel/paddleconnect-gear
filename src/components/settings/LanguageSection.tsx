@@ -36,6 +36,8 @@ export const LanguageSection = () => {
             <SelectItem value="en">English</SelectItem>
             <SelectItem value="es">Español</SelectItem>
             <SelectItem value="pt">Português</SelectItem>
+            <SelectItem value="fr">Français</SelectItem>
+            <SelectItem value="de">Deutsch</SelectItem>
           </SelectContent>
         </Select>
       </div>

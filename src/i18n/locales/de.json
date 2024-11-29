@@ -1,0 +1,18 @@
+{
+  "common": {
+    "save": "Änderungen speichern",
+    "delete": "Konto löschen",
+    "cancel": "Abbrechen",
+    "back": "Zurück"
+  },
+  "settings": {
+    "language": "Sprache",
+    "selectLanguage": "Wählen Sie Ihre bevorzugte Sprache",
+    "personalInfo": "Persönliche Informationen",
+    "privacy": "Datenschutzeinstellungen",
+    "fullName": "Vollständiger Name",
+    "email": "E-Mail",
+    "whatsapp": "WhatsApp-Nummer",
+    "bio": "Biografie"
+  }
+}

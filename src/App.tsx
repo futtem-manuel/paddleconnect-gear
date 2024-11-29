@@ -19,6 +19,7 @@ import Rules from "./pages/Rules";
 import Connections from "./pages/Connections";
 import ProfileSettings from "./pages/ProfileSettings";
 import Legal from "./pages/Legal";
+import Leaderboard from "./pages/Leaderboard";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/connections" element={<Connections />} />
               <Route path="/profile-settings" element={<ProfileSettings />} />
               <Route path="/legal" element={<Legal />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
             </Routes>
           </div>
         </BrowserRouter>

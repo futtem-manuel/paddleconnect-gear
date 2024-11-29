@@ -1,12 +1,12 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Trophy, Users, MapPin, ExternalLink, Edit, Book } from "lucide-react";
+import { Plus, Users, MapPin, ExternalLink, Book } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
 import { PerformanceCharts } from "@/components/dashboard/PerformanceCharts";
 import { PlayerConnections } from "@/components/dashboard/PlayerConnections";
 import { RecentMatches } from "@/components/dashboard/RecentMatches";
+import { ProfileHeader } from "@/components/dashboard/ProfileHeader";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -61,7 +61,6 @@ const Dashboard = () => {
     }
   ];
 
-  // Add the missing performance data
   const performanceData = [
     { date: "2024-01-01", rating: 3.5 },
     { date: "2024-01-15", rating: 4.0 },
@@ -70,7 +69,6 @@ const Dashboard = () => {
     { date: "2024-03-01", rating: 4.5 }
   ];
 
-  // Add the missing win/loss data
   const winLossData = {
     wins: 9,
     losses: 6
@@ -78,56 +76,29 @@ const Dashboard = () => {
 
   const displayRating = eloToDisplayRating(userProfile.eloRating);
 
-  // ... keep existing code (rest of the component JSX)
-
   return (
     <div className="min-h-screen bg-background p-4 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
         <Card className="neu-card">
           <CardHeader>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                <Avatar className="h-20 w-20">
-                  <AvatarImage src={userProfile.avatar} />
-                  <AvatarFallback className="bg-muted">JD</AvatarFallback>
-                </Avatar>
-                <div className="space-y-1">
-                  <CardTitle className="text-2xl">{userProfile.name}</CardTitle>
-                  <p className="text-muted-foreground">Rating: {displayRating.toFixed(1)}</p>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin className="h-4 w-4" />
-                    <span>{userProfile.location}</span>
-                  </div>
-                </div>
-              </div>
-              <Button 
-                variant="outline" 
-                className="neu-button w-full md:w-auto"
-                onClick={() => navigate("/profile-settings")}
-              >
-                <Edit className="h-4 w-4 mr-2" />
-                Edit Profile
-              </Button>
-            </div>
+            <ProfileHeader userProfile={userProfile} displayRating={displayRating} />
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
-              <div className="grid grid-cols-4 gap-4">
-                <div className="p-4 neu-card flex items-center gap-3 col-span-1">
-                  <Trophy className="h-5 w-5 text-primary" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="p-4 neu-card flex items-center gap-3">
                   <div>
                     <p className="text-sm text-muted-foreground">Matches Played</p>
                     <p className="text-xl font-semibold">{userProfile.matches}</p>
                   </div>
                 </div>
-                <div className="p-4 neu-card flex items-center gap-3 col-span-1">
-                  <Users className="h-5 w-5 text-primary" />
+                <div className="p-4 neu-card flex items-center gap-3">
                   <div>
                     <p className="text-sm text-muted-foreground">Win Rate</p>
                     <p className="text-xl font-semibold">{userProfile.winRate}</p>
                   </div>
                 </div>
-                <div className="p-4 neu-card bg-primary/5 border-2 border-primary col-span-2">
+                <div className="p-4 neu-card bg-primary/5 border-2 border-primary sm:col-span-2">
                   <h3 className="font-medium mb-2 text-primary">Connected Players</h3>
                   <PlayerConnections connections={playerConnections} />
                 </div>

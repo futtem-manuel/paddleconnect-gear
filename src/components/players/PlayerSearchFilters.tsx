@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
-import { Search, GripHorizontal } from "lucide-react";
+import { Search } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
 
 interface PlayerSearchFiltersProps {
   searchQuery: string;
@@ -36,7 +37,7 @@ export const PlayerSearchFilters = ({
       </div>
       
       <div className="space-y-2">
-        <label className="text-sm font-medium">Location</label>
+        <Label>Location</Label>
         <Input
           type="text"
           placeholder="Enter location..."
@@ -48,35 +49,39 @@ export const PlayerSearchFilters = ({
 
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <label className="text-sm font-medium">Rating Range</label>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <GripHorizontal className={`h-4 w-4 ${isDragging.min ? 'text-primary' : 'text-muted-foreground'}`} />
-              <span className="text-sm text-muted-foreground">{ratingRange[0].toFixed(1)}</span>
-            </div>
-            <span className="text-sm text-muted-foreground">-</span>
-            <div className="flex items-center gap-1">
-              <GripHorizontal className={`h-4 w-4 ${isDragging.max ? 'text-primary' : 'text-muted-foreground'}`} />
-              <span className="text-sm text-muted-foreground">{ratingRange[1].toFixed(1)}</span>
-            </div>
+          <Label>Rating Range</Label>
+          <div className="flex items-center gap-2 text-sm">
+            <span className="min-w-[40px] text-center bg-muted rounded px-2 py-1">
+              {ratingRange[0].toFixed(1)}
+            </span>
+            <span>-</span>
+            <span className="min-w-[40px] text-center bg-muted rounded px-2 py-1">
+              {ratingRange[1].toFixed(1)}
+            </span>
           </div>
         </div>
-        <Slider
-          defaultValue={[1, 7]}
-          max={7}
-          min={1}
-          step={0.5}
-          value={ratingRange}
-          onValueChange={setRatingRange}
-          className="w-full"
-          onValueCommit={() => setIsDragging({ min: false, max: false })}
-          onPointerDown={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const pos = (e.clientX - rect.left) / rect.width;
-            const closer = Math.abs(pos - (ratingRange[0] - 1) / 6) < Math.abs(pos - (ratingRange[1] - 1) / 6);
-            setIsDragging({ min: closer, max: !closer });
-          }}
-        />
+        <div className="pt-2">
+          <Slider
+            defaultValue={[1, 7]}
+            max={7}
+            min={1}
+            step={0.1}
+            value={ratingRange}
+            onValueChange={setRatingRange}
+            className="w-full"
+            onValueCommit={() => setIsDragging({ min: false, max: false })}
+            onPointerDown={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const pos = (e.clientX - rect.left) / rect.width;
+              const closer = Math.abs(pos - (ratingRange[0] - 1) / 6) < Math.abs(pos - (ratingRange[1] - 1) / 6);
+              setIsDragging({ min: closer, max: !closer });
+            }}
+          />
+          <div className="flex justify-between mt-1">
+            <span className="text-xs text-muted-foreground">1.0</span>
+            <span className="text-xs text-muted-foreground">7.0</span>
+          </div>
+        </div>
       </div>
     </div>
   );

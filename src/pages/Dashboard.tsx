@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
 import { PerformanceCharts } from "@/components/dashboard/PerformanceCharts";
 import { PlayerConnections } from "@/components/dashboard/PlayerConnections";
+import { RecentMatches } from "@/components/dashboard/RecentMatches";
 
+const Dashboard = () => {
+  const navigate = useNavigate();
+  
   const userProfile = {
     name: "John Doe",
     eloRating: 1200,
@@ -28,48 +32,35 @@ import { PlayerConnections } from "@/components/dashboard/PlayerConnections";
     { id: "3", name: "Golden Gate Padel", distance: "2.1 miles", rating: 4.3, googleUrl: "https://maps.google.com/?q=Golden+Gate+Padel" },
   ];
 
-  const performanceData = [
-    { date: "Jan", rating: 5.2 },
-    { date: "Feb", rating: 5.4 },
-    { date: "Mar", rating: 5.3 },
-    { date: "Apr", rating: 5.6 },
-    { date: "May", rating: 5.8 },
+  const recentMatches = [
+    {
+      id: "1",
+      date: "2024-02-20",
+      venue: "City Padel Club",
+      result: "Won",
+      score: "6-4, 6-3",
+      opponent: "Alice Smith",
+      opponentAvatar: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=100"
+    },
+    {
+      id: "2",
+      date: "2024-02-18",
+      venue: "Bay Area Padel Center",
+      result: "Lost",
+      score: "4-6, 6-7",
+      opponent: "Bob Johnson",
+      opponentAvatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=100"
+    },
+    {
+      id: "3",
+      date: "2024-02-15",
+      venue: "Golden Gate Padel",
+      result: "Won",
+      score: "6-2, 6-4",
+      opponent: "Carol White"
+    }
   ];
 
-  const winLossData = {
-    wins: 9,
-    losses: 6,
-  };
-
-const recentMatches = [
-  {
-    id: "1",
-    date: "2024-02-20",
-    venue: "City Padel Club",
-    result: "Won",
-    score: "6-4, 6-3",
-    opponent: "Alice Smith"
-  },
-  {
-    id: "2",
-    date: "2024-02-18",
-    venue: "Bay Area Padel Center",
-    result: "Lost",
-    score: "4-6, 6-7",
-    opponent: "Bob Johnson"
-  },
-  {
-    id: "3",
-    date: "2024-02-15",
-    venue: "Golden Gate Padel",
-    result: "Won",
-    score: "6-2, 6-4",
-    opponent: "Carol White"
-  }
-];
-
-const Dashboard = () => {
-  const navigate = useNavigate();
   const displayRating = eloToDisplayRating(userProfile.eloRating);
 
   return (
@@ -95,7 +86,7 @@ const Dashboard = () => {
               <Button 
                 variant="outline" 
                 className="neu-button w-full md:w-auto"
-                onClick={() => navigate("/edit-profile")}
+                onClick={() => navigate("/profile-settings")}
               >
                 <Edit className="h-4 w-4 mr-2" />
                 Edit Profile
@@ -104,7 +95,7 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 <div className="p-4 neu-card flex items-center gap-3 col-span-1">
                   <Trophy className="h-5 w-5 text-primary" />
                   <div>
@@ -119,7 +110,7 @@ const Dashboard = () => {
                     <p className="text-xl font-semibold">{userProfile.winRate}</p>
                   </div>
                 </div>
-                <div className="p-4 neu-card bg-primary/5 border-2 border-primary col-span-1 sm:h-32">
+                <div className="p-4 neu-card bg-primary/5 border-2 border-primary col-span-2">
                   <h3 className="font-medium mb-2 text-primary">Connected Players</h3>
                   <PlayerConnections connections={playerConnections} />
                 </div>
@@ -147,36 +138,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="neu-card">
-          <CardHeader>
-            <CardTitle>Recent Matches</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentMatches.map((match) => (
-                <div
-                  key={match.id}
-                  onClick={() => navigate(`/match/${match.id}`)}
-                  className="p-4 neu-card hover:bg-muted/50 cursor-pointer transition-colors"
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="font-medium">vs {match.opponent}</p>
-                      <p className="text-sm text-muted-foreground">{match.venue}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className={`font-medium ${match.result === 'Won' ? 'text-green-500' : 'text-red-500'}`}>
-                        {match.result}
-                      </p>
-                      <p className="text-sm text-muted-foreground">{match.score}</p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2">{match.date}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <RecentMatches matches={recentMatches} />
 
         <PerformanceCharts 
           performanceData={performanceData}
@@ -220,7 +182,7 @@ const Dashboard = () => {
 
         <div className="flex flex-col items-center space-y-4">
           <Button
-            variant="outline"
+            variant="default"
             className="w-full max-w-md"
             onClick={() => navigate("/rules")}
           >

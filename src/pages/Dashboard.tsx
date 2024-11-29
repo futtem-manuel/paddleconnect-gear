@@ -61,7 +61,24 @@ const Dashboard = () => {
     }
   ];
 
+  // Add the missing performance data
+  const performanceData = [
+    { date: "2024-01-01", rating: 3.5 },
+    { date: "2024-01-15", rating: 4.0 },
+    { date: "2024-02-01", rating: 3.8 },
+    { date: "2024-02-15", rating: 4.2 },
+    { date: "2024-03-01", rating: 4.5 }
+  ];
+
+  // Add the missing win/loss data
+  const winLossData = {
+    wins: 9,
+    losses: 6
+  };
+
   const displayRating = eloToDisplayRating(userProfile.eloRating);
+
+  // ... keep existing code (rest of the component JSX)
 
   return (
     <div className="min-h-screen bg-background p-4 md:p-6">

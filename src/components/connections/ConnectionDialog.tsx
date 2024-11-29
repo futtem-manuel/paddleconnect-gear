@@ -4,13 +4,26 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ConnectionHistory } from "./ConnectionHistory";
 import { PlayerConnection } from "./PlayerConnectionCard";
-import { MapPin } from "lucide-react";
+import { MapPin, UserMinus } from "lucide-react";
+import { toast } from "sonner";
 
 interface ConnectionDialogProps {
   connection: PlayerConnection | null;
@@ -26,6 +39,12 @@ export const ConnectionDialog = ({
   onWhatsAppAccessChange,
 }: ConnectionDialogProps) => {
   if (!connection) return null;
+
+  const handleRemoveConnection = () => {
+    // In a real app, this would make an API call to remove the connection
+    toast.success("Connection removed successfully");
+    onClose();
+  };
 
   // Mock match history data - in a real app, this would come from your backend
   const matchHistory = [
@@ -46,8 +65,30 @@ export const ConnectionDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
+        <DialogHeader className="flex flex-row justify-between items-center">
           <DialogTitle>Connection Details</DialogTitle>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" size="sm">
+                <UserMinus className="h-4 w-4 mr-2" />
+                Remove Connection
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Remove Connection</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to remove {connection.name} from your connections? This action cannot be undone and will remove the connection for both players.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleRemoveConnection} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                  Remove
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </DialogHeader>
         
         <div className="flex flex-col md:flex-row gap-6 mb-6">

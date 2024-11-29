@@ -48,15 +48,22 @@ const MatchDetails = () => {
         .from("matches")
         .select(`
           *,
-          player1:player1_id(id, full_name, avatar_url, rating),
-          player2:player2_id(id, full_name, avatar_url, rating),
-          venue:venue_id(id, name, location)
+          player1:profiles!matches_player1_id_fkey(id, full_name, avatar_url, rating),
+          player2:profiles!matches_player2_id_fkey(id, full_name, avatar_url, rating),
+          venue:venues!matches_venue_id_fkey(id, name, location)
         `)
         .eq("id", matchId)
         .single();
 
       if (error) throw error;
-      return data;
+      
+      // Transform the data to match our interface
+      return {
+        ...data,
+        player1: data.player1[0] as Player,
+        player2: data.player2[0] as Player,
+        venue: data.venue[0] as Venue
+      } as Match;
     },
   });
 

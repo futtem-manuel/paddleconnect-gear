@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import RuleSection from "@/components/rules/RuleSection";
+import SearchLegend from "@/components/rules/SearchLegend";
 
 const Rules = () => {
   const navigate = useNavigate();
@@ -37,18 +39,18 @@ const Rules = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+              <SearchLegend />
             </div>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-[70vh] pr-4">
               <div className="space-y-6">
-                <section>
-                  <h2 className="text-xl font-semibold mb-3">RULE 1. POSITION OF THE PLAYERS</h2>
-                  <p>The game is played in pairs. The players stand in the areas located on either side of the net. The server puts the ball into play and the receiver returns the ball.</p>
-                  <p>The receiver may stand in any part of their area of the court as can the partner of the receiver and the partner of the server.</p>
-                  <p>Players change sides when the number of games played is an odd number. If an error is made and the players do not change sides they should rectify the error as soon as it is discovered to follow the correct order of play.</p>
-                  <p>Maximum rest time between games is 90 seconds.</p>
-                </section>
+                <RuleSection title="RULE 1. POSITION OF THE PLAYERS" searchQuery={searchQuery}>
+                  The game is played in pairs. The players stand in the areas located on either side of the net. The server puts the ball into play and the receiver returns the ball.
+                  The receiver may stand in any part of their area of the court as can the partner of the receiver and the partner of the server.
+                  Players change sides when the number of games played is an odd number. If an error is made and the players do not change sides they should rectify the error as soon as it is discovered to follow the correct order of play.
+                  Maximum rest time between games is 90 seconds.
+                </RuleSection>
 
                 <section>
                   <h2 className="text-xl font-semibold mb-3">RULE 2. CHOICE OF SIDE AND OF SERVICE</h2>

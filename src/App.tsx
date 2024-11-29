@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navigation from "./components/layout/Navigation";
 import "./i18n";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -26,20 +27,23 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/onboarding" element={<Onboarding />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/record-match" element={<RecordMatch />} />
-            <Route path="/verify-match/:matchId" element={<VerifyMatch />} />
-            <Route path="/find-players" element={<FindPlayers />} />
-            <Route path="/rules" element={<Rules />} />
-            <Route path="/connections" element={<Connections />} />
-            <Route path="/profile-settings" element={<ProfileSettings />} />
-            <Route path="/legal" element={<Legal />} />
-          </Routes>
+          <Navigation />
+          <div className="pt-16 pb-16 md:pb-0">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/record-match" element={<RecordMatch />} />
+              <Route path="/verify-match/:matchId" element={<VerifyMatch />} />
+              <Route path="/find-players" element={<FindPlayers />} />
+              <Route path="/rules" element={<Rules />} />
+              <Route path="/connections" element={<Connections />} />
+              <Route path="/profile-settings" element={<ProfileSettings />} />
+              <Route path="/legal" element={<Legal />} />
+            </Routes>
+          </div>
         </BrowserRouter>
       </div>
     </TooltipProvider>

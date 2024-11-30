@@ -3,7 +3,39 @@
     "save": "Salvar Alterações",
     "delete": "Excluir Conta",
     "cancel": "Cancelar",
-    "back": "Voltar"
+    "back": "Voltar",
+    "login": "Entrar",
+    "register": "Registrar",
+    "joinCommunity": "Junte-se à comunidade #1 de Padel e acompanhe seu progresso",
+    "success": "Sucesso",
+    "appName": "PaddleRank",
+    "dashboard": "Painel",
+    "messages": "Mensagens",
+    "notifications": "Notificações",
+    "findPlayers": "Encontrar Jogadores",
+    "rules": "Regras",
+    "connections": "Conexões",
+    "settings": "Configurações",
+    "leaderboard": "Classificação",
+    "recordMatch": "Registrar Partida",
+    "connect": "Conectar",
+    "viewDetails": "Ver Detalhes",
+    "rating": "Classificação",
+    "matches": "Partidas",
+    "winRate": "Taxa de Vitórias",
+    "location": "Localização",
+    "viewOnGoogle": "Ver no Google",
+    "viewRules": "Ver Regras Oficiais",
+    "welcomeBack": "Bem-vindo de volta",
+    "signIn": "Entrar",
+    "signUp": "Registrar",
+    "dontHaveAccount": "Não tem uma conta?",
+    "email": "E-mail",
+    "password": "Senha",
+    "filterByLocation": "Filtrar por localização...",
+    "filterByRating": "Filtrar por classificação",
+    "sortBy": "Ordenar por...",
+    "allRatings": "Todas as classificações"
   },
   "settings": {
     "language": "Idioma",
@@ -13,6 +45,33 @@
     "fullName": "Nome Completo",
     "email": "E-mail",
     "whatsapp": "Número do WhatsApp",
-    "bio": "Biografia"
+    "bio": "Biografia",
+    "languageChanged": "Idioma atualizado com sucesso"
+  },
+  "match": {
+    "recordNew": "Registrar Nova Partida",
+    "enterDetails": "Insira os detalhes da partida e selecione os jogadores",
+    "date": "Data",
+    "venue": "Local",
+    "enterVenue": "Digite o nome do local",
+    "teams": "Times",
+    "score": "Placar",
+    "advanced": "Detalhes Avançados",
+    "scanToVerify": "Escaneie para verificar a partida",
+    "recordMatch": "Registrar Partida"
+  },
+  "players": {
+    "findPlayers": "Encontrar Jogadores",
+    "searchPlayers": "Buscar jogadores...",
+    "location": "Localização",
+    "ratingRange": "Faixa de Classificação",
+    "noPlayersFound": "Nenhum jogador encontrado"
+  },
+  "leaderboard": {
+    "title": "Classificação",
+    "filterLocation": "Filtrar por localização...",
+    "filterRating": "Filtrar por classificação",
+    "sortByRating": "Classificação",
+    "sortByWinRate": "Taxa de Vitórias"
   }
 }

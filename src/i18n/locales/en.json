@@ -16,7 +16,26 @@
     "rules": "Rules",
     "connections": "Connections",
     "settings": "Settings",
-    "leaderboard": "Leaderboard"
+    "leaderboard": "Leaderboard",
+    "recordMatch": "Record New Match",
+    "connect": "Connect",
+    "viewDetails": "View Details",
+    "rating": "Rating",
+    "matches": "Matches",
+    "winRate": "Win Rate",
+    "location": "Location",
+    "viewOnGoogle": "View on Google",
+    "viewRules": "View Official Rules",
+    "welcomeBack": "Welcome back",
+    "signIn": "Sign In",
+    "signUp": "Sign up",
+    "dontHaveAccount": "Don't have an account?",
+    "email": "Email",
+    "password": "Password",
+    "filterByLocation": "Filter by location...",
+    "filterByRating": "Filter by rating",
+    "sortBy": "Sort by...",
+    "allRatings": "All Ratings"
   },
   "settings": {
     "language": "Language",
@@ -29,9 +48,30 @@
     "bio": "Bio",
     "languageChanged": "Language updated successfully"
   },
-  "navigation": {
-    "home": "Home",
-    "profile": "Profile",
-    "logout": "Logout"
+  "match": {
+    "recordNew": "Record New Match",
+    "enterDetails": "Enter match details and select players to record a new match",
+    "date": "Date",
+    "venue": "Venue",
+    "enterVenue": "Enter venue name",
+    "teams": "Teams",
+    "score": "Score",
+    "advanced": "Advanced Details",
+    "scanToVerify": "Scan to verify match",
+    "recordMatch": "Record Match"
+  },
+  "players": {
+    "findPlayers": "Find Players",
+    "searchPlayers": "Search players...",
+    "location": "Location",
+    "ratingRange": "Rating Range",
+    "noPlayersFound": "No players found"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "filterLocation": "Filter by location...",
+    "filterRating": "Filter by rating",
+    "sortByRating": "Rating",
+    "sortByWinRate": "Win Rate"
   }
 }

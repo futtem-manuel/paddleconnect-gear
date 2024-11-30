@@ -3,7 +3,39 @@
     "save": "Änderungen speichern",
     "delete": "Konto löschen",
     "cancel": "Abbrechen",
-    "back": "Zurück"
+    "back": "Zurück",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "joinCommunity": "Tritt der #1 Padel-Community bei und verfolge deinen Fortschritt",
+    "success": "Erfolg",
+    "appName": "PaddleRank",
+    "dashboard": "Dashboard",
+    "messages": "Nachrichten",
+    "notifications": "Benachrichtigungen",
+    "findPlayers": "Spieler finden",
+    "rules": "Regeln",
+    "connections": "Verbindungen",
+    "settings": "Einstellungen",
+    "leaderboard": "Rangliste",
+    "recordMatch": "Spiel aufzeichnen",
+    "connect": "Verbinden",
+    "viewDetails": "Details anzeigen",
+    "rating": "Bewertung",
+    "matches": "Spiele",
+    "winRate": "Siegesquote",
+    "location": "Standort",
+    "viewOnGoogle": "Auf Google ansehen",
+    "viewRules": "Offizielle Regeln ansehen",
+    "welcomeBack": "Willkommen zurück",
+    "signIn": "Anmelden",
+    "signUp": "Registrieren",
+    "dontHaveAccount": "Noch kein Konto?",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "filterByLocation": "Nach Standort filtern...",
+    "filterByRating": "Nach Bewertung filtern",
+    "sortBy": "Sortieren nach...",
+    "allRatings": "Alle Bewertungen"
   },
   "settings": {
     "language": "Sprache",
@@ -13,6 +45,33 @@
     "fullName": "Vollständiger Name",
     "email": "E-Mail",
     "whatsapp": "WhatsApp-Nummer",
-    "bio": "Biografie"
+    "bio": "Biografie",
+    "languageChanged": "Sprache erfolgreich aktualisiert"
+  },
+  "match": {
+    "recordNew": "Neues Spiel aufzeichnen",
+    "enterDetails": "Geben Sie die Spieldetails ein und wählen Sie die Spieler aus",
+    "date": "Datum",
+    "venue": "Spielort",
+    "enterVenue": "Spielort eingeben",
+    "teams": "Teams",
+    "score": "Ergebnis",
+    "advanced": "Erweiterte Details",
+    "scanToVerify": "Scannen zur Spielverifikation",
+    "recordMatch": "Spiel aufzeichnen"
+  },
+  "players": {
+    "findPlayers": "Spieler finden",
+    "searchPlayers": "Spieler suchen...",
+    "location": "Standort",
+    "ratingRange": "Bewertungsbereich",
+    "noPlayersFound": "Keine Spieler gefunden"
+  },
+  "leaderboard": {
+    "title": "Rangliste",
+    "filterLocation": "Nach Standort filtern...",
+    "filterRating": "Nach Bewertung filtern",
+    "sortByRating": "Bewertung",
+    "sortByWinRate": "Siegesquote"
   }
 }

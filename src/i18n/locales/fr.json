@@ -3,7 +3,39 @@
     "save": "Enregistrer les modifications",
     "delete": "Supprimer le compte",
     "cancel": "Annuler",
-    "back": "Retour"
+    "back": "Retour",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "joinCommunity": "Rejoignez la communauté #1 de Padel et suivez vos progrès",
+    "success": "Succès",
+    "appName": "PaddleRank",
+    "dashboard": "Tableau de bord",
+    "messages": "Messages",
+    "notifications": "Notifications",
+    "findPlayers": "Trouver des joueurs",
+    "rules": "Règles",
+    "connections": "Connexions",
+    "settings": "Paramètres",
+    "leaderboard": "Classement",
+    "recordMatch": "Enregistrer un match",
+    "connect": "Se connecter",
+    "viewDetails": "Voir les détails",
+    "rating": "Classement",
+    "matches": "Matchs",
+    "winRate": "Taux de victoire",
+    "location": "Emplacement",
+    "viewOnGoogle": "Voir sur Google",
+    "viewRules": "Voir les règles officielles",
+    "welcomeBack": "Bon retour",
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "dontHaveAccount": "Vous n'avez pas de compte ?",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "filterByLocation": "Filtrer par emplacement...",
+    "filterByRating": "Filtrer par classement",
+    "sortBy": "Trier par...",
+    "allRatings": "Tous les classements"
   },
   "settings": {
     "language": "Langue",
@@ -13,6 +45,33 @@
     "fullName": "Nom complet",
     "email": "E-mail",
     "whatsapp": "Numéro WhatsApp",
-    "bio": "Biographie"
+    "bio": "Biographie",
+    "languageChanged": "Langue mise à jour avec succès"
+  },
+  "match": {
+    "recordNew": "Enregistrer un nouveau match",
+    "enterDetails": "Entrez les détails du match et sélectionnez les joueurs",
+    "date": "Date",
+    "venue": "Lieu",
+    "enterVenue": "Entrez le nom du lieu",
+    "teams": "Équipes",
+    "score": "Score",
+    "advanced": "Détails avancés",
+    "scanToVerify": "Scannez pour vérifier le match",
+    "recordMatch": "Enregistrer le match"
+  },
+  "players": {
+    "findPlayers": "Trouver des joueurs",
+    "searchPlayers": "Rechercher des joueurs...",
+    "location": "Emplacement",
+    "ratingRange": "Plage de classement",
+    "noPlayersFound": "Aucun joueur trouvé"
+  },
+  "leaderboard": {
+    "title": "Classement",
+    "filterLocation": "Filtrer par emplacement...",
+    "filterRating": "Filtrer par classement",
+    "sortByRating": "Classement",
+    "sortByWinRate": "Taux de victoire"
   }
 }

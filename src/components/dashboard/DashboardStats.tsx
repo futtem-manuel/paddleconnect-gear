@@ -7,7 +7,7 @@ interface DashboardStatsProps {
     matches: number;
     winRate: string;
   };
-  playerConnections: Array<{ id: string; name: string; avatar: string; }>;
+  playerConnections: Array<{ id: string; name: string; avatar?: string; }>;
 }
 
 export const DashboardStats = ({ userProfile, playerConnections }: DashboardStatsProps) => {

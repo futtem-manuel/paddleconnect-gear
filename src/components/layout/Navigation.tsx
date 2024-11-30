@@ -1,103 +1,97 @@
-import { Link, useLocation } from "react-router-dom";
-import { Bell, MessageSquare, LayoutDashboard } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 const Navigation = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const { toast } = useToast();
 
-  const isActive = (path: string) => location.pathname === path;
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message,
+      });
+    } else {
+      navigate("/");
+    }
+  };
+
+  // Don't show navigation on auth pages
+  if (["/login", "/register", "/"].includes(location.pathname)) {
+    return null;
+  }
 
   return (
-    <>
-      {/* Top Navigation for Desktop */}
-      <nav className="hidden md:flex fixed top-0 left-0 right-0 h-16 bg-white border-b shadow-sm z-50">
-        <div className="max-w-7xl mx-auto w-full px-4 flex items-center justify-between">
-          <Link to="/dashboard" className="flex items-center gap-3">
-            <img 
-              src="/lovable-uploads/ce205f00-8e5a-4ed2-9756-417964ef47e6.png" 
-              alt="PaddleRank Logo" 
-              className="w-8 h-8"
-            />
-            <span className="font-bold text-lg">{t('common.appName')}</span>
-          </Link>
-          
-          <div className="flex items-center gap-4">
-            <Link
-              to="/dashboard"
-              className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-md transition-colors",
-                isActive("/dashboard") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"
-              )}
-            >
-              <LayoutDashboard className="h-5 w-5" />
-              <span>{t('common.dashboard')}</span>
-            </Link>
-            
-            <Link
-              to="/messages"
-              className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-md transition-colors",
-                isActive("/messages") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"
-              )}
-            >
-              <MessageSquare className="h-5 w-5" />
-              <span>{t('common.messages')}</span>
-            </Link>
-            
-            <Link
-              to="/notifications"
-              className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-md transition-colors",
-                isActive("/notifications") ? "bg-primary/10 text-primary" : "hover:bg-gray-100"
-              )}
-            >
-              <Bell className="h-5 w-5" />
-              <span>{t('common.notifications')}</span>
-            </Link>
-          </div>
+    <div className="border-b fixed top-0 left-0 right-0 z-50 bg-background">
+      <div className="flex h-16 items-center px-4">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  location.pathname === "/dashboard" && "text-primary"
+                )}
+                onClick={() => navigate("/dashboard")}
+              >
+                {t("common.dashboard")}
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  location.pathname === "/messages" && "text-primary"
+                )}
+                onClick={() => navigate("/messages")}
+              >
+                {t("common.messages")}
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  location.pathname === "/find-players" && "text-primary"
+                )}
+                onClick={() => navigate("/find-players")}
+              >
+                {t("common.findPlayers")}
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+        <div className="ml-auto flex items-center space-x-4">
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/profile-settings")}
+          >
+            Settings
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
         </div>
-      </nav>
-
-      {/* Bottom Navigation for Mobile */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t shadow-sm z-50">
-        <div className="grid grid-cols-3 h-full">
-          <Link
-            to="/dashboard"
-            className={cn(
-              "flex flex-col items-center justify-center gap-1",
-              isActive("/dashboard") ? "text-primary" : "text-gray-500"
-            )}
-          >
-            <LayoutDashboard className="h-6 w-6" />
-            <span className="text-xs">{t('common.dashboard')}</span>
-          </Link>
-          
-          <Link
-            to="/messages"
-            className={cn(
-              "flex flex-col items-center justify-center gap-1",
-              isActive("/messages") ? "text-primary" : "text-gray-500"
-            )}
-          >
-            <MessageSquare className="h-6 w-6" />
-            <span className="text-xs">{t('common.messages')}</span>
-          </Link>
-          
-          <Link
-            to="/notifications"
-            className={cn(
-              "flex flex-col items-center justify-center gap-1",
-              isActive("/notifications") ? "text-primary" : "text-gray-500"
-            )}
-          >
-            <Bell className="h-6 w-6" />
-            <span className="text-xs">{t('common.notifications')}</span>
-          </Link>
-        </div>
-      </nav>
-    </>
+      </div>
+    </div>
   );
 };
 

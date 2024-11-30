@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
+import { PlayerConnections } from "./PlayerConnections"; // Add this import
 
 interface DashboardStatsProps {
   userProfile: {

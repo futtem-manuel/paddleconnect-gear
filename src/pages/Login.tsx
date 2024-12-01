@@ -33,6 +33,7 @@ const Login = () => {
       });
 
       if (error) {
+        console.error('Login error:', error);
         if (error.message.includes("Invalid login credentials")) {
           toast.error(t('auth.invalidCredentials'));
         } else {

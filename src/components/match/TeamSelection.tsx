@@ -28,7 +28,10 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
   useEffect(() => {
     const fetchConnections = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        toast.error("Please log in to record a match");
+        return;
+      }
 
       const { data: connectionsData, error } = await supabase
         .from('connections')
@@ -45,6 +48,7 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
 
       if (error) {
         console.error('Error fetching connections:', error);
+        toast.error("Failed to load your connections");
         return;
       }
 
@@ -62,32 +66,53 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
     fetchConnections();
   }, []);
 
+  useEffect(() => {
+    // Reset teams when switching between singles and doubles
+    setTeam1([]);
+    setTeam2([]);
+  }, [isDoubles]);
+
   const handleAddPlayer = (team: number, player: Player) => {
     if (team === 1 && team1.length < maxPlayersPerTeam) {
       setTeam1(prev => [...prev, player]);
+      setSearchValue("");
       toast.success(`Added ${player.name} to Team 1`);
     } else if (team === 2 && team2.length < maxPlayersPerTeam) {
       setTeam2(prev => [...prev, player]);
+      setSearchValue("");
       toast.success(`Added ${player.name} to Team 2`);
+    } else {
+      toast.error(`Team ${team} is already full`);
     }
-    setSearchValue("");
   };
 
   const handleRemovePlayer = (team: number, playerId: string) => {
     if (team === 1) {
       setTeam1(team1.filter(p => p.id !== playerId));
+      toast.info("Player removed from Team 1");
     } else {
       setTeam2(team2.filter(p => p.id !== playerId));
+      toast.info("Player removed from Team 2");
     }
   };
 
   const handleAddGhostPlayer = (team: number) => {
+    if (!searchValue.trim()) {
+      toast.error("Please enter a player name");
+      return;
+    }
+
     const ghostPlayer: Player = {
       id: `ghost-${Date.now()}`,
-      name: searchValue || "Unknown Player",
+      name: searchValue,
     };
     handleAddPlayer(team, ghostPlayer);
   };
+
+  useEffect(() => {
+    // Notify parent component whenever teams change
+    onTeamsConfirmed({ team1, team2 });
+  }, [team1, team2, onTeamsConfirmed]);
 
   const filteredPlayers = searchValue
     ? connections.filter(player =>
@@ -95,7 +120,7 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
         !team1.some(p => p.id === player.id) &&
         !team2.some(p => p.id === player.id)
       )
-    : connections;
+    : [];
 
   return (
     <div className="space-y-6">

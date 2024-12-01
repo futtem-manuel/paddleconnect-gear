@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { QRCodeSVG } from "qrcode.react";
+import { useEffect } from "react";
 
 interface Player {
   id: string;
@@ -44,6 +45,18 @@ export const MatchForm = () => {
     team2: number[];
   }>({ team1: [], team2: [] });
 
+  // Check authentication on component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error(t('auth.required'));
+        navigate('/login');
+      }
+    };
+    checkAuth();
+  }, [navigate, t]);
+
   const form = useForm<MatchFormData>({
     resolver: zodResolver(matchSchema),
     defaultValues: {
@@ -69,6 +82,7 @@ export const MatchForm = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         toast.error(t('auth.required'));
+        navigate('/login');
         return;
       }
 

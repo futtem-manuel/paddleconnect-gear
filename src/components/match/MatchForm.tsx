@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -13,7 +13,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { QRCodeSVG } from "qrcode.react";
-import { useEffect } from "react";
 
 interface Player {
   id: string;
@@ -45,16 +44,31 @@ export const MatchForm = () => {
     team2: number[];
   }>({ team1: [], team2: [] });
 
-  // Check authentication on component mount
+  // Check authentication on component mount and set up auth state listener
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         toast.error(t('auth.required'));
         navigate('/login');
+        return;
       }
     };
+    
     checkAuth();
+
+    // Set up auth state change listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        toast.error(t('auth.required'));
+        navigate('/login');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [navigate, t]);
 
   const form = useForm<MatchFormData>({

@@ -19,6 +19,10 @@ interface RecentMatchesProps {
 export const RecentMatches = ({ matches }: RecentMatchesProps) => {
   const navigate = useNavigate();
 
+  const handleMatchClick = (matchId: string) => {
+    navigate(`/match/${matchId}`);
+  };
+
   return (
     <Card className="neu-card">
       <CardHeader>
@@ -29,8 +33,10 @@ export const RecentMatches = ({ matches }: RecentMatchesProps) => {
           {matches.map((match) => (
             <div
               key={match.id}
-              onClick={() => navigate(`/match/${match.id}`)}
-              className="p-4 neu-card hover:bg-muted/50 cursor-pointer transition-colors"
+              onClick={() => handleMatchClick(match.id)}
+              className="p-4 neu-card hover:bg-muted/50 cursor-pointer transition-colors active:scale-[0.99] group"
+              role="button"
+              aria-label={`View match details against ${match.opponent}`}
             >
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
@@ -42,7 +48,7 @@ export const RecentMatches = ({ matches }: RecentMatchesProps) => {
                     <AvatarFallback>{match.opponent.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium">vs {match.opponent}</p>
+                    <p className="font-medium group-hover:text-primary transition-colors">vs {match.opponent}</p>
                     <p className="text-sm text-muted-foreground">{match.venue}</p>
                   </div>
                 </div>

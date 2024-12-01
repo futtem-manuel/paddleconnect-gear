@@ -21,13 +21,25 @@ const Login = () => {
     setIsLoading(true);
 
     try {
+      // First check if the user exists
+      const { data: userExists, error: userCheckError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', email)
+        .single();
+
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+        email: email.toLowerCase().trim(),
         password,
       });
 
       if (error) {
-        throw error;
+        if (error.message.includes("Invalid login credentials")) {
+          toast.error(t('auth.invalidCredentials'));
+        } else {
+          toast.error(error.message);
+        }
+        return;
       }
 
       if (data.user) {
@@ -35,7 +47,8 @@ const Login = () => {
         navigate("/dashboard");
       }
     } catch (error: any) {
-      toast.error(error.message || t('auth.loginError'));
+      console.error('Login error:', error);
+      toast.error(t('auth.loginError'));
     } finally {
       setIsLoading(false);
     }
@@ -68,6 +81,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
+                className="w-full"
               />
             </div>
             <div className="space-y-2">
@@ -79,6 +93,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
+                className="w-full"
               />
             </div>
             <Button

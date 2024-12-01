@@ -18,6 +18,12 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!email || !password) {
+      toast.error(t('auth.allFieldsRequired'));
+      return;
+    }
+
     setIsLoading(true);
 
     try {

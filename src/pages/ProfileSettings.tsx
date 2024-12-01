@@ -21,22 +21,24 @@ import { ProfilePictureSection } from "@/components/settings/ProfilePictureSecti
 import { PersonalInfoSection } from "@/components/settings/PersonalInfoSection";
 import { PrivacySection } from "@/components/settings/PrivacySection";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ProfileSettings = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleSave = () => {
     toast({
-      title: "Settings saved",
-      description: "Your profile settings have been updated successfully.",
+      title: t('common.success'),
+      description: t('settings.profileUpdated'),
     });
   };
 
   const handleDeleteAccount = () => {
     toast({
-      title: "Account deleted",
-      description: "Your account has been permanently deleted.",
+      title: t('settings.accountDeleted'),
+      description: t('settings.accountDeletedDesc'),
       variant: "destructive",
     });
     navigate("/");
@@ -52,7 +54,7 @@ const ProfileSettings = () => {
             onClick={() => navigate(-1)}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
+            {t('common.back')}
           </Button>
           <img
             src="/lovable-uploads/ce205f00-8e5a-4ed2-9756-417964ef47e6.png"
@@ -63,9 +65,9 @@ const ProfileSettings = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Profile Settings</CardTitle>
+            <CardTitle>{t('settings.profileSettings')}</CardTitle>
             <CardDescription>
-              Manage your profile information and privacy settings
+              {t('settings.profileSettingsDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -74,17 +76,17 @@ const ProfileSettings = () => {
             <PrivacySection />
 
             <Button onClick={handleSave} className="w-full">
-              Save Changes
+              {t('common.save')}
             </Button>
 
             <div className="pt-6 border-t space-y-4">
               <div className="flex justify-center space-x-4 text-sm text-muted-foreground">
                 <Link to="/legal?tab=terms" className="hover:underline">
-                  Terms of Service
+                  {t('common.termsOfService')}
                 </Link>
                 <span>•</span>
                 <Link to="/legal?tab=privacy" className="hover:underline">
-                  Privacy Policy
+                  {t('common.privacyPolicy')}
                 </Link>
               </div>
 
@@ -95,25 +97,25 @@ const ProfileSettings = () => {
                     className="w-full text-destructive hover:bg-destructive/10"
                   >
                     <Trash2 className="mr-2 h-4 w-4" />
-                    Delete Account
+                    {t('common.delete')}
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Delete Account</DialogTitle>
+                    <DialogTitle>{t('settings.deleteAccount')}</DialogTitle>
                     <DialogDescription>
-                      Are you sure you want to delete your account? This action cannot be undone.
+                      {t('settings.deleteAccountConfirm')}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="flex justify-end space-x-2">
                     <Button variant="outline" onClick={() => {}}>
-                      Cancel
+                      {t('common.cancel')}
                     </Button>
                     <Button
                       variant="destructive"
                       onClick={handleDeleteAccount}
                     >
-                      Delete Account
+                      {t('common.delete')}
                     </Button>
                   </div>
                 </DialogContent>

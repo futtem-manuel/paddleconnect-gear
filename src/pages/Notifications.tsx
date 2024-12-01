@@ -1,70 +1,44 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import { Check, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-
-interface Notification {
-  id: string;
-  type: 'verification' | 'game_invite' | 'game_reminder';
-  user: {
-    name: string;
-    avatar?: string;
-  };
-  message: string;
-  timestamp: string;
-  matchId?: string;
-  read: boolean;
-}
+import { Bell, MessageSquare, Trophy, UserPlus } from "lucide-react";
 
 const Notifications = () => {
-  const navigate = useNavigate();
-  
-  // This would come from your backend in a real app
-  const notifications: Notification[] = [
+  const { t } = useTranslation();
+
+  const notifications = [
     {
-      id: "1",
-      type: "verification",
-      user: {
-        name: "Alice Smith",
-        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100",
-      },
-      message: "Requesting verification for your match on February 20th",
-      timestamp: "2 hours ago",
-      matchId: "match123",
+      id: 1,
+      icon: <MessageSquare className="h-4 w-4" />,
+      title: t('notifications.newMessage'),
+      message: t('notifications.messageContent'),
+      time: "2h",
       read: false,
     },
     {
-      id: "2",
-      type: "game_invite",
-      user: {
-        name: "Bob Johnson",
-      },
-      message: "Invited you to play a match this Saturday at 2 PM",
-      timestamp: "1 day ago",
+      id: 2,
+      icon: <Trophy className="h-4 w-4" />,
+      title: t('notifications.matchVerified'),
+      message: t('notifications.matchVerifiedContent'),
+      time: "1d",
       read: true,
     },
     {
-      id: "3",
-      type: "game_reminder",
-      user: {
-        name: "Carol White",
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
-      },
-      message: "Reminder: Your match starts in 2 hours at City Padel Club",
-      timestamp: "2 days ago",
+      id: 3,
+      icon: <UserPlus className="h-4 w-4" />,
+      title: t('notifications.newConnection'),
+      message: t('notifications.connectionContent'),
+      time: "2d",
       read: true,
     },
   ];
 
-  const handleVerificationAction = (matchId: string, action: 'verify' | 'contest') => {
-    navigate(`/verify-match/${matchId}?action=${action}`);
-  };
-
   return (
     <div className="container mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-6">Notifications</h1>
+      <div className="flex items-center gap-2 mb-6">
+        <Bell className="h-5 w-5" />
+        <h1 className="text-2xl font-bold">{t('common.notifications')}</h1>
+      </div>
       
       <Card className="max-w-2xl mx-auto">
         <ScrollArea className="h-[calc(100vh-200px)]">
@@ -77,49 +51,23 @@ const Notifications = () => {
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  <Avatar className="h-12 w-12">
-                    <AvatarImage src={notification.user.avatar} />
-                    <AvatarFallback>
-                      {notification.user.name.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+                  <div className="p-2 rounded-full bg-muted">
+                    {notification.icon}
+                  </div>
                   
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2 mb-1">
+                    <div className="flex items-center justify-between gap-2">
                       <p className="font-semibold">
-                        {notification.user.name}
+                        {notification.title}
                       </p>
                       <span className="text-sm text-muted-foreground whitespace-nowrap">
-                        {notification.timestamp}
+                        {notification.time}
                       </span>
                     </div>
                     
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-sm text-muted-foreground">
                       {notification.message}
                     </p>
-
-                    {notification.type === 'verification' && notification.matchId && (
-                      <div className="flex gap-2 mt-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="flex items-center gap-1"
-                          onClick={() => handleVerificationAction(notification.matchId!, 'verify')}
-                        >
-                          <Check className="h-4 w-4" />
-                          Verify
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="flex items-center gap-1"
-                          onClick={() => handleVerificationAction(notification.matchId!, 'contest')}
-                        >
-                          <X className="h-4 w-4" />
-                          Contest
-                        </Button>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

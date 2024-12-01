@@ -29,10 +29,10 @@ export const LanguageSection = () => {
       <div className="space-y-2">
         <Label htmlFor="language">{t('settings.selectLanguage')}</Label>
         <Select onValueChange={handleLanguageChange} defaultValue={i18n.language}>
-          <SelectTrigger id="language">
+          <SelectTrigger id="language" className="bg-white">
             <SelectValue placeholder={t('settings.selectLanguage')} />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white">
             <SelectItem value="en">English</SelectItem>
             <SelectItem value="es">Español</SelectItem>
             <SelectItem value="pt">Português</SelectItem>

@@ -1,34 +1,40 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+// Import all translations
+import enTranslations from './locales/en.json';
+import esTranslations from './locales/es.json';
+import ptTranslations from './locales/pt.json';
+import frTranslations from './locales/fr.json';
+import deTranslations from './locales/de.json';
+
+const resources = {
+  en: {
+    translation: enTranslations,
+  },
+  es: {
+    translation: esTranslations,
+  },
+  pt: {
+    translation: ptTranslations,
+  },
+  fr: {
+    translation: frTranslations,
+  },
+  de: {
+    translation: deTranslations,
+  },
+};
+
 i18n
   .use(initReactI18next)
   .init({
-    resources: {
-      en: {
-        translation: {
-          common: {
-            appName: 'PaddleRank',
-            login: 'Login',
-            register: 'Register',
-            dashboard: 'Dashboard',
-            messages: 'Messages',
-            findPlayers: 'Find Players',
-            joinCommunity: 'Join our growing community of padel enthusiasts',
-            success: 'Success'
-          },
-          settings: {
-            selectLanguage: 'Select Language',
-            languageChanged: 'Language changed successfully'
-          }
-        }
-      }
-    },
-    lng: 'en',
+    resources,
+    lng: localStorage.getItem('preferredLanguage') || 'en',
     fallbackLng: 'en',
     interpolation: {
-      escapeValue: false
-    }
+      escapeValue: false,
+    },
   });
 
 export default i18n;

@@ -73,52 +73,5 @@
     "filterRating": "Filter by rating",
     "sortByRating": "Rating",
     "sortByWinRate": "Win Rate"
-  },
-  "connections": {
-    "title": "Your Connections",
-    "noConnections": "No connections yet",
-    "message": "Message",
-    "whatsapp": "WhatsApp",
-    "viewDetails": "View Details",
-    "matchHistory": "Match History",
-    "noMatches": "No matches played yet with this connection"
-  },
-  "profile": {
-    "editProfile": "Edit Profile",
-    "viewLeaderboard": "View Leaderboard",
-    "matchesPlayed": "Matches Played",
-    "winRate": "Win Rate",
-    "connectedPlayers": "Connected Players",
-    "recordMatch": "Record New Match",
-    "findPlayers": "Find Players",
-    "nearbyVenues": "Nearby Padel Venues",
-    "viewRules": "View Official Rules",
-    "poweredBy": "App powered by Futtem LLC",
-    "away": "away",
-    "viewOnGoogle": "View on Google"
-  },
-  "legal": {
-    "title": "Legal",
-    "termsOfService": "Terms of Service",
-    "privacyPolicy": "Privacy Policy",
-    "lastUpdated": "Last updated",
-    "agreement": "Agreement to Terms",
-    "useLicense": "Use License",
-    "intellectualProperty": "Intellectual Property",
-    "termination": "Termination",
-    "limitation": "Limitation of Liability"
-  },
-  "notifications": {
-    "title": "Notifications",
-    "noNotifications": "No notifications yet",
-    "markAsRead": "Mark as read",
-    "markAllAsRead": "Mark all as read",
-    "clearAll": "Clear all"
-  },
-  "messages": {
-    "title": "Messages",
-    "noMessages": "No messages yet",
-    "typeMessage": "Type your message...",
-    "send": "Send"
   }
 }

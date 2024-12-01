@@ -73,52 +73,5 @@
     "filterRating": "Nach Bewertung filtern",
     "sortByRating": "Bewertung",
     "sortByWinRate": "Siegesquote"
-  },
-  "connections": {
-    "title": "Ihre Verbindungen",
-    "noConnections": "Noch keine Verbindungen",
-    "message": "Nachricht",
-    "whatsapp": "WhatsApp",
-    "viewDetails": "Details anzeigen",
-    "matchHistory": "Spielverlauf",
-    "noMatches": "Noch keine Spiele mit dieser Verbindung"
-  },
-  "profile": {
-    "editProfile": "Profil bearbeiten",
-    "viewLeaderboard": "Rangliste anzeigen",
-    "matchesPlayed": "Gespielte Spiele",
-    "winRate": "Siegesquote",
-    "connectedPlayers": "Verbundene Spieler",
-    "recordMatch": "Neues Spiel aufzeichnen",
-    "findPlayers": "Spieler finden",
-    "nearbyVenues": "Nahe gelegene Plätze",
-    "viewRules": "Offizielle Regeln anzeigen",
-    "poweredBy": "App entwickelt von Futtem LLC",
-    "away": "entfernt",
-    "viewOnGoogle": "Auf Google ansehen"
-  },
-  "legal": {
-    "title": "Rechtliches",
-    "termsOfService": "Nutzungsbedingungen",
-    "privacyPolicy": "Datenschutzrichtlinie",
-    "lastUpdated": "Zuletzt aktualisiert",
-    "agreement": "Zustimmung zu den Bedingungen",
-    "useLicense": "Nutzungslizenz",
-    "intellectualProperty": "Geistiges Eigentum",
-    "termination": "Kündigung",
-    "limitation": "Haftungsbeschränkung"
-  },
-  "notifications": {
-    "title": "Benachrichtigungen",
-    "noNotifications": "Noch keine Benachrichtigungen",
-    "markAsRead": "Als gelesen markieren",
-    "markAllAsRead": "Alle als gelesen markieren",
-    "clearAll": "Alle löschen"
-  },
-  "messages": {
-    "title": "Nachrichten",
-    "noMessages": "Noch keine Nachrichten",
-    "typeMessage": "Nachricht eingeben...",
-    "send": "Senden"
   }
 }

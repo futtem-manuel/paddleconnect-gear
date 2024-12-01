@@ -73,52 +73,5 @@
     "filterRating": "Filtrar por classificação",
     "sortByRating": "Classificação",
     "sortByWinRate": "Taxa de Vitórias"
-  },
-  "connections": {
-    "title": "Suas Conexões",
-    "noConnections": "Ainda não há conexões",
-    "message": "Mensagem",
-    "whatsapp": "WhatsApp",
-    "viewDetails": "Ver Detalhes",
-    "matchHistory": "Histórico de Partidas",
-    "noMatches": "Ainda não há partidas jogadas com esta conexão"
-  },
-  "profile": {
-    "editProfile": "Editar Perfil",
-    "viewLeaderboard": "Ver Classificação",
-    "matchesPlayed": "Partidas Jogadas",
-    "winRate": "Taxa de Vitória",
-    "connectedPlayers": "Jogadores Conectados",
-    "recordMatch": "Registrar Nova Partida",
-    "findPlayers": "Encontrar Jogadores",
-    "nearbyVenues": "Quadras Próximas",
-    "viewRules": "Ver Regras Oficiais",
-    "poweredBy": "Aplicativo desenvolvido por Futtem LLC",
-    "away": "de distância",
-    "viewOnGoogle": "Ver no Google"
-  },
-  "legal": {
-    "title": "Legal",
-    "termsOfService": "Termos de Serviço",
-    "privacyPolicy": "Política de Privacidade",
-    "lastUpdated": "Última atualização",
-    "agreement": "Concordância com os Termos",
-    "useLicense": "Licença de Uso",
-    "intellectualProperty": "Propriedade Intelectual",
-    "termination": "Rescisão",
-    "limitation": "Limitação de Responsabilidade"
-  },
-  "notifications": {
-    "title": "Notificações",
-    "noNotifications": "Ainda não há notificações",
-    "markAsRead": "Marcar como lido",
-    "markAllAsRead": "Marcar tudo como lido",
-    "clearAll": "Limpar tudo"
-  },
-  "messages": {
-    "title": "Mensagens",
-    "noMessages": "Ainda não há mensagens",
-    "typeMessage": "Digite sua mensagem...",
-    "send": "Enviar"
   }
 }

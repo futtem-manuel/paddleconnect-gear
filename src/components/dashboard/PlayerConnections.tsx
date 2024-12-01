@@ -20,9 +20,9 @@ export const PlayerConnections = ({ connections }: PlayerConnectionsProps) => {
     <div className="flex items-center gap-2">
       <div className="flex -space-x-2">
         {connections.slice(0, 3).map((connection) => (
-          <Avatar key={connection.id} className="border-2 border-background">
-            <AvatarImage src={connection.avatar} alt={connection.name} />
-            <AvatarFallback>{connection.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+          <Avatar key={connection.id} className="border-2 border-white">
+            <AvatarImage src={connection.avatar} />
+            <AvatarFallback>{connection.name.slice(0, 2)}</AvatarFallback>
           </Avatar>
         ))}
       </div>

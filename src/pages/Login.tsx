@@ -21,13 +21,6 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // First check if the user exists
-      const { data: userExists, error: userCheckError } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('id', email)
-        .single();
-
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email.toLowerCase().trim(),
         password,

@@ -54,5 +54,55 @@
     "sampleMessage2": "¡Gran partido ayer! Deberíamos jugar de nuevo pronto.",
     "sampleMessage3": "¡Gracias por los consejos para mejorar mi revés!",
     "timeAgo": "hace {{time}}"
+  },
+  "rules": {
+    "title": "Reglas Oficiales de Pádel",
+    "subtitle": "Federación Internacional de Pádel (FIP)",
+    "searchPlaceholder": "Buscar reglas...",
+    "section1": {
+      "title": "La Pista",
+      "content": "El área de juego es de 20 metros de largo por 10 metros de ancho, dividida en el medio por una red."
+    },
+    "section2": {
+      "title": "La Red",
+      "content": "La red debe tener una altura de 88cm en el centro y 92cm en los lados."
+    },
+    "section3": {
+      "title": "La Pelota",
+      "content": "La pelota debe ser una pelota de goma presurizada aprobada por la Federación Internacional de Pádel."
+    },
+    "section4": {
+      "title": "La Pala",
+      "content": "La pala de pádel debe cumplir con las especificaciones oficiales establecidas por la Federación Internacional de Pádel."
+    }
+  },
+  "profile": {
+    "info": "Información Personal",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "emailLocked": "El correo electrónico no se puede cambiar",
+    "whatsapp": "WhatsApp",
+    "bio": "Biografía",
+    "bioPlaceholder": "Háblanos de ti...",
+    "privacy": "Privacidad",
+    "publicProfile": "Perfil Público",
+    "publicProfileDesc": "Haz que tu perfil sea visible para otros jugadores",
+    "showWhatsApp": "Mostrar WhatsApp",
+    "showWhatsAppDesc": "Permitir que otros jugadores vean tu número de WhatsApp"
+  },
+  "match": {
+    "verify": "Verificar Partido",
+    "summary": "Resumen del Partido",
+    "photos": "Fotos del Partido",
+    "photoAlt": "Foto del partido {number}",
+    "share": "Compartir",
+    "shareTitle": "Resultado del Partido",
+    "shareText": "Mira este resultado del partido",
+    "urlCopied": "URL del partido copiada al portapapeles",
+    "resultContested": "El resultado del partido ha sido impugnado",
+    "resultVerified": "El resultado del partido ha sido verificado",
+    "verifyResult": "Verificar Resultado",
+    "verifyConfirmation": "¿Estás seguro de que quieres verificar este resultado del partido?",
+    "copyUrl": "Copiar URL del Partido"
   }
 }

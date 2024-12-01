@@ -37,16 +37,26 @@
     "sortBy": "Sortieren nach...",
     "allRatings": "Alle Bewertungen"
   },
-  "settings": {
-    "language": "Sprache",
-    "selectLanguage": "Wählen Sie Ihre bevorzugte Sprache",
-    "personalInfo": "Persönliche Informationen",
-    "privacy": "Datenschutzeinstellungen",
-    "fullName": "Vollständiger Name",
-    "email": "E-Mail",
-    "whatsapp": "WhatsApp-Nummer",
-    "bio": "Biografie",
-    "languageChanged": "Sprache erfolgreich aktualisiert"
+  "rules": {
+    "title": "Offizielle Padel-Regeln",
+    "subtitle": "Internationaler Padel Verband (FIP)",
+    "searchPlaceholder": "Regeln durchsuchen...",
+    "section1": {
+      "title": "Der Platz",
+      "content": "Die Spielfläche ist 20 Meter lang und 10 Meter breit, in der Mitte durch ein Netz geteilt."
+    },
+    "section2": {
+      "title": "Das Netz",
+      "content": "Das Netz sollte in der Mitte 88 cm und an den Seiten 92 cm hoch sein."
+    },
+    "section3": {
+      "title": "Der Ball",
+      "content": "Der Ball muss ein vom Internationalen Padel Verband zugelassener Pressball aus Gummi sein."
+    },
+    "section4": {
+      "title": "Der Schläger",
+      "content": "Der Padel-Schläger muss den offiziellen Spezifikationen des Internationalen Padel Verbands entsprechen."
+    }
   },
   "match": {
     "recordNew": "Neues Spiel aufzeichnen",
@@ -60,18 +70,12 @@
     "scanToVerify": "Scannen zur Spielverifikation",
     "recordMatch": "Spiel aufzeichnen"
   },
-  "players": {
-    "findPlayers": "Spieler finden",
-    "searchPlayers": "Spieler suchen...",
-    "location": "Standort",
-    "ratingRange": "Bewertungsbereich",
-    "noPlayersFound": "Keine Spieler gefunden"
-  },
-  "leaderboard": {
-    "title": "Rangliste",
-    "filterLocation": "Nach Standort filtern...",
-    "filterRating": "Nach Bewertung filtern",
-    "sortByRating": "Bewertung",
-    "sortByWinRate": "Siegesquote"
+  "profile": {
+    "info": "Persönliche Informationen",
+    "name": "Name",
+    "email": "E-Mail",
+    "whatsapp": "WhatsApp-Nummer",
+    "bio": "Biografie",
+    "languageChanged": "Sprache erfolgreich aktualisiert"
   }
 }

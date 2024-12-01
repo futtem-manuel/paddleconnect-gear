@@ -13,6 +13,7 @@ import { MatchQuickView } from "@/components/match/MatchQuickView";
 import { VerificationActions } from "@/components/match/VerificationActions";
 
 const VerifyMatch = () => {
+  const { t } = useTranslation();
   const { matchId } = useParams();
   const navigate = useNavigate();
   const matchUrl = window.location.href;
@@ -48,18 +49,18 @@ const VerifyMatch = () => {
   const handleCopyUrl = async () => {
     try {
       await navigator.clipboard.writeText(matchUrl);
-      toast.success("Match URL copied to clipboard");
+      toast.success(t('match.urlCopied'));
     } catch (err) {
-      toast.error("Failed to copy URL");
+      toast.error(t('common.error'));
     }
   };
 
   const handleVerification = (verified: boolean) => {
     if (!verified) {
       setIsContested(true);
-      toast.error("Match result has been contested");
+      toast.error(t('match.resultContested'));
     } else {
-      toast.success("Match result verified");
+      toast.success(t('match.resultVerified'));
     }
     setShowVerificationDialog(false);
     setShowSummary(true);
@@ -69,12 +70,12 @@ const VerifyMatch = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Match Result",
-          text: "Check out this match result!",
+          title: t('match.shareTitle'),
+          text: t('match.shareText'),
           url: matchUrl,
         });
       } catch (err) {
-        toast.error("Failed to share");
+        toast.error(t('common.shareError'));
       }
     } else {
       handleCopyUrl();
@@ -95,7 +96,7 @@ const VerifyMatch = () => {
           {matchImages.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle>Match Photos</CardTitle>
+                <CardTitle>{t('match.photos')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
@@ -103,7 +104,7 @@ const VerifyMatch = () => {
                     <img
                       key={index}
                       src={URL.createObjectURL(image)}
-                      alt={`Match ${index + 1}`}
+                      alt={t('match.photoAlt', { number: index + 1 })}
                       className="rounded-lg w-full h-48 object-cover"
                     />
                   ))}
@@ -115,11 +116,11 @@ const VerifyMatch = () => {
           <div className="flex gap-4">
             <Button onClick={() => navigate("/dashboard")} className="flex-1">
               <Home className="h-4 w-4 mr-2" />
-              Dashboard
+              {t('common.dashboard')}
             </Button>
             <Button onClick={handleShare} className="flex-1">
               <Share2 className="h-4 w-4 mr-2" />
-              Share Result
+              {t('match.shareResult')}
             </Button>
           </div>
         </div>
@@ -132,7 +133,7 @@ const VerifyMatch = () => {
       <div className="max-w-2xl mx-auto space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Verify Match</CardTitle>
+            <CardTitle>{t('match.verify')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <VerificationExplanation />
@@ -145,7 +146,7 @@ const VerifyMatch = () => {
                 onClick={handleCopyUrl}
               >
                 <Copy className="h-4 w-4" />
-                Copy Match URL
+                {t('match.copyUrl')}
               </Button>
             </div>
 
@@ -163,15 +164,15 @@ const VerifyMatch = () => {
         <AlertDialog open={showVerificationDialog} onOpenChange={setShowVerificationDialog}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Verify Match Result</AlertDialogTitle>
+              <AlertDialogTitle>{t('match.verifyResult')}</AlertDialogTitle>
               <AlertDialogDescription>
-                Are you sure you want to verify this match result? This action cannot be undone.
+                {t('match.verifyConfirmation')}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
               <AlertDialogAction onClick={() => handleVerification(true)}>
-                Verify
+                {t('match.verify')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

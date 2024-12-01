@@ -12,6 +12,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { QRCodeSVG } from "qrcode.react";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const matchSchema = z.object({
   date: z.string(),
@@ -26,6 +27,7 @@ type MatchFormData = z.infer<typeof matchSchema>;
 
 const RecordMatch = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const form = useForm<MatchFormData>({
     resolver: zodResolver(matchSchema),
     defaultValues: {
@@ -40,8 +42,8 @@ const RecordMatch = () => {
 
   const onSubmit = (data: MatchFormData) => {
     console.log("Match recorded:", data);
-    toast.success("Match recorded successfully!", {
-      description: "The match has been saved to your history.",
+    toast.success(t('match.recordSuccess'), {
+      description: t('match.recordSuccessDesc'),
     });
     navigate("/dashboard");
   };
@@ -57,14 +59,14 @@ const RecordMatch = () => {
           className="mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
+          {t('common.back')}
         </Button>
 
         <Card className="border-none shadow-lg">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold">Record New Match</CardTitle>
+            <CardTitle className="text-2xl font-bold">{t('match.recordNew')}</CardTitle>
             <p className="text-muted-foreground">
-              Enter match details and select players to record a new match.
+              {t('match.enterDetails')}
             </p>
           </CardHeader>
           <CardContent>
@@ -76,7 +78,7 @@ const RecordMatch = () => {
                     name="date"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Date</FormLabel>
+                        <FormLabel>{t('match.date')}</FormLabel>
                         <FormControl>
                           <Input type="date" {...field} className="bg-white" />
                         </FormControl>
@@ -89,10 +91,10 @@ const RecordMatch = () => {
                     name="venue"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Venue</FormLabel>
+                        <FormLabel>{t('match.venue')}</FormLabel>
                         <FormControl>
                           <Input 
-                            placeholder="Enter venue name" 
+                            placeholder={t('match.enterVenue')}
                             {...field} 
                             className="bg-white"
                           />
@@ -104,7 +106,7 @@ const RecordMatch = () => {
 
                 <div className="space-y-6">
                   <div className="bg-white p-6 rounded-lg border shadow-sm">
-                    <h3 className="text-lg font-semibold mb-4">Teams</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('match.teams')}</h3>
                     <TeamSelection 
                       onTeamsConfirmed={() => {}}
                       initialPlayers={[]}
@@ -112,7 +114,7 @@ const RecordMatch = () => {
                   </div>
 
                   <div className="bg-white p-6 rounded-lg border shadow-sm">
-                    <h3 className="text-lg font-semibold mb-4">Score</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('match.score')}</h3>
                     <ScoreInput onScoreSubmit={() => {}} />
                   </div>
 
@@ -131,7 +133,7 @@ const RecordMatch = () => {
                   <div className="flex-shrink-0">
                     <QRCodeSVG value={matchUrl} size={120} />
                     <p className="text-sm text-muted-foreground mt-2 text-center">
-                      Scan to verify match
+                      {t('match.scanToVerify')}
                     </p>
                   </div>
                   <div className="flex gap-4">
@@ -140,9 +142,9 @@ const RecordMatch = () => {
                       variant="outline"
                       onClick={() => navigate("/dashboard")}
                     >
-                      Cancel
+                      {t('common.cancel')}
                     </Button>
-                    <Button type="submit">Record Match</Button>
+                    <Button type="submit">{t('match.recordMatch')}</Button>
                   </div>
                 </div>
               </form>

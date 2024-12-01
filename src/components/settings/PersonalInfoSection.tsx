@@ -21,7 +21,7 @@ export const PersonalInfoSection = () => {
           <Label htmlFor="email">{t('settings.email')}</Label>
           <Input id="email" defaultValue="john@example.com" disabled />
           <p className="text-sm text-muted-foreground">
-            Email cannot be changed
+            {t('settings.emailCannotBeChanged')}
           </p>
         </div>
 
@@ -34,7 +34,7 @@ export const PersonalInfoSection = () => {
           <Label htmlFor="bio">{t('settings.bio')}</Label>
           <Textarea
             id="bio"
-            placeholder="Tell others about yourself..."
+            placeholder={t('settings.bioPlaceholder')}
             className="h-32"
           />
         </div>

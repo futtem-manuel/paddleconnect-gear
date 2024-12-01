@@ -1,20 +1,22 @@
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { useTranslation } from 'react-i18next';
 
 export const PrivacySection = () => {
   const [isPublicProfile, setIsPublicProfile] = useState(true);
   const [showWhatsApp, setShowWhatsApp] = useState(true);
+  const { t } = useTranslation();
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold">Privacy Settings</h3>
+      <h3 className="text-lg font-semibold">{t('settings.privacy')}</h3>
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label>Public Profile</Label>
+          <Label>{t('settings.publicProfile')}</Label>
           <p className="text-sm text-muted-foreground">
-            Allow others to see your profile
+            {t('settings.publicProfileDesc')}
           </p>
         </div>
         <Switch
@@ -25,9 +27,9 @@ export const PrivacySection = () => {
 
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label>Show WhatsApp</Label>
+          <Label>{t('settings.showWhatsApp')}</Label>
           <p className="text-sm text-muted-foreground">
-            Display your WhatsApp number to connections
+            {t('settings.showWhatsAppDesc')}
           </p>
         </div>
         <Switch

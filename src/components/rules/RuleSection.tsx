@@ -2,15 +2,13 @@ import React from 'react';
 import { useTranslation } from "react-i18next";
 
 interface RuleSectionProps {
-  titleKey: string;
-  contentKey: string;
+  title: string;
+  content: string | React.ReactNode;
   searchQuery: string;
 }
 
-const RuleSection = ({ titleKey, contentKey, searchQuery }: RuleSectionProps) => {
+const RuleSection = ({ title, content, searchQuery }: RuleSectionProps) => {
   const { t } = useTranslation();
-  const title = t(titleKey);
-  const content = t(contentKey);
 
   const highlightText = (text: string) => {
     if (!searchQuery) return text;
@@ -25,14 +23,18 @@ const RuleSection = ({ titleKey, contentKey, searchQuery }: RuleSectionProps) =>
 
   const shouldShow = !searchQuery || 
     title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    content.toLowerCase().includes(searchQuery.toLowerCase());
+    (typeof content === 'string' && content.toLowerCase().includes(searchQuery.toLowerCase()));
 
   if (!shouldShow) return null;
 
   return (
     <section>
       <h2 className="text-xl font-semibold mb-3">{highlightText(title)}</h2>
-      <p>{highlightText(content)}</p>
+      {typeof content === 'string' ? (
+        <p>{highlightText(content)}</p>
+      ) : (
+        content
+      )}
     </section>
   );
 };

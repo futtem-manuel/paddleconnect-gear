@@ -1,4 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
+import PositionRules from "./sections/PositionRules";
 import RuleSection from "./RuleSection";
 
 interface RulesContentProps {
@@ -9,22 +10,22 @@ const RulesContent = ({ searchQuery }: RulesContentProps) => {
   return (
     <ScrollArea className="h-[70vh] pr-4">
       <div className="space-y-6">
-        <RuleSection title="RULE 1. POSITION OF THE PLAYERS" searchQuery={searchQuery}>
-          The game is played in pairs. The players stand in the areas located on either side of the net. The server puts the ball into play and the receiver returns the ball.
-          The receiver may stand in any part of their area of the court as can the partner of the receiver and the partner of the server.
-          Players change sides when the number of games played is an odd number. If an error is made and the players do not change sides they should rectify the error as soon as it is discovered to follow the correct order of play.
-          Maximum rest time between games is 90 seconds.
-        </RuleSection>
+        <PositionRules searchQuery={searchQuery} />
         
-                <section>
-                  <h2 className="text-xl font-semibold mb-3">RULE 2. CHOICE OF SIDE AND OF SERVICE</h2>
-                  <p>The choice of sides and the right to serve in the first game is decided by a draw. The pair who win the draw have the right to choose between:</p>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>Serving or receiving the service, in which case the other pair choose the side of the court</li>
-                    <li>The side of the court, in which case the other pair can choose to serve or receive</li>
-                    <li>Requesting that their opponents choose first</li>
-                  </ul>
-                </section>
+        <RuleSection
+          title="RULE 2. CHOICE OF SIDE AND OF SERVICE"
+          content={
+            <>
+              <p>The choice of sides and the right to serve in the first game is decided by a draw. The pair who win the draw have the right to choose between:</p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Serving or receiving the service, in which case the other pair choose the side of the court</li>
+                <li>The side of the court, in which case the other pair can choose to serve or receive</li>
+                <li>Requesting that their opponents choose first</li>
+              </ul>
+            </>
+          }
+          searchQuery={searchQuery}
+        />
 
                 <section>
                   <h2 className="text-xl font-semibold mb-3">RULE 3. THE SERVE</h2>

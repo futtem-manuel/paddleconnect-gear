@@ -54,5 +54,34 @@
     "sampleMessage2": "Great game yesterday! We should play again soon.",
     "sampleMessage3": "Thanks for the tips on improving my backhand!",
     "timeAgo": "{{time}} ago"
+  },
+  "profile": {
+    "info": "Personal Info",
+    "name": "Name",
+    "email": "Email",
+    "emailLocked": "Email cannot be changed",
+    "whatsapp": "WhatsApp",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about yourself...",
+    "privacy": "Privacy",
+    "publicProfile": "Public Profile",
+    "publicProfileDesc": "Make your profile visible to other players",
+    "showWhatsApp": "Show WhatsApp",
+    "showWhatsAppDesc": "Allow other players to see your WhatsApp number"
+  },
+  "match": {
+    "verify": "Verify Match",
+    "summary": "Match Summary",
+    "photos": "Match Photos",
+    "photoAlt": "Match photo {number}",
+    "share": "Share",
+    "shareTitle": "Match Result",
+    "shareText": "Check out this match result",
+    "urlCopied": "Match URL copied to clipboard",
+    "resultContested": "Match result has been contested",
+    "resultVerified": "Match result has been verified",
+    "verifyResult": "Verify Result",
+    "verifyConfirmation": "Are you sure you want to verify this match result?",
+    "copyUrl": "Copy Match URL"
   }
 }

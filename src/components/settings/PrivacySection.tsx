@@ -10,13 +10,13 @@ export const PrivacySection = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold">{t('settings.privacy')}</h3>
+      <h3 className="text-lg font-semibold">{t('profile.privacy')}</h3>
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label>{t('settings.publicProfile')}</Label>
+          <Label>{t('profile.publicProfile')}</Label>
           <p className="text-sm text-muted-foreground">
-            {t('settings.publicProfileDesc')}
+            {t('profile.publicProfileDesc')}
           </p>
         </div>
         <Switch
@@ -27,9 +27,9 @@ export const PrivacySection = () => {
 
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label>{t('settings.showWhatsApp')}</Label>
+          <Label>{t('profile.showWhatsApp')}</Label>
           <p className="text-sm text-muted-foreground">
-            {t('settings.showWhatsAppDesc')}
+            {t('profile.showWhatsAppDesc')}
           </p>
         </div>
         <Switch

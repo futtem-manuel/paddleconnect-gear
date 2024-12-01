@@ -10,31 +10,31 @@ export const PersonalInfoSection = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">{t('settings.personalInfo')}</h3>
+        <h3 className="text-lg font-semibold">{t('profile.info')}</h3>
         
         <div className="space-y-2">
-          <Label htmlFor="name">{t('settings.fullName')}</Label>
+          <Label htmlFor="name">{t('profile.name')}</Label>
           <Input id="name" defaultValue="John Doe" />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">{t('settings.email')}</Label>
+          <Label htmlFor="email">{t('profile.email')}</Label>
           <Input id="email" defaultValue="john@example.com" disabled />
           <p className="text-sm text-muted-foreground">
-            {t('settings.emailCannotBeChanged')}
+            {t('profile.emailLocked')}
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="whatsapp">{t('settings.whatsapp')}</Label>
+          <Label htmlFor="whatsapp">{t('profile.whatsapp')}</Label>
           <Input id="whatsapp" placeholder="+1234567890" />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="bio">{t('settings.bio')}</Label>
+          <Label htmlFor="bio">{t('profile.bio')}</Label>
           <Textarea
             id="bio"
-            placeholder={t('settings.bioPlaceholder')}
+            placeholder={t('profile.bioPlaceholder')}
             className="h-32"
           />
         </div>

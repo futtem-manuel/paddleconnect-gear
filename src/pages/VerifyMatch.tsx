@@ -87,13 +87,20 @@ const VerifyMatch = () => {
     return (
       <div className="min-h-screen bg-background p-6">
         <div className="max-w-2xl mx-auto space-y-6">
-          <MatchSummary
-            date={matchData.date}
-            venue={matchData.venue}
-            teams={matchData.teams}
-            isContested={isContested}
-          />
-          
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('match.summary')}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <MatchSummary
+                date={matchData.date}
+                venue={matchData.venue}
+                teams={matchData.teams}
+                isContested={isContested}
+              />
+            </CardContent>
+          </Card>
+
           {matchImages.length > 0 && (
             <Card>
               <CardHeader>
@@ -121,7 +128,7 @@ const VerifyMatch = () => {
             </Button>
             <Button onClick={handleShare} className="flex-1">
               <Share2 className="h-4 w-4 mr-2" />
-              {t('match.shareResult')}
+              {t('match.share')}
             </Button>
           </div>
         </div>

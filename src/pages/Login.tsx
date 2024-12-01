@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault();
     
     if (!email || !password) {
-      toast.error(t('auth.allFieldsRequired'));
+      toast.error("Please enter both email and password");
       return;
     }
 
@@ -35,7 +35,7 @@ const Login = () => {
       if (error) {
         console.error('Login error:', error);
         if (error.message.includes("Invalid login credentials")) {
-          toast.error("Invalid email or password. Please check your credentials and try again.");
+          toast.error("Account not found. Please register first or check your credentials.");
         } else {
           toast.error(error.message);
         }

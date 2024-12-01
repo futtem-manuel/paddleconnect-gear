@@ -1,30 +1,46 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { PlayerSearchFilters } from "@/components/players/PlayerSearchFilters";
 import { PlayerCard } from "@/components/players/PlayerCard";
 import { PlayerDialog } from "@/components/players/PlayerDialog";
 import { eloToDisplayRating } from "@/utils/rankingUtils";
-
-// Mock data - would be replaced with API call
-const mockPlayers = [
-  { id: 1, name: "Sarah Johnson", eloRating: 1350, avatar: "", location: "San Francisco", matchesPlayed: 25, bio: "Competitive player with 5 years of experience" },
-  { id: 2, name: "Mike Chen", eloRating: 1275, avatar: "", location: "Los Angeles", matchesPlayed: 18, bio: "Casual player looking for friendly matches" },
-  { id: 3, name: "Ana Silva", eloRating: 1420, avatar: "", location: "San Diego", matchesPlayed: 32, bio: "Tournament player since 2020" },
-];
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const FindPlayers = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [ratingRange, setRatingRange] = useState([1, 7]);
-  const [selectedPlayer, setSelectedPlayer] = useState<typeof mockPlayers[0] | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<any | null>(null);
   const [isDragging, setIsDragging] = useState({ min: false, max: false });
+  const [players, setPlayers] = useState<any[]>([]);
 
-  const filteredPlayers = mockPlayers.filter(player => {
-    const matchesSearch = player.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      player.location.toLowerCase().includes(searchQuery.toLowerCase());
-    const playerRating = eloToDisplayRating(player.eloRating);
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      const { data: profiles, error } = await supabase
+        .from('profiles')
+        .select('*');
+
+      if (error) {
+        console.error('Error fetching players:', error);
+        toast.error(t('errors.fetchPlayers'));
+        return;
+      }
+
+      setPlayers(profiles || []);
+    };
+
+    fetchPlayers();
+  }, [t]);
+
+  const filteredPlayers = players.filter(player => {
+    const matchesSearch = player.full_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      player.location?.toLowerCase().includes(searchQuery.toLowerCase());
+    const playerRating = eloToDisplayRating(player.rating || 1200);
     const matchesRating = playerRating >= ratingRange[0] && playerRating <= ratingRange[1];
     return matchesSearch && matchesRating;
   });
@@ -62,7 +78,14 @@ const FindPlayers = () => {
           {filteredPlayers.map((player) => (
             <PlayerCard
               key={player.id}
-              player={player}
+              player={{
+                id: player.id,
+                name: player.full_name || 'Unknown Player',
+                eloRating: player.rating || 1200,
+                avatar: player.avatar_url || '',
+                location: player.location || 'Unknown Location',
+                matchesPlayed: 0 // TODO: Add matches count
+              }}
               onPlayerClick={() => setSelectedPlayer(player)}
             />
           ))}

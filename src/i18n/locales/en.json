@@ -37,41 +37,22 @@
     "sortBy": "Sort by...",
     "allRatings": "All Ratings"
   },
-  "settings": {
-    "language": "Language",
-    "selectLanguage": "Select your preferred language",
-    "personalInfo": "Personal Information",
-    "privacy": "Privacy Settings",
-    "fullName": "Full Name",
-    "email": "Email",
-    "whatsapp": "WhatsApp Number",
-    "bio": "Bio",
-    "languageChanged": "Language updated successfully"
-  },
-  "match": {
-    "recordNew": "Record New Match",
-    "enterDetails": "Enter match details and select players to record a new match",
-    "date": "Date",
-    "venue": "Venue",
-    "enterVenue": "Enter venue name",
-    "teams": "Teams",
-    "score": "Score",
-    "advanced": "Advanced Details",
-    "scanToVerify": "Scan to verify match",
-    "recordMatch": "Record Match"
-  },
-  "players": {
+  "dashboard": {
+    "matchesPlayed": "Matches Played",
+    "winRate": "Win Rate",
+    "connectedPlayers": "Connected Players",
+    "recordNewMatch": "Record New Match",
     "findPlayers": "Find Players",
-    "searchPlayers": "Search players...",
-    "location": "Location",
-    "ratingRange": "Rating Range",
-    "noPlayersFound": "No players found"
+    "nearbyVenues": "Nearby Padel Venues",
+    "distanceAway": "{{distance}} away",
+    "viewOnGoogle": "View on Google",
+    "viewRules": "View Official Rules",
+    "poweredBy": "App powered by Futtem LLC"
   },
-  "leaderboard": {
-    "title": "Leaderboard",
-    "filterLocation": "Filter by location...",
-    "filterRating": "Filter by rating",
-    "sortByRating": "Rating",
-    "sortByWinRate": "Win Rate"
+  "messages": {
+    "sampleMessage1": "Hey, would you like to play a match this weekend?",
+    "sampleMessage2": "Great game yesterday! We should play again soon.",
+    "sampleMessage3": "Thanks for the tips on improving my backhand!",
+    "timeAgo": "{{time}} ago"
   }
 }

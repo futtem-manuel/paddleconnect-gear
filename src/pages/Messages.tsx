@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageDialog } from "@/components/messaging/MessageDialog";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Message {
   id: string;
@@ -17,6 +18,7 @@ interface Message {
 
 const Messages = () => {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const { t } = useTranslation();
   
   // This would come from your backend in a real app
   const messages: Message[] = [
@@ -26,8 +28,8 @@ const Messages = () => {
         name: "Alice Smith",
         avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100",
       },
-      lastMessage: "Hey, would you like to play a match this weekend?",
-      timestamp: "2 hours ago",
+      lastMessage: t('messages.sampleMessage1'),
+      timestamp: t('messages.timeAgo', { time: '2 hours' }),
       unread: true,
     },
     {
@@ -35,8 +37,8 @@ const Messages = () => {
       sender: {
         name: "Bob Johnson",
       },
-      lastMessage: "Great game yesterday! We should play again soon.",
-      timestamp: "1 day ago",
+      lastMessage: t('messages.sampleMessage2'),
+      timestamp: t('messages.timeAgo', { time: '1 day' }),
       unread: false,
     },
     {
@@ -45,15 +47,15 @@ const Messages = () => {
         name: "Carol White",
         avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
       },
-      lastMessage: "Thanks for the tips on improving my backhand!",
-      timestamp: "2 days ago",
+      lastMessage: t('messages.sampleMessage3'),
+      timestamp: t('messages.timeAgo', { time: '2 days' }),
       unread: false,
     },
   ];
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-6">Messages</h1>
+      <h1 className="text-2xl font-bold mb-6">{t('common.messages')}</h1>
       
       <Card className="max-w-2xl mx-auto">
         <ScrollArea className="h-[calc(100vh-200px)]">

@@ -37,41 +37,22 @@
     "sortBy": "Ordenar por...",
     "allRatings": "Todas las puntuaciones"
   },
-  "settings": {
-    "language": "Idioma",
-    "selectLanguage": "Selecciona tu idioma preferido",
-    "personalInfo": "Información Personal",
-    "privacy": "Configuración de Privacidad",
-    "fullName": "Nombre Completo",
-    "email": "Correo Electrónico",
-    "whatsapp": "Número de WhatsApp",
-    "bio": "Biografía",
-    "languageChanged": "Idioma actualizado correctamente"
-  },
-  "match": {
-    "recordNew": "Registrar Nuevo Partido",
-    "enterDetails": "Ingresa los detalles del partido y selecciona los jugadores",
-    "date": "Fecha",
-    "venue": "Lugar",
-    "enterVenue": "Ingresa el nombre del lugar",
-    "teams": "Equipos",
-    "score": "Puntuación",
-    "advanced": "Detalles Avanzados",
-    "scanToVerify": "Escanea para verificar el partido",
-    "recordMatch": "Registrar Partido"
-  },
-  "players": {
+  "dashboard": {
+    "matchesPlayed": "Partidos Jugados",
+    "winRate": "Tasa de Victoria",
+    "connectedPlayers": "Jugadores Conectados",
+    "recordNewMatch": "Registrar Nuevo Partido",
     "findPlayers": "Buscar Jugadores",
-    "searchPlayers": "Buscar jugadores...",
-    "location": "Ubicación",
-    "ratingRange": "Rango de Puntuación",
-    "noPlayersFound": "No se encontraron jugadores"
+    "nearbyVenues": "Canchas de Padel Cercanas",
+    "distanceAway": "a {{distance}}",
+    "viewOnGoogle": "Ver en Google",
+    "viewRules": "Ver Reglas Oficiales",
+    "poweredBy": "Aplicación desarrollada por Futtem LLC"
   },
-  "leaderboard": {
-    "title": "Clasificación",
-    "filterLocation": "Filtrar por ubicación...",
-    "filterRating": "Filtrar por puntuación",
-    "sortByRating": "Puntuación",
-    "sortByWinRate": "% Victorias"
+  "messages": {
+    "sampleMessage1": "¡Hola! ¿Te gustaría jugar un partido este fin de semana?",
+    "sampleMessage2": "¡Gran partido ayer! Deberíamos jugar de nuevo pronto.",
+    "sampleMessage3": "¡Gracias por los consejos para mejorar mi revés!",
+    "timeAgo": "hace {{time}}"
   }
 }

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
-import { PlayerSearchHeader } from "@/components/players/PlayerSearchHeader";
+import { useTranslation } from "react-i18next";
 import { PlayerSearchFilters } from "@/components/players/PlayerSearchFilters";
 import { PlayerCard } from "@/components/players/PlayerCard";
 import { PlayerDialog } from "@/components/players/PlayerDialog";
@@ -14,6 +14,7 @@ const mockPlayers = [
 ];
 
 const FindPlayers = () => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [ratingRange, setRatingRange] = useState([1, 7]);
@@ -31,11 +32,17 @@ const FindPlayers = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
-        <PlayerSearchHeader />
+        <div className="flex justify-center mb-8">
+          <img
+            src="/lovable-uploads/fd2b445d-f8f6-4612-8dc4-42911f72395b.png"
+            alt="PaddleRank Logo"
+            className="h-12 md:h-16 object-contain"
+          />
+        </div>
 
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Find Players</CardTitle>
+            <CardTitle>{t('players.findPlayers')}</CardTitle>
           </CardHeader>
           <CardContent>
             <PlayerSearchFilters

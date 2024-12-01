@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { useTranslation } from "react-i18next";
 
 interface PlayerSearchFiltersProps {
   searchQuery: string;
@@ -24,12 +25,14 @@ export const PlayerSearchFilters = ({
   isDragging,
   setIsDragging,
 }: PlayerSearchFiltersProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       <div className="relative">
         <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search by name..."
+          placeholder={t('players.searchPlayers')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-9"
@@ -37,10 +40,10 @@ export const PlayerSearchFilters = ({
       </div>
       
       <div className="space-y-2">
-        <Label>Location</Label>
+        <Label>{t('common.location')}</Label>
         <Input
           type="text"
-          placeholder="Enter location..."
+          placeholder={t('players.filterByLocation')}
           value={selectedLocation}
           onChange={(e) => setSelectedLocation(e.target.value)}
           className="w-full"
@@ -49,15 +52,43 @@ export const PlayerSearchFilters = ({
 
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <Label>Rating Range</Label>
+          <Label>{t('players.ratingRange')}</Label>
           <div className="flex items-center gap-2 text-sm">
-            <span className="min-w-[40px] text-center bg-muted rounded px-2 py-1">
-              {ratingRange[0].toFixed(1)}
-            </span>
+            <div className="flex flex-col items-center">
+              <span className="text-xs text-muted-foreground">Min</span>
+              <input
+                type="number"
+                min="1"
+                max="7"
+                step="0.1"
+                value={ratingRange[0]}
+                onChange={(e) => {
+                  const newValue = parseFloat(e.target.value);
+                  if (newValue <= ratingRange[1]) {
+                    setRatingRange([newValue, ratingRange[1]]);
+                  }
+                }}
+                className="w-16 text-center bg-muted rounded px-2 py-1"
+              />
+            </div>
             <span>-</span>
-            <span className="min-w-[40px] text-center bg-muted rounded px-2 py-1">
-              {ratingRange[1].toFixed(1)}
-            </span>
+            <div className="flex flex-col items-center">
+              <span className="text-xs text-muted-foreground">Max</span>
+              <input
+                type="number"
+                min="1"
+                max="7"
+                step="0.1"
+                value={ratingRange[1]}
+                onChange={(e) => {
+                  const newValue = parseFloat(e.target.value);
+                  if (newValue >= ratingRange[0]) {
+                    setRatingRange([ratingRange[0], newValue]);
+                  }
+                }}
+                className="w-16 text-center bg-muted rounded px-2 py-1"
+              />
+            </div>
           </div>
         </div>
         <div className="pt-2">

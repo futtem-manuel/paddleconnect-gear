@@ -35,7 +35,7 @@ const Login = () => {
       if (error) {
         console.error('Login error:', error);
         if (error.message.includes("Invalid login credentials")) {
-          toast.error(t('auth.invalidCredentials'));
+          toast.error("Invalid email or password. Please check your credentials and try again.");
         } else {
           toast.error(error.message);
         }
@@ -43,12 +43,12 @@ const Login = () => {
       }
 
       if (data.user) {
-        toast.success(t('auth.loginSuccess'));
+        toast.success("Successfully logged in!");
         navigate("/dashboard");
       }
     } catch (error: any) {
       console.error('Login error:', error);
-      toast.error(t('auth.loginError'));
+      toast.error("An error occurred during login. Please try again.");
     } finally {
       setIsLoading(false);
     }

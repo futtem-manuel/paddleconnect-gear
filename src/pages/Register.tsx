@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/select";
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,13 +36,13 @@ const Register = () => {
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <CardTitle className="text-2xl font-bold">Create account</CardTitle>
+            <CardTitle className="text-2xl font-bold">{t('common.register')}</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">{t('settings.fullName')}</Label>
               <Input
                 id="name"
                 placeholder="John Doe"
@@ -49,7 +51,7 @@ const Register = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('common.email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -59,7 +61,7 @@ const Register = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('common.password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -68,15 +70,15 @@ const Register = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="initial-ranking">Initial Ranking</Label>
+              <Label htmlFor="initial-ranking">{t('common.rating')}</Label>
               <Select>
                 <SelectTrigger className="neu-button">
-                  <SelectValue placeholder="Select your level" />
+                  <SelectValue placeholder={t('players.ratingRange')} />
                 </SelectTrigger>
                 <SelectContent>
-                  {[1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0].map((ranking) => (
-                    <SelectItem key={ranking} value={ranking.toString()}>
-                      {ranking.toFixed(1)}
+                  {[1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0].map((rating) => (
+                    <SelectItem key={rating} value={rating.toString()}>
+                      {rating.toFixed(1)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -85,27 +87,23 @@ const Register = () => {
             <div className="flex items-center space-x-2">
               <Checkbox id="terms" required />
               <Label htmlFor="terms" className="text-sm">
-                I agree to the{" "}
-                <Link to="/legal" className="text-primary hover:underline">
-                  Terms of Service and Privacy Policy
-                </Link>
+                {t('common.joinCommunity')}
               </Label>
             </div>
             <Button
               type="submit"
               className="w-full neu-button bg-primary text-white hover:bg-primary/90"
             >
-              Create Account
+              {t('common.register')}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
-            <span className="text-muted-foreground">Already have an account? </span>
             <Button
               variant="link"
               className="text-primary p-0"
               onClick={() => navigate("/login")}
             >
-              Sign in
+              {t('common.login')}
             </Button>
           </div>
         </CardContent>

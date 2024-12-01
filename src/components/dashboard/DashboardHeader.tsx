@@ -4,6 +4,8 @@ import { Plus, Users, Book } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PlayerConnections } from "./PlayerConnections";
 import { ProfileHeader } from "./ProfileHeader";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const DashboardHeader = ({ 
   userProfile, 
@@ -16,6 +18,26 @@ export const DashboardHeader = ({
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const handleRecordMatch = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      toast.error(t('auth.required'));
+      navigate('/login');
+      return;
+    }
+    navigate("/record-match");
+  };
+
+  const handleFindPlayers = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      toast.error(t('auth.required'));
+      navigate('/login');
+      return;
+    }
+    navigate("/find-players");
+  };
 
   return (
     <div className="space-y-6">
@@ -43,7 +65,7 @@ export const DashboardHeader = ({
         <Button 
           className="h-auto py-4"
           variant="default"
-          onClick={() => navigate("/record-match")}
+          onClick={handleRecordMatch}
         >
           <Plus className="h-5 w-5 mr-2" />
           {t('dashboard.recordNewMatch')}
@@ -51,7 +73,7 @@ export const DashboardHeader = ({
         <Button 
           className="neu-button h-auto py-4"
           variant="outline"
-          onClick={() => navigate("/find-players")}
+          onClick={handleFindPlayers}
         >
           <Users className="h-5 w-5 mr-2" />
           {t('dashboard.findPlayers')}

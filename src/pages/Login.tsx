@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,26 +6,50 @@ import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement login logic
-    navigate("/dashboard");
+    setIsLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.user) {
+        toast.success(t('auth.loginSuccess'));
+        navigate("/dashboard");
+      }
+    } catch (error: any) {
+      toast.error(error.message || t('auth.loginError'));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-background p-6 flex flex-col items-center justify-center">
-      <Card className="w-full max-w-md neu-card">
+      <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
-              className="neu-button"
               onClick={() => navigate("/")}
+              disabled={isLoading}
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
@@ -40,7 +65,9 @@ const Login = () => {
                 type="email"
                 placeholder="m@example.com"
                 required
-                className="neu-button"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -49,14 +76,17 @@ const Login = () => {
                 id="password"
                 type="password"
                 required
-                className="neu-button"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
               />
             </div>
             <Button
               type="submit"
-              className="w-full neu-button bg-primary text-white hover:bg-primary/90"
+              className="w-full"
+              disabled={isLoading}
             >
-              {t('common.signIn')}
+              {isLoading ? t('common.loading') : t('common.signIn')}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
@@ -65,6 +95,7 @@ const Login = () => {
               variant="link"
               className="text-primary p-0"
               onClick={() => navigate("/register")}
+              disabled={isLoading}
             >
               {t('common.signUp')}
             </Button>

@@ -8,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,40 +16,42 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     
     if (!email || !password) {
-      toast.error("Please enter both email and password");
+      setError(t('auth.provideCredentials'));
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email: email.toLowerCase().trim(),
         password,
       });
 
-      if (error) {
-        console.error('Login error:', error);
-        if (error.message.includes("Invalid login credentials")) {
-          toast.error("Account not found. Please register first or check your credentials.");
+      if (signInError) {
+        if (signInError.message.includes("Invalid login credentials")) {
+          setError(t('auth.invalidCredentials'));
+          toast.error(t('auth.pleaseRegister'));
         } else {
-          toast.error(error.message);
+          setError(signInError.message);
         }
         return;
       }
 
       if (data.user) {
-        toast.success("Successfully logged in!");
+        toast.success(t('auth.loginSuccess'));
         navigate("/dashboard");
       }
     } catch (error: any) {
+      setError(t('auth.generalError'));
       console.error('Login error:', error);
-      toast.error("An error occurred during login. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -70,6 +73,11 @@ const Login = () => {
           </div>
         </CardHeader>
         <CardContent>
+          {error && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">{t('common.email')}</Label>

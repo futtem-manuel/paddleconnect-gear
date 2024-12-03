@@ -37,6 +37,24 @@
     "sortBy": "Sort by...",
     "allRatings": "All Ratings"
   },
+  "recordMatch": {
+    "title": "Record New Match",
+    "subtitle": "Enter match details and select players",
+    "date": "Date",
+    "venue": "Venue",
+    "enterVenue": "Enter venue name",
+    "teams": "Teams",
+    "score": "Score",
+    "advanced": "Advanced Details",
+    "scanToVerify": "Scan to verify match",
+    "submit": "Record Match",
+    "searchPlayers": "Search players or enter new name...",
+    "connections": "Your Connections",
+    "unknownPlayer": "Unknown Player",
+    "addToTeam": "Add \"{{name}}\" to Team {{team}}",
+    "addToTeam1": "Add to Team 1",
+    "addToTeam2": "Add to Team 2"
+  },
   "dashboard": {
     "matchesPlayed": "Matches Played",
     "winRate": "Win Rate",
@@ -84,16 +102,4 @@
     "verifyConfirmation": "Are you sure you want to verify this match result?",
     "copyUrl": "Copy Match URL"
   },
-  "recordMatch": {
-    "title": "Record New Match",
-    "subtitle": "Enter match details and select players",
-    "date": "Date",
-    "venue": "Venue",
-    "enterVenue": "Enter venue name",
-    "teams": "Teams",
-    "score": "Score",
-    "advanced": "Advanced Details",
-    "scanToVerify": "Scan to verify match",
-    "submit": "Record Match"
-  }
 }

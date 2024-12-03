@@ -22,49 +22,7 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
   const [team1, setTeam1] = useState<Player[]>([]);
   const [team2, setTeam2] = useState<Player[]>([]);
   const [isDoubles, setIsDoubles] = useState(true);
-  const [connections, setConnections] = useState<Player[]>([]);
   const maxPlayersPerTeam = isDoubles ? 2 : 1;
-
-  useEffect(() => {
-    const fetchConnections = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast.error("Please log in to record a match");
-        return;
-      }
-
-      const { data: connectionsData, error } = await supabase
-        .from('connections')
-        .select(`
-          connected_user_id,
-          connected_user:profiles!connections_connected_user_id_fkey(
-            id,
-            full_name,
-            avatar_url
-          )
-        `)
-        .eq('user_id', user.id)
-        .eq('status', 'accepted');
-
-      if (error) {
-        console.error('Error fetching connections:', error);
-        toast.error("Failed to load your connections");
-        return;
-      }
-
-      const formattedConnections = connectionsData
-        .map(conn => ({
-          id: conn.connected_user.id,
-          name: conn.connected_user.full_name || 'Unknown Player',
-          avatar_url: conn.connected_user.avatar_url
-        }))
-        .filter(conn => conn.name !== 'Unknown Player');
-
-      setConnections(formattedConnections);
-    };
-
-    fetchConnections();
-  }, []);
 
   useEffect(() => {
     // Reset teams when switching between singles and doubles
@@ -114,13 +72,7 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
     onTeamsConfirmed({ team1, team2 });
   }, [team1, team2, onTeamsConfirmed]);
 
-  const filteredPlayers = searchValue
-    ? connections.filter(player =>
-        player.name.toLowerCase().includes(searchValue.toLowerCase()) &&
-        !team1.some(p => p.id === player.id) &&
-        !team2.some(p => p.id === player.id)
-      )
-    : [];
+  const selectedPlayers = [...team1, ...team2];
 
   return (
     <div className="space-y-6">
@@ -137,12 +89,12 @@ export const TeamSelection = ({ onTeamsConfirmed, initialPlayers = [] }: TeamSel
         <PlayerSearch
           searchValue={searchValue}
           onSearchChange={setSearchValue}
-          filteredPlayers={filteredPlayers}
           onAddPlayer={handleAddPlayer}
           onAddGhostPlayer={handleAddGhostPlayer}
           team1Count={team1.length}
           team2Count={team2.length}
           maxPlayersPerTeam={maxPlayersPerTeam}
+          selectedPlayers={selectedPlayers}
         />
       </div>
 

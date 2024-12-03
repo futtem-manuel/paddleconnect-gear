@@ -26,6 +26,7 @@ const Login = () => {
     try {
       if (!email || !password) {
         setError("Please enter both email and password");
+        setIsLoading(false);
         return;
       }
 
@@ -36,7 +37,8 @@ const Login = () => {
 
       if (signInError) {
         if (signInError.message.includes("Invalid login credentials")) {
-          setError("Invalid email or password. Please check your credentials or register if you don't have an account.");
+          setError("No account found with these credentials. Please register first or check your email/password.");
+          toast.error("Don't have an account? Please register first!");
         } else {
           setError(signInError.message);
         }

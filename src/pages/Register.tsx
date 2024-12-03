@@ -59,7 +59,7 @@ const Register = () => {
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <CardTitle className="text-2xl font-bold">{t('common.createAccount')}</CardTitle>
+            <CardTitle className="text-2xl font-bold">{t('common.joinCommunity')}</CardTitle>
           </div>
         </CardHeader>
         <CardContent>

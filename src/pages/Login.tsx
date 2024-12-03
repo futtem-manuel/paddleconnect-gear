@@ -36,8 +36,18 @@ const Login = () => {
 
       if (signInError) {
         if (signInError.message.includes("Email not confirmed")) {
-          setError("Please check your email and confirm your account before logging in.");
+          setError("Please check your email and verify your account before logging in. Check your spam folder if you don't see the verification email.");
           toast.error("Email verification required!");
+          
+          // Offer to resend verification email
+          const { error: resendError } = await supabase.auth.resend({
+            type: 'signup',
+            email: email.toLowerCase().trim(),
+          });
+          
+          if (!resendError) {
+            toast.success("Verification email resent! Please check your inbox.");
+          }
         } else if (signInError.message.includes("Invalid login credentials")) {
           setError("No account found with these credentials. Please register first or check your email/password.");
           toast.error("Don't have an account? Please register first!");

@@ -44,6 +44,7 @@ export const PlayerSearch = ({
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
 
+        // Fetch connections where the user is either the initiator or the recipient
         const { data: connectionsData, error } = await supabase
           .from('connections')
           .select(`
@@ -51,20 +52,29 @@ export const PlayerSearch = ({
               id,
               full_name,
               avatar_url
+            ),
+            user:profiles!connections_user_id_fkey(
+              id,
+              full_name,
+              avatar_url
             )
           `)
-          .eq('user_id', user.id)
+          .or(`user_id.eq.${user.id},connected_user_id.eq.${user.id}`)
           .eq('status', 'accepted');
 
         if (error) throw error;
 
-        const formattedConnections = connectionsData
-          .map(conn => ({
-            id: conn.connected_user.id,
-            name: conn.connected_user.full_name || 'Unknown Player',
-            avatar_url: conn.connected_user.avatar_url
-          }))
-          .filter(conn => !selectedPlayers.some(p => p.id === conn.id));
+        // Process connections to get a flat list of connected players
+        const formattedConnections = connectionsData.map(conn => {
+          // If the current user is the initiator, return the connected user's details
+          // Otherwise, return the initiator's details
+          const connectedPlayer = conn.user.id === user.id ? conn.connected_user : conn.user;
+          return {
+            id: connectedPlayer.id,
+            name: connectedPlayer.full_name || 'Unknown Player',
+            avatar_url: connectedPlayer.avatar_url
+          };
+        }).filter(conn => !selectedPlayers.some(p => p.id === conn.id));
 
         setConnections(formattedConnections);
       } catch (error) {

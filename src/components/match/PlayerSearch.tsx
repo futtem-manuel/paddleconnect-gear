@@ -14,26 +14,35 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
+interface Player {
+  id: string;
+  name: string;
+  avatar_url?: string;
+}
+
 interface PlayerSearchProps {
-  onSelect: (player: { id: string; name: string; avatar_url?: string }) => void;
-  selectedPlayers: Array<{ id: string; name: string }>;
-  placeholder?: string;
-  className?: string;
+  searchValue: string;
+  onSearchChange: (value: string) => void;
+  onAddPlayer: (team: number, player: Player) => void;
+  onAddGhostPlayer: (team: number) => void;
+  team1Count: number;
+  team2Count: number;
+  maxPlayersPerTeam: number;
+  selectedPlayers: Player[];
 }
 
 export const PlayerSearch = ({
-  onSelect,
+  searchValue,
+  onSearchChange,
+  onAddPlayer,
+  onAddGhostPlayer,
+  team1Count,
+  team2Count,
+  maxPlayersPerTeam,
   selectedPlayers,
-  placeholder = "Search players...",
-  className,
 }: PlayerSearchProps) => {
   const [open, setOpen] = useState(false);
-  const [connections, setConnections] = useState<Array<{
-    id: string;
-    name: string;
-    avatar_url?: string;
-  }>>([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [connections, setConnections] = useState<Player[]>([]);
 
   useEffect(() => {
     const fetchConnections = async () => {
@@ -56,7 +65,7 @@ export const PlayerSearch = ({
             )
           `)
           .in('status', ['accepted'])
-          .or(`and(user_id.eq.${user.id},connected_user_id.neq.${user.id}),and(connected_user_id.eq.${user.id},user_id.neq.${user.id})`);
+          .or(`user_id.eq.${user.id},connected_user_id.eq.${user.id}`);
 
         if (error) {
           console.error('Error fetching connections:', error);
@@ -65,8 +74,6 @@ export const PlayerSearch = ({
 
         // Process connections to get a flat list of connected players
         const formattedConnections = connectionsData.map(conn => {
-          // If the current user is the initiator, return the connected user's details
-          // Otherwise, return the initiator's details
           const connectedPlayer = conn.user.id === user.id ? conn.connected_user : conn.user;
           return {
             id: connectedPlayer.id,
@@ -91,30 +98,13 @@ export const PlayerSearch = ({
       !selectedPlayers.some((p) => p.id === player.id)
   );
 
-  const handleSelect = (player: { id: string; name: string; avatar_url?: string }) => {
-    onSelect(player);
-    setOpen(false);
-    setSearchValue("");
-  };
-
-  const handleAddVacantPlayer = () => {
-    if (!searchValue.trim()) return;
-    
-    const newPlayer = {
-      id: `vacant-${Date.now()}`,
-      name: searchValue.trim(),
-    };
-    
-    handleSelect(newPlayer);
-  };
-
   return (
-    <Command className={cn("relative rounded-lg border max-w-lg", className)}>
+    <Command className="relative rounded-lg border max-w-lg">
       <div className="flex items-center border-b px-3">
         <CommandInput
-          placeholder={placeholder}
+          placeholder="Search players..."
           value={searchValue}
-          onValueChange={setSearchValue}
+          onValueChange={onSearchChange}
         />
       </div>
       <CommandList>
@@ -122,14 +112,26 @@ export const PlayerSearch = ({
           <div className="space-y-1">
             <p className="text-muted-foreground">No players found.</p>
             {searchValue && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleAddVacantPlayer}
-                className="mx-auto"
-              >
-                Add "{searchValue}" as player
-              </Button>
+              <div className="flex gap-2 justify-center">
+                {team1Count < maxPlayersPerTeam && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onAddGhostPlayer(1)}
+                  >
+                    Add to Team 1
+                  </Button>
+                )}
+                {team2Count < maxPlayersPerTeam && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onAddGhostPlayer(2)}
+                  >
+                    Add to Team 2
+                  </Button>
+                )}
+              </div>
             )}
           </div>
         </CommandEmpty>
@@ -137,16 +139,37 @@ export const PlayerSearch = ({
           {filteredPlayers.map((player) => (
             <CommandItem
               key={player.id}
-              onSelect={() => handleSelect(player)}
               className="flex items-center gap-2 px-4 py-2"
             >
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={player.avatar_url} />
-                <AvatarFallback>
-                  {player.name.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <span>{player.name}</span>
+              <div className="flex-1 flex items-center gap-2">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={player.avatar_url} />
+                  <AvatarFallback>
+                    {player.name.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <span>{player.name}</span>
+              </div>
+              <div className="flex gap-2">
+                {team1Count < maxPlayersPerTeam && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onAddPlayer(1, player)}
+                  >
+                    Team 1
+                  </Button>
+                )}
+                {team2Count < maxPlayersPerTeam && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onAddPlayer(2, player)}
+                  >
+                    Team 2
+                  </Button>
+                )}
+              </div>
             </CommandItem>
           ))}
         </CommandGroup>

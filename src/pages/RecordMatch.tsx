@@ -23,9 +23,9 @@ const RecordMatch = () => {
 
         <Card className="border-none shadow-lg">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold">{t('match.recordNew')}</CardTitle>
+            <CardTitle className="text-2xl font-bold">{t('recordMatch.title')}</CardTitle>
             <p className="text-muted-foreground">
-              {t('match.enterDetails')}
+              {t('recordMatch.subtitle')}
             </p>
           </CardHeader>
           <CardContent>

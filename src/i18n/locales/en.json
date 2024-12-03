@@ -84,25 +84,16 @@
     "verifyConfirmation": "Are you sure you want to verify this match result?",
     "copyUrl": "Copy Match URL"
   },
-  "rules": {
-    "title": "Official Padel Rules",
-    "subtitle": "International Federation Of Padel (FIP)",
-    "searchPlaceholder": "Search rules...",
-    "section1": {
-      "title": "The Court",
-      "content": "The playing area is 20 meters long by 10 meters wide, divided in the middle by a net."
-    },
-    "section2": {
-      "title": "The Net",
-      "content": "The net should be 88cm in height at the center and 92cm at the sides."
-    },
-    "section3": {
-      "title": "The Ball",
-      "content": "The ball must be a rubber pressurized ball approved by the International Padel Federation."
-    },
-    "section4": {
-      "title": "The Racket",
-      "content": "The padel racket must conform to the official specifications set by the International Padel Federation."
-    }
+  "recordMatch": {
+    "title": "Record New Match",
+    "subtitle": "Enter match details and select players",
+    "date": "Date",
+    "venue": "Venue",
+    "enterVenue": "Enter venue name",
+    "teams": "Teams",
+    "score": "Score",
+    "advanced": "Advanced Details",
+    "scanToVerify": "Scan to verify match",
+    "submit": "Record Match"
   }
 }

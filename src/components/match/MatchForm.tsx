@@ -150,7 +150,7 @@ export const MatchForm = () => {
             name="date"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('match.date')}</FormLabel>
+                <FormLabel>{t('recordMatch.date')}</FormLabel>
                 <FormControl>
                   <Input type="date" {...field} className="bg-white" />
                 </FormControl>
@@ -163,10 +163,10 @@ export const MatchForm = () => {
             name="venue"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('match.venue')}</FormLabel>
+                <FormLabel>{t('recordMatch.venue')}</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder={t('match.enterVenue')}
+                    placeholder={t('recordMatch.enterVenue')}
                     {...field} 
                     className="bg-white"
                   />
@@ -178,7 +178,7 @@ export const MatchForm = () => {
 
         <div className="space-y-6">
           <div className="bg-white p-6 rounded-lg border shadow-sm">
-            <h3 className="text-lg font-semibold mb-4">{t('match.teams')}</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('recordMatch.teams')}</h3>
             <TeamSelection 
               onTeamsConfirmed={handleTeamsConfirmed}
               initialPlayers={[]}
@@ -186,7 +186,7 @@ export const MatchForm = () => {
           </div>
 
           <div className="bg-white p-6 rounded-lg border shadow-sm">
-            <h3 className="text-lg font-semibold mb-4">{t('match.score')}</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('recordMatch.score')}</h3>
             <ScoreInput onScoreSubmit={handleScoreSubmit} />
           </div>
 
@@ -205,7 +205,7 @@ export const MatchForm = () => {
           <div className="flex-shrink-0">
             <QRCodeSVG value={matchUrl} size={120} />
             <p className="text-sm text-muted-foreground mt-2 text-center">
-              {t('match.scanToVerify')}
+              {t('recordMatch.scanToVerify')}
             </p>
           </div>
           <div className="flex gap-4">
@@ -216,7 +216,7 @@ export const MatchForm = () => {
             >
               {t('common.cancel')}
             </Button>
-            <Button type="submit">{t('match.recordMatch')}</Button>
+            <Button type="submit">{t('recordMatch.submit')}</Button>
           </div>
         </div>
       </form>

@@ -26,7 +26,6 @@ const Login = () => {
     try {
       if (!email || !password) {
         setError("Please enter both email and password");
-        setIsLoading(false);
         return;
       }
 

@@ -35,7 +35,10 @@ const Login = () => {
       });
 
       if (signInError) {
-        if (signInError.message.includes("Invalid login credentials")) {
+        if (signInError.message.includes("Email not confirmed")) {
+          setError("Please check your email and confirm your account before logging in.");
+          toast.error("Email verification required!");
+        } else if (signInError.message.includes("Invalid login credentials")) {
           setError("No account found with these credentials. Please register first or check your email/password.");
           toast.error("Don't have an account? Please register first!");
         } else {

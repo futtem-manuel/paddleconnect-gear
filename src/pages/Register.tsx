@@ -16,12 +16,36 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const validatePassword = (password: string) => {
+    if (password.length < 6) {
+      return "Password should be at least 6 characters long";
+    }
+    return null;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
 
     try {
+      // Validate inputs
+      if (!email || !password || !fullName) {
+        setError("Please fill in all fields");
+        setIsLoading(false);
+        return;
+      }
+
+      // Validate password
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        setError(passwordError);
+        setIsLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -42,6 +66,7 @@ const Register = () => {
       }
     } catch (error: any) {
       toast.error(error.message || t('auth.registrationError'));
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -64,6 +89,9 @@ const Register = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div className="text-sm text-destructive">{error}</div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="fullName">{t('common.fullName')}</Label>
               <Input
@@ -96,6 +124,7 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
+                placeholder="Min. 6 characters"
               />
             </div>
             <Button

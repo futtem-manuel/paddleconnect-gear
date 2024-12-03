@@ -21,24 +21,22 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    
-    if (!email || !password) {
-      setError(t('auth.provideCredentials'));
-      return;
-    }
-
     setIsLoading(true);
 
     try {
+      if (!email || !password) {
+        setError("Please enter both email and password");
+        return;
+      }
+
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email: email.toLowerCase().trim(),
-        password,
+        password: password.trim(),
       });
 
       if (signInError) {
         if (signInError.message.includes("Invalid login credentials")) {
-          setError(t('auth.invalidCredentials'));
-          toast.error(t('auth.pleaseRegister'));
+          setError("Invalid email or password. Please check your credentials or register if you don't have an account.");
         } else {
           setError(signInError.message);
         }
@@ -46,11 +44,11 @@ const Login = () => {
       }
 
       if (data.user) {
-        toast.success(t('auth.loginSuccess'));
+        toast.success("Successfully logged in!");
         navigate("/dashboard");
       }
     } catch (error: any) {
-      setError(t('auth.generalError'));
+      setError("An unexpected error occurred. Please try again.");
       console.error('Login error:', error);
     } finally {
       setIsLoading(false);
@@ -109,7 +107,7 @@ const Login = () => {
               className="w-full"
               disabled={isLoading}
             >
-              {isLoading ? t('common.loading') : t('common.signIn')}
+              {isLoading ? "Logging in..." : t('common.signIn')}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
